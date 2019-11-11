@@ -1,2 +1,2 @@
 # PeopleCounter
-Just does people++
+Just does people++, or people--
