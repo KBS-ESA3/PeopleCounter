@@ -9,6 +9,6 @@ int main(void)
     {
         UART_PrintInt(1234);
         UART_PrintStr("Test");
-        HAL_Delay(500);
+        HAL_Delay(1000);
     }
 }
