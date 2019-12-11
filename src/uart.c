@@ -1,5 +1,8 @@
 #include "uart.h"
 
+void UART_GPIO_Init(void);
+void Error_Blink(void);
+
 void UART_Init(void)
 {
     USARTx_CLK_ENABLE();

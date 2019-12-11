@@ -20,10 +20,8 @@ UART_HandleTypeDef initStructure;
 
 // Function declarations
 void UART_Init();
-void UART_GPIO_Init(void);
 void UART_PrintStr(char *text);
 void UART_PrintInt(uint32_t value);
 uint8_t Get_Strlen(char *string);
-void Error_Blink(void);
 
 #endif
