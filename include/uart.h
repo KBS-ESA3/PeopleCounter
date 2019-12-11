@@ -14,15 +14,16 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define BUFFER_SIZE 100     // For printing integers
+#define UART_BUFFER_SIZE 16     // For printing integers
 
 UART_HandleTypeDef initStructure;
 
-// Function declaration
+// Function declarations
 void UART_Init();
 void UART_GPIO_Init(void);
 void UART_PrintStr(char *text);
 void UART_PrintInt(uint32_t value);
+uint8_t Get_Strlen(char *string);
 void Error_Blink(void);
 
 #endif

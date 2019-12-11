@@ -55,15 +55,21 @@ void UART_PrintStr(char *text)
 
 void UART_PrintInt(uint32_t value)
 {
-    char bufferArray[BUFFER_SIZE] = "";
-    uint8_t size = 0;
+    char bufferArray[UART_BUFFER_SIZE] = "";
 
-    itoa(value,bufferArray,10); // Transfer int to char and put it in bufferArray
-    for(size_t i = 0; bufferArray[i] != '\0'; i++)  // Get the size of bufferArray
+    itoa(value, bufferArray, 10); // Transfer int to char and put it in bufferArray
+    HAL_UART_Transmit(&initStructure, (uint8_t*)bufferArray, Get_Strlen(bufferArray), 0xFFFF);
+}
+
+uint8_t Get_Strlen(char *string)
+{
+    uint8_t size = 0;
+    for(uint8_t i = 0; string[i] != '\0'; i++)  // Get the size of bufferArray
     {
         size++;
     }
-    HAL_UART_Transmit(&initStructure, (uint8_t*)bufferArray, size, 0xFFFF);
+    
+    return size;
 }
 
 void Error_Blink(void)
