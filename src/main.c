@@ -8,7 +8,7 @@ int main(void)
     while (1)
     {
         UART_PrintInt(1234);
-        UART_PrintStr("Test");
+        UART_PrintStr("Test\n");
         HAL_Delay(1000);
     }
 }

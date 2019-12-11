@@ -20,7 +20,7 @@ UART_HandleTypeDef initStructure;
 
 // Function declarations
 void UART_Init();
-void UART_PrintStr(char *text);
+void UART_PrintStr(char *string);
 void UART_PrintInt(uint32_t value);
 uint8_t Get_Strlen(char *string);
 

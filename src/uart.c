@@ -44,16 +44,9 @@ void UART_GPIO_Init(void)
     HAL_GPIO_Init(USARTx_RX_GPIO_PORT, &GPIO_InitStruct);
 }
 
-void UART_PrintStr(char *text)
+void UART_PrintStr(char *string)
 {
-    char delim[] = "";
-	char *ptr = strtok(text, delim);
-
-	while(ptr != NULL)  // Transmit char in ptr array and update ptr till delim is empty
-	{
-        HAL_UART_Transmit(&initStructure, (uint8_t*)ptr, strlen(text), 0xFFFF);
-	    ptr = strtok(NULL, delim);
-	}
+    HAL_UART_Transmit(&initStructure, (uint8_t*)string, Get_Strlen(string), 0xFFFF);
 }
 
 void UART_PrintInt(uint32_t value)
