@@ -5,6 +5,9 @@
 *   - For printing an integer, call the UART_PrintInt(*your integer*) function  *
 *   - For printing a string, call the UART_PrintStr(*your string*) function     *
 ********************************************************************************/
+#ifndef UART_H
+#define UART_H
+
 #include "stm32l0xx_hal.h"
 #include "conf.h"
 #include <stdio.h>
@@ -21,3 +24,5 @@ void UART_GPIO_Init(void);
 void UART_PrintStr(char *text);
 void UART_PrintInt(uint32_t value);
 void Error_Blink(void);
+
+#endif
