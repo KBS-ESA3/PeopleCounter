@@ -8,6 +8,11 @@
 
 #include "vl53l1_types.h"
 
+//I2C flag defines
+#define VL53_TIMEOUT            ((uint32_t)(0x00001000))
+#define VL53_COMM_OK            (0x0)
+#define VL53_COMM_ERROR         (0x1)
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -84,6 +89,8 @@ int8_t VL53L1_WaitMs(
 		uint16_t dev,
 		int32_t       wait_ms);
 
+void VL53_WaitForI2CFlag(
+		uint32_t flag);
 #ifdef __cplusplus
 }
 #endif

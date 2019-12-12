@@ -107,25 +107,25 @@ void I2C_Setup(void)
   */
 void SE24LC512_WriteData(uint16_t addr, uint8_t data)
 {
-  // Wait while I2C peripheral is not ready
-  SE_WaitForI2CFlag( I2C_ISR_BUSY );
+		// Wait while I2C peripheral is not ready
+		SE_WaitForI2CFlag( I2C_ISR_BUSY );
 
-  // Start I2C write transfer for 3 bytes
-  I2C_TransferHandling( I2C1, SE_24LC512_ADDR, 3, I2C_AutoEnd_Mode, I2C_Generate_Start_Write );
-  SE_WaitForI2CFlag( I2C_ISR_TXIS );
+		// Start I2C write transfer for 3 bytes
+		I2C_TransferHandling( I2C1, SE_24LC512_ADDR, 3, I2C_AutoEnd_Mode, I2C_Generate_Start_Write );
+		SE_WaitForI2CFlag( I2C_ISR_TXIS );
 
-  // Write eeprom address
-  I2C_SendData(I2C1, addr >> 8);       // Address High byte
-  SE_WaitForI2CFlag(I2C_ISR_TXIS);
-  I2C_SendData(I2C1, addr & 0x00FF);   // Address Low byte
-  SE_WaitForI2CFlag(I2C_ISR_TXIS);
+		// Write eeprom address
+		I2C_SendData(I2C1, addr >> 8);       // Address High byte
+		SE_WaitForI2CFlag(I2C_ISR_TXIS);
+		I2C_SendData(I2C1, addr & 0x00FF);   // Address Low byte
+		SE_WaitForI2CFlag(I2C_ISR_TXIS);
 
-  // Write data
-  I2C_SendData(I2C1, data);
-    
-  // Wait for- and clear stop condition
-  SE_WaitForI2CFlag(I2C_ISR_STOPF);
-  I2C_ClearFlag(I2C1, I2C_ICR_STOPCF);
+		// Write data
+		I2C_SendData(I2C1, data);
+			
+		// Wait for- and clear stop condition
+		SE_WaitForI2CFlag(I2C_ISR_STOPF);
+		I2C_ClearFlag(I2C1, I2C_ICR_STOPCF);
 }
 
 
