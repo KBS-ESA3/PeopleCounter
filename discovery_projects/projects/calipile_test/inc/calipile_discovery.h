@@ -64,6 +64,7 @@ uint32_t calipile_getTPObject(Calipile *sensor);
 void calipile_init(Calipile *sensor);
 int16_t calipile_getTPMotion(Calipile *sensor);
 int16_t calipile_getTPPresence(Calipile *sensor);
+uint32_t calipile_getLP1(Calipile *sensor);
 
 #endif /* _CALIPILE_DISCOVERY_H_ */
 

@@ -8,6 +8,7 @@
 #include "stm32f0_discovery.h"
 #include "helper.h"
 #include "calipile_discovery.h"
+//#include "VL53L1X_discovery.h"
 
 #define DELAY_MS SystemCoreClock/8/1000
 #define DELAY_S SystemCoreClock/8
@@ -21,7 +22,6 @@
 // ----------------------------------------------------------------------------
 Calipile sensor0 = {CALIPILE_0_ADDR,11,8,10,50,10,10,0x00,0x08,0x01,0x00,0,0};
 Calipile sensor1 = {CALIPILE_1_ADDR,11,8,10,50,10,10,0x00,0x08,0x01,0x00,0,0};
-
 
 
 
@@ -40,25 +40,30 @@ void USART_clearscreen(void);
 // ----------------------------------------------------------------------------
 int main(void)
 {
-	char buffer[50];
-	
+	char buffer[100];
+	uint32_t object0 = 0;
+	float object = 0.0;
 	int16_t motion0 = 0;
 	int16_t presence0 = 0;
-	int16_t motion1 = 0;
-	int16_t presence1 = 0;
+	uint32_t LP1_0 = 0;
+	uint32_t LP2_0 = 0;
+	uint32_t LP2FR_0 = 0;
+	uint8_t presence = 0;
+	uint8_t motion = 0;
   USART_init();
-	USART_putstr("Motion0 presence0 Motion1 presence1\n");
+	USART_putstr("Object Motion presence LP1 LP2 LP2FR presence motion\n");
 	I2C_Setup();
-	calipile_init(&sensor0);
 	calipile_init(&sensor1);
 	
   while(1)
   {
-		motion0 = calipile_getTPMotion(&sensor0);
-		presence0 = calipile_getTPPresence(&sensor0);
-		motion1 = calipile_getTPMotion(&sensor1);
-		presence1 = calipile_getTPPresence(&sensor1);
-		sprintf(buffer,"%d %d %d %d\n",motion0,presence0,motion1,presence1);
+		object0 = calipile_getTPObject(&sensor1);
+		object = (float)object0/512.0;
+		motion0 = calipile_getTPMotion(&sensor1);
+		presence0 = calipile_getTPPresence(&sensor1);
+		LP1_0 = calipile_getLP1(&sensor1);
+		
+		sprintf(buffer,"%d %d %d %d %d %d %d %d\n",object0,motion0,presence0,LP1_0,LP2_0,LP2FR_0,presence,motion);
 		USART_putstr(buffer);
 		Delay(DELAY_MS*10);
   }
@@ -168,4 +173,5 @@ void USART_clearscreen(void)
   USART_putstr(cmd1);
   USART_putstr(cmd2);
 }
+
 

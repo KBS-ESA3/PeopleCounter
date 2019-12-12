@@ -91,11 +91,9 @@ void calipile_writeData(Calipile *sensor, uint8_t reg, uint8_t val)
 uint32_t calipile_getTPObject(Calipile *sensor)
 {
 	uint32_t reading = 0;
-	reading |= calipile_ReadData(sensor,3);
-	reading |= calipile_ReadData(sensor,2)<<8;
-	reading |= calipile_ReadData(sensor,1)<<16;
-	reading = reading>>7;
+	reading = ( (uint32_t) ( (uint32_t)calipile_ReadData(sensor,IR_TPOBJECT) << 16) | ( (uint32_t)calipile_ReadData(sensor,IR_TPOBJECT+1) << 8) | ( (uint32_t)calipile_ReadData(sensor,IR_TPOBJECT+2) & 0x80)) >> 7;
 	return reading;	
+	
 	
 }
 
@@ -169,4 +167,22 @@ int16_t calipile_getTPPresence(Calipile *sensor)
 	return reading;
 	
 }
+
+/**
+  * @brief  returns the presence value from sensor register.
+  * @param 	sensor: pointer to struct containing sensor settings.
+  * @retval 9 bit signed presence value
+  */
+uint32_t calipile_getLP1(Calipile *sensor)
+{
+	uint32_t reading = 0;
+	reading |= calipile_ReadData(sensor,IR_TPLOWPASS1)<<16;
+	reading |= calipile_ReadData(sensor,IR_TPLOWPASS1+1)<<8;
+	reading |= (calipile_ReadData(sensor,IR_TPLOWPASS1)& 0xF0);
+	reading >>= 4;
+	
+	return reading;
+	
+}
+
 
