@@ -17,9 +17,9 @@ void UART_Init(void)
     initStructure.Init.WordLength = UART_WORDLENGTH_8B;
     initStructure.Init.HwFlowCtl = UART_HWCONTROL_NONE;
 
-    if (HAL_UART_Init(&initStructure) != HAL_OK)    // If error..
+    if (HAL_UART_Init(&initStructure) != HAL_OK) // If error..
     {
-        Error_Blink();  // Blink a LED
+        Error_Blink(); // Blink a LED
     }
 }
 
@@ -46,7 +46,7 @@ void UART_GPIO_Init(void)
 
 void UART_PrintStr(char *string)
 {
-    HAL_UART_Transmit(&initStructure, (uint8_t*)string, Get_Strlen(string), 0xFFFF);
+    HAL_UART_Transmit(&initStructure, (uint8_t *)string, Get_Strlen(string), 0xFFFF);
 }
 
 void UART_PrintInt(uint32_t value)
@@ -54,13 +54,13 @@ void UART_PrintInt(uint32_t value)
     char bufferArray[UART_BUFFER_SIZE] = "";
 
     itoa(value, bufferArray, 10); // Transfer int to char and put it in bufferArray
-    HAL_UART_Transmit(&initStructure, (uint8_t*)bufferArray, Get_Strlen(bufferArray), 0xFFFF);
+    HAL_UART_Transmit(&initStructure, (uint8_t *)bufferArray, Get_Strlen(bufferArray), 0xFFFF);
 }
 
 uint8_t Get_Strlen(char *string)
 {
     uint8_t size = 0;
-    for(uint8_t i = 0; string[i] != '\0'; i++)  // Get the size of bufferArray
+    for (uint8_t i = 0; string[i] != '\0'; i++) // Get the size of bufferArray
     {
         size++;
     }
