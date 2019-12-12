@@ -1,17 +1,9 @@
 /******************************************************************************
  * File           : Main program - I2C 2x16 LCD BTHQ21605V
  *****************************************************************************/
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
-#include "stm32f0xx.h"
-#include "stm32f0_discovery.h"
-#include "helper.h"
-#include "calipile_discovery.h"
-//#include "VL53L1X_discovery.h"
+#include "config.h"
 
-#define DELAY_MS SystemCoreClock/8/1000
-#define DELAY_S SystemCoreClock/8
+
 #define CALIPILE_0_ADDR (0x0C<<1)
 #define CALIPILE_1_ADDR (0x0D<<1)
 
@@ -42,7 +34,6 @@ int main(void)
 {
 	char buffer[100];
 	uint32_t object0 = 0;
-	float object = 0.0;
 	int16_t motion0 = 0;
 	int16_t presence0 = 0;
 	uint32_t LP1_0 = 0;
@@ -58,7 +49,6 @@ int main(void)
   while(1)
   {
 		object0 = calipile_getTPObject(&sensor1);
-		object = (float)object0/512.0;
 		motion0 = calipile_getTPMotion(&sensor1);
 		presence0 = calipile_getTPPresence(&sensor1);
 		LP1_0 = calipile_getLP1(&sensor1);

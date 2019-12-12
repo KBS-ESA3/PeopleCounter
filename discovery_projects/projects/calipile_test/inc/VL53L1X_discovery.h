@@ -1,7 +1,7 @@
 #ifndef _VL53L1X_DISCOVERY_H_
 #define _VL53L1X_DISCOVERY_H_
 
-#include "helper.h"
+#include "config.h"
 
 #define VL53L1X_DEFAULT_ADRESS 41
 #define VL53L1X_TIMINGGUARD 4528

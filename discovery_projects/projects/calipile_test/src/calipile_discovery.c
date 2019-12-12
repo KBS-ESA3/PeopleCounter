@@ -8,18 +8,11 @@
   */
 void calipile_generalCall(void)
 {
-  // Wait while I2C peripheral is not ready
-  WaitForI2CFlag( I2C_ISR_BUSY );
-  // Start I2C write transfer for 3 bytes
-  I2C_TransferHandling( I2C1, 0x00, 1, I2C_AutoEnd_Mode, I2C_Generate_Start_Write );
-  WaitForI2CFlag( I2C_ISR_TXIS );
-  // Write eeprom address
-  I2C_SendData(I2C1, 0x04);       // Address High byte
-  WaitForI2CFlag(I2C_ISR_TC);
+	I2C_startWrite(0x00,1,1);
+	I2C_sendData(0x04);
+	I2C_checkTranferComplete();
+	I2C_stop();
   
-  // Wait for- and clear stop condition
-  WaitForI2CFlag(I2C_ISR_STOPF);
-  I2C_ClearFlag(I2C1, I2C_ICR_STOPCF);
 }
 
 /**
@@ -32,26 +25,13 @@ uint8_t calipile_ReadData(Calipile *sensor, uint8_t regAdress)
 {
   uint8_t data = 0x0F;
 
-  // Wait while I2C peripheral is not ready
-  WaitForI2CFlag(I2C_ISR_BUSY);
-
-  // Start I2C write transfer for 2 bytes, do not end transfer (SoftEnd_Mode)
-  I2C_TransferHandling(I2C1, sensor->I2CAdress, 1, I2C_SoftEnd_Mode, I2C_Generate_Start_Write);
-  WaitForI2CFlag(I2C_ISR_TXIS);
-
-  I2C_SendData(I2C1, regAdress);   // Address Low byte
-  WaitForI2CFlag(I2C_ISR_TC);
-  // Repeated start I2C read transfer for 1 byte
-  I2C_TransferHandling(I2C1, sensor->I2CAdress, 1, I2C_AutoEnd_Mode, I2C_Generate_Start_Read);
-	
-  WaitForI2CFlag(I2C_ISR_RXNE);
+	I2C_startWrite(sensor->I2CAdress,1,0);
+	I2C_sendData(regAdress);
+	I2C_startRead(sensor->I2CAdress,1,1);
+	data = I2C_readData();
+	I2C_checkTranferComplete();
+	I2C_stop();
   
-  // Read data
-  data = I2C_ReceiveData(I2C1);
-    
-  // Wait for- and clear stop condition
-  WaitForI2CFlag(I2C_ISR_STOPF);
-  I2C1->ICR = I2C_ICR_STOPCF;
   
   return( data );
 }
@@ -66,20 +46,13 @@ uint8_t calipile_ReadData(Calipile *sensor, uint8_t regAdress)
   */
 void calipile_writeData(Calipile *sensor, uint8_t reg, uint8_t val)
 {
-	// Wait while I2C peripheral is not ready
-  WaitForI2CFlag( I2C_ISR_BUSY );
-  // Start I2C write transfer for 3 bytes
-  I2C_TransferHandling( I2C1, sensor->I2CAdress, 2, I2C_AutoEnd_Mode, I2C_Generate_Start_Write );
-  WaitForI2CFlag( I2C_ISR_TXIS );
-  // Write eeprom address
-  I2C_SendData(I2C1, reg);       // Address High byte
-	WaitForI2CFlag( I2C_ISR_TXIS );
-	I2C_SendData(I2C1, val);       // Address High byte
-	WaitForI2CFlag(I2C_ISR_TC);
-  
-  // Wait for- and clear stop condition
-  WaitForI2CFlag(I2C_ISR_STOPF);
-  I2C_ClearFlag(I2C1, I2C_ICR_STOPCF);
+	
+	
+	I2C_startWrite(sensor->I2CAdress,2,0);
+	I2C_sendData(reg);
+	I2C_sendData(val);
+	I2C_checkTranferComplete();
+	I2C_stop();
 	
 }
 

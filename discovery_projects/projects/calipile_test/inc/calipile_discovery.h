@@ -1,9 +1,7 @@
 #ifndef _CALIPILE_DISCOVERY_H_
 #define _CALIPILE_DISCOVERY_H_
 
-#include "helper.h"
-
-
+#include "config.h"
 // ----------------------------------------------------------------------------
 // Constants
 // ----------------------------------------------------------------------------
