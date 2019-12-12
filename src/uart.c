@@ -10,7 +10,7 @@ void UART_Init(void)
     UART_GPIO_Init();
 
     initStructure.Instance = USART2;
-    initStructure.Init.BaudRate = 115200;
+    initStructure.Init.BaudRate = UART_BAUD_RATE;
     initStructure.Init.Mode = UART_MODE_TX_RX;
     initStructure.Init.Parity = UART_PARITY_NONE;
     initStructure.Init.StopBits = UART_STOPBITS_1;
@@ -46,15 +46,15 @@ void UART_GPIO_Init(void)
 
 void UART_PrintStr(char *string)
 {
-    HAL_UART_Transmit(&initStructure, (uint8_t *)string, Get_Strlen(string), 0xFFFF);
+    HAL_UART_Transmit(&initStructure, (uint8_t *)string, Get_Strlen(string), UART_MAX_TIMEOUT);
 }
 
 void UART_PrintInt(uint32_t value)
 {
     char bufferArray[UART_BUFFER_SIZE] = "";
 
-    itoa(value, bufferArray, 10); // Transfer int to char and put it in bufferArray
-    HAL_UART_Transmit(&initStructure, (uint8_t *)bufferArray, Get_Strlen(bufferArray), 0xFFFF);
+    itoa(value, bufferArray, DECIMAL); // Transfer int to char and put it in bufferArray
+    HAL_UART_Transmit(&initStructure, (uint8_t *)bufferArray, Get_Strlen(bufferArray), UART_MAX_TIMEOUT);
 }
 
 uint8_t Get_Strlen(char *string)
@@ -64,7 +64,7 @@ uint8_t Get_Strlen(char *string)
     {
         size++;
     }
-    
+
     return size;
 }
 

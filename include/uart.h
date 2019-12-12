@@ -14,7 +14,10 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define UART_BAUD_RATE 115200
 #define UART_BUFFER_SIZE 16     // For printing integers
+#define UART_MAX_TIMEOUT 0xFFFF
+#define DECIMAL 10              // Parameter for the itoa() function to use the decimal system
 
 UART_HandleTypeDef initStructure;
 
