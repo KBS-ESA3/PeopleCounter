@@ -140,3 +140,7 @@ void SX1276Send(uint8_t *buffer, uint8_t size)
 
 }
 
+void LoRa_Send_String(uint8_t *textToSend)
+{
+    SX1276Send((uint8_t*)textToSend, Get_Strlen(textToSend));
+}
