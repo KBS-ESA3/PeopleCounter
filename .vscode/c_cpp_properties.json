@@ -1,0 +1,60 @@
+{
+    "configurations": [
+        {
+            "name": "!!! WARNING !!! AUTO-GENERATED FILE, PLEASE DO NOT MODIFY IT AND USE https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags"
+        },
+        {
+            "name": "Win32",
+            "includePath": [
+                "c:/Users/joost/Downloads/platform-ststm32-develop/examples/stm32cube-hal-blink/include",
+                "c:/Users/joost/Downloads/platform-ststm32-develop/examples/stm32cube-hal-blink/src",
+                "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/CMSIS/Include",
+                "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/CMSIS/Device/ST/STM32L0xx/Include",
+                "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/STM32L0xx_HAL_Driver/Inc",
+                "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/Common",
+                "C:/Users/joost/.platformio/lib/ACS712 Current Sensor_ID1601/src",
+                "C:/Users/joost/.platformio/lib/mc-coap_ID5783/src",
+                "C:/Users/joost/.platformio/lib/mc-coap_ID5783/ext/lwipcpp",
+                "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/gde021a1",
+                "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/hx8347d",
+                "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/mfxstm32l152",
+                "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/st7735",
+                "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/stlm75",
+                "C:/Users/joost/.platformio/packages/tool-unity",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "c:/Users/joost/Downloads/platform-ststm32-develop/examples/stm32cube-hal-blink/include",
+                    "c:/Users/joost/Downloads/platform-ststm32-develop/examples/stm32cube-hal-blink/src",
+                    "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/CMSIS/Include",
+                    "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/CMSIS/Device/ST/STM32L0xx/Include",
+                    "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/STM32L0xx_HAL_Driver/Inc",
+                    "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/Common",
+                    "C:/Users/joost/.platformio/lib/ACS712 Current Sensor_ID1601/src",
+                    "C:/Users/joost/.platformio/lib/mc-coap_ID5783/src",
+                    "C:/Users/joost/.platformio/lib/mc-coap_ID5783/ext/lwipcpp",
+                    "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/gde021a1",
+                    "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/hx8347d",
+                    "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/mfxstm32l152",
+                    "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/st7735",
+                    "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/stlm75",
+                    "C:/Users/joost/.platformio/packages/tool-unity",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=40100",
+                "STM32L072xx",
+                "LORA_BOARD",
+                "USE_HAL_DRIVER",
+                "F_CPU=32000000L",
+                ""
+            ],
+            "intelliSenseMode": "clang-x64",
+            "compilerPath": "\"C:/Users/joost/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-gcc.exe\" -mthumb -mcpu=cortex-m0plus"
+        }
+    ],
+    "version": 4
+}

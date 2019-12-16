@@ -1,0 +1,9 @@
+.\obj\vl53l1x_api.o: src\VL53L1X_api.c
+.\obj\vl53l1x_api.o: .\inc\VL53L1X_api.h
+.\obj\vl53l1x_api.o: .\inc\vl53l1_platform.h
+.\obj\vl53l1x_api.o: .\inc\vl53l1_types.h
+.\obj\vl53l1x_api.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\obj\vl53l1x_api.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\obj\vl53l1x_api.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\obj\vl53l1x_api.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\obj\vl53l1x_api.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

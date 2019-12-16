@@ -1,9 +1,6 @@
 {
-    "C_Cpp.errorSquiggles": "Disabled",
     "files.associations": {
-        "radio.h": "c",
-        "string.h": "c",
-        "mlm32l0xx_hw_conf.h": "c",
-        "stdlib.h": "c"
+        "stm32f0xx_hal_i2c.h": "c",
+        "hardware_functions.h": "c"
     }
 }
