@@ -1,4 +1,3 @@
-
 #include "hardware_functions.h"
 
 UART_HandleTypeDef UART_Handler;

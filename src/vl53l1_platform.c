@@ -33,11 +33,10 @@
 */
 #include "vl53l1_platform.h"
 #include "vl53l1_platform_log.h"
-//#include "vl53l1_api.h"
+#include "vl53l1_error_codes.h"
 #include <string.h>
 #include <time.h>
 #include <math.h>
-#include "vl53l1_error_codes.h"
 #include "hardware_functions.h"
 
 
