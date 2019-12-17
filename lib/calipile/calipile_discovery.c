@@ -8,10 +8,8 @@
   */
 void calipile_generalCall(void)
 {
-	I2C_startWrite(0x00,1,1);
-	I2C_sendData(0x04);
-	I2C_checkTranferComplete();
-	I2C_stop();
+	const uint8_t command = 0x04;
+	I2C_Write(0x00,&command,1);
   
 }
 
@@ -23,17 +21,9 @@ void calipile_generalCall(void)
   */
 uint8_t calipile_ReadData(Calipile *sensor, uint8_t regAdress)
 {
-  uint8_t data = 0x0F;
-
-	I2C_startWrite(sensor->I2CAdress,1,0);
-	I2C_sendData(regAdress);
-	I2C_startRead(sensor->I2CAdress,1,1);
-	data = I2C_readData();
-	I2C_checkTranferComplete();
-	I2C_stop();
-  
-  
-  return( data );
+  	uint8_t data = 0x00;
+	I2C_ReadRegister8(sensor->I2CAdress,regAdress,&data,1);  
+  	return( data );
 }
 
 
@@ -46,14 +36,7 @@ uint8_t calipile_ReadData(Calipile *sensor, uint8_t regAdress)
   */
 void calipile_writeData(Calipile *sensor, uint8_t reg, uint8_t val)
 {
-	
-	
-	I2C_startWrite(sensor->I2CAdress,2,0);
-	I2C_sendData(reg);
-	I2C_sendData(val);
-	I2C_checkTranferComplete();
-	I2C_stop();
-	
+	I2C_WriteRegister8(sensor->I2CAdress,reg,&val,1);
 }
 
 /**

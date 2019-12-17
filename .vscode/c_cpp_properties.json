@@ -6,12 +6,14 @@
         {
             "name": "Win32",
             "includePath": [
-                "c:/Users/joost/Downloads/platform-ststm32-develop/examples/stm32cube-hal-blink/include",
-                "c:/Users/joost/Downloads/platform-ststm32-develop/examples/stm32cube-hal-blink/src",
+                "c:/Users/joost/OneDrive/School/windesheim/ict jaar 3/KBS ESA 3/git/PeopleCounter/include",
+                "c:/Users/joost/OneDrive/School/windesheim/ict jaar 3/KBS ESA 3/git/PeopleCounter/src",
                 "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/CMSIS/Include",
                 "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/CMSIS/Device/ST/STM32L0xx/Include",
                 "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/STM32L0xx_HAL_Driver/Inc",
                 "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/Common",
+                "c:/Users/joost/OneDrive/School/windesheim/ict jaar 3/KBS ESA 3/git/PeopleCounter/lib/VL53L1X",
+                "c:/Users/joost/OneDrive/School/windesheim/ict jaar 3/KBS ESA 3/git/PeopleCounter/lib/calipile",
                 "C:/Users/joost/.platformio/lib/ACS712 Current Sensor_ID1601/src",
                 "C:/Users/joost/.platformio/lib/mc-coap_ID5783/src",
                 "C:/Users/joost/.platformio/lib/mc-coap_ID5783/ext/lwipcpp",
@@ -26,12 +28,14 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "c:/Users/joost/Downloads/platform-ststm32-develop/examples/stm32cube-hal-blink/include",
-                    "c:/Users/joost/Downloads/platform-ststm32-develop/examples/stm32cube-hal-blink/src",
+                    "c:/Users/joost/OneDrive/School/windesheim/ict jaar 3/KBS ESA 3/git/PeopleCounter/include",
+                    "c:/Users/joost/OneDrive/School/windesheim/ict jaar 3/KBS ESA 3/git/PeopleCounter/src",
                     "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/CMSIS/Include",
                     "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/CMSIS/Device/ST/STM32L0xx/Include",
                     "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/STM32L0xx_HAL_Driver/Inc",
                     "C:/Users/joost/.platformio/packages/framework-stm32cube/l0/Drivers/BSP/Components/Common",
+                    "c:/Users/joost/OneDrive/School/windesheim/ict jaar 3/KBS ESA 3/git/PeopleCounter/lib/VL53L1X",
+                    "c:/Users/joost/OneDrive/School/windesheim/ict jaar 3/KBS ESA 3/git/PeopleCounter/lib/calipile",
                     "C:/Users/joost/.platformio/lib/ACS712 Current Sensor_ID1601/src",
                     "C:/Users/joost/.platformio/lib/mc-coap_ID5783/src",
                     "C:/Users/joost/.platformio/lib/mc-coap_ID5783/ext/lwipcpp",

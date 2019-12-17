@@ -33,7 +33,6 @@
 * 
 */
 
-#include "stm32f0xx_i2c.h"
 #include "VL53L1X_api.h"
 #include "vl53l1_platform.h"
 #include "vl53l1_error_codes.h"
