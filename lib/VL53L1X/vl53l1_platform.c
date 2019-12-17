@@ -69,37 +69,46 @@
 
 
 int8_t VL53L1_WriteMulti( uint16_t dev, uint16_t index, uint8_t *pdata, uint32_t count) {
+	I2C_WriteRegister16(dev,index,pdata,count);
 	return 0; // to be implemented
 }
 
 int8_t VL53L1_ReadMulti(uint16_t dev, uint16_t index, uint8_t *pdata, uint32_t count){
+	I2C_ReadRegister16(dev,index,pdata,count);
 	return 0; // to be implemented
 }
 
 int8_t VL53L1_WrByte(uint16_t dev, uint16_t index, uint8_t data) {
+	I2C_WriteRegister16(dev,index,&data,1);
 	return 0; // to be implemented
 }
 
 int8_t VL53L1_WrWord(uint16_t dev, uint16_t index, uint16_t data) {
+	I2C_WriteRegister16(dev,index,&data,2);
 	return 0; // to be implemented
 }
 
 int8_t VL53L1_WrDWord(uint16_t dev, uint16_t index, uint32_t data) {
+	I2C_WriteRegister16(dev,index,&data,4);
 	return 0; // to be implemented
 }
 
 int8_t VL53L1_RdByte(uint16_t dev, uint16_t index, uint8_t *data) {
+	I2C_ReadRegister16(dev,index,&data,1);
 	return 0; // to be implemented
 }
 
 int8_t VL53L1_RdWord(uint16_t dev, uint16_t index, uint16_t *data) {
+	I2C_ReadRegister16(dev,index,&data,2);
 	return 0; // to be implemented
 }
 
 int8_t VL53L1_RdDWord(uint16_t dev, uint16_t index, uint32_t *data) {
+	I2C_ReadRegister16(dev,index,&data,4);
 	return 0; // to be implemented
 }
 
 int8_t VL53L1_WaitMs(uint16_t dev, int32_t wait_ms){
+	HAL_Delay(wait_ms);
 	return 0; // to be implemented
 }
