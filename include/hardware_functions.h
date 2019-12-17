@@ -5,9 +5,7 @@
 #include "error_handling.h"
 
 #define UART_INT_BUFFER 10
-
-UART_HandleTypeDef UART_Handler;
-I2C_HandleTypeDef I2C_Handler;
+#define print UART_PutStr
 
 void initLeds(void);
 void toggleLed(uint8_t led);
