@@ -1,5 +1,7 @@
 .pioenvs
 .piolibdeps
+*/*
+.pio/*
 *.*
 **.*
 !*.c
