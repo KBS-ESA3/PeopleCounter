@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "stm32f0xx_hal_i2c.h": "c",
-        "hardware_functions.h": "c"
+        "hardware_functions.h": "c",
+        "vl53_algorithm.h": "c"
     },
     "C_Cpp.dimInactiveRegions": false,
     "C_Cpp.errorSquiggles": "Disabled"
