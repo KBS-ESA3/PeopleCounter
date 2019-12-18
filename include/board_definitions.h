@@ -37,7 +37,7 @@
       break;                                            \
     }                                                   \
   } while (0)
-  
+
 #define LEDx_GPIO_CLK_DISABLE(__INDEX__) \
   do                                     \
   {                                      \
@@ -59,7 +59,7 @@
 #define I2C_GPIO_PORT GPIOB
 #define I2C_GPIO_CLK_ENABLE() __HAL_RCC_GPIOB_CLK_ENABLE()
 #define I2C_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
-#define I2C_GPIO_AF GPIO_AF1_I2C
+#define I2C_GPIO_AF GPIO_AF1_I2C1
 #define I2C_TIMING 0x2033030A
 
 #define UART_TX_PIN GPIO_PIN_9

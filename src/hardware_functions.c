@@ -140,10 +140,10 @@ void I2C_Init()
     I2C_Handler.Init.Timing = I2C_TIMING;
     I2C_Handler.Init.OwnAddress1 = 0;
     I2C_Handler.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-    I2C_Handler.Init.DualAddressMode = I2C_DUALADDRESS_DISABLED;
+    I2C_Handler.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
     I2C_Handler.Init.OwnAddress2 = 0;
-    I2C_Handler.Init.GeneralCallMode = I2C_GENERALCALL_DISABLED;
-    I2C_Handler.Init.NoStretchMode = I2C_NOSTRETCH_DISABLED;
+    I2C_Handler.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+    I2C_Handler.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
 
     HAL_I2C_Init(&I2C_Handler);
 }
