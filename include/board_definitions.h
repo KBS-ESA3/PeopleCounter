@@ -37,6 +37,7 @@
       break;                                            \
     }                                                   \
   } while (0)
+  
 #define LEDx_GPIO_CLK_DISABLE(__INDEX__) \
   do                                     \
   {                                      \

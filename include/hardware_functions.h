@@ -5,6 +5,8 @@
 #include "error_handling.h"
 
 #define UART_INT_BUFFER 10
+#define UART_BAUD_RATE 115200
+#define ITOA_DECIMAL 10
 
 UART_HandleTypeDef UART_Handler;
 I2C_HandleTypeDef I2C_Handler;

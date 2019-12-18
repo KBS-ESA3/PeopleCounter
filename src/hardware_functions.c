@@ -72,7 +72,7 @@ void UART_Init()
     HAL_GPIO_Init(UART_GPIO_PORT, &GPIO_InitStructure);
 
     UART_Handler.Instance = USART1;
-    UART_Handler.Init.BaudRate = 115200;
+    UART_Handler.Init.BaudRate = UART_BAUD_RATE;
     UART_Handler.Init.Mode = UART_MODE_TX_RX;
     UART_Handler.Init.Parity = UART_PARITY_NONE;
     UART_Handler.Init.StopBits = UART_STOPBITS_1;
@@ -101,9 +101,11 @@ void UART_PutInt(uint32_t val)
 {
     char message[UART_INT_BUFFER];
     uint8_t size = 0;
-    itoa(val, message, 10);
+    itoa(val, message, ITOA_DECIMAL);
     while (message[size] != '\0')
+    {
         size++;
+    }        
     HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
 }
 
