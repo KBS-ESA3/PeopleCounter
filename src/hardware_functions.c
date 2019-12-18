@@ -1,4 +1,3 @@
-
 #include "hardware_functions.h"
 
 void initLeds(void)
@@ -83,17 +82,13 @@ void UART_Init()
     HAL_UART_Init(&UART_Handler);
 }
 
-void UART_Hello(void)
-{
-    uint8_t message[] = "hello\n\r";
-    HAL_UART_Transmit(&UART_Handler, message, sizeof(message), HAL_UART_TIMEOUT_VALUE);
-}
-
 void UART_PutStr(char *message)
 {
     uint8_t size = 0;
     while (message[size] != '\0')
+    {
         size++;
+    }
     HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
 }
 
@@ -106,7 +101,7 @@ void UART_PutInt(uint32_t val)
 {
     char message[UART_INT_BUFFER];
     uint8_t size = 0;
-    itoa(val,message,10);    
+    itoa(val, message, 10);
     while (message[size] != '\0')
         size++;
     HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
@@ -146,38 +141,38 @@ void I2C_Init()
     I2C_Handler.Init.DualAddressMode = I2C_DUALADDRESS_DISABLED;
     I2C_Handler.Init.OwnAddress2 = 0;
     I2C_Handler.Init.GeneralCallMode = I2C_GENERALCALL_DISABLED;
-    I2C_Handler.Init.NoStretchMode = I2C_NOSTRETCH_DISABLED; 
+    I2C_Handler.Init.NoStretchMode = I2C_NOSTRETCH_DISABLED;
 
     HAL_I2C_Init(&I2C_Handler);
-
 }
 
-void I2C_Write(uint8_t adress, uint8_t* data,uint8_t size)
+void I2C_Write(uint8_t adress, uint8_t *data, uint8_t size)
 {
-    HAL_I2C_Master_Transmit(&I2C_Handler,adress,data,size,HAL_MAX_DELAY);
+    HAL_I2C_Master_Transmit(&I2C_Handler, adress, data, size, HAL_MAX_DELAY);
 }
 
-void I2C_Read(uint8_t adress, uint8_t* destination,uint8_t size)
+void I2C_Read(uint8_t adress, uint8_t *destination, uint8_t size)
 {
-    HAL_I2C_Master_Receive(&I2C_Handler,adress,destination,size,HAL_MAX_DELAY);
+    HAL_I2C_Master_Receive(&I2C_Handler, adress, destination, size, HAL_MAX_DELAY);
 }
 
-void I2C_WriteRegister8(uint8_t adress, uint8_t regg, uint8_t* data, uint8_t size)
+void I2C_WriteRegister8(uint8_t adress, uint8_t regg, uint8_t *data, uint8_t size)
 {
-    HAL_I2C_Mem_Write(&I2C_Handler, adress,regg,1,data,size,HAL_MAX_DELAY);
+    HAL_I2C_Mem_Write(&I2C_Handler, adress, regg, 1, data, size, HAL_MAX_DELAY);
 }
 
-void I2C_WriteRegister16(uint8_t adress, uint16_t regg, uint8_t* data, uint8_t size)
+void I2C_WriteRegister16(uint8_t adress, uint16_t regg, uint8_t *data, uint8_t size)
 {
-    HAL_I2C_Mem_Write(&I2C_Handler, adress,regg,2,data,size,HAL_MAX_DELAY);
+    HAL_I2C_Mem_Write(&I2C_Handler, adress, regg, 2, data, size, HAL_MAX_DELAY);
 }
 
-void I2C_ReadRegister8(uint8_t adress, uint8_t regg, uint8_t* destination, uint8_t size)
+void I2C_ReadRegister8(uint8_t adress, uint8_t regg, uint8_t *destination, uint8_t size)
 {
-    HAL_I2C_Mem_Read(&I2C_Handler, adress,regg,1,destination,size,HAL_MAX_DELAY);
+    HAL_I2C_Mem_Read(&I2C_Handler, adress, regg, 1, destination, size, HAL_MAX_DELAY);
 }
 
-void I2C_ReadRegister16(uint8_t adress, uint16_t regg, uint8_t* destination, uint8_t size)
+void I2C_ReadRegister16(uint8_t adress, uint16_t regg, uint8_t *destination, uint8_t size)
 {
-    HAL_I2C_Mem_Read(&I2C_Handler, adress,regg,2,destination,size,HAL_MAX_DELAY);
+    HAL_I2C_Mem_Read(&I2C_Handler, adress, regg, 2, destination, size, HAL_MAX_DELAY);
 }
+

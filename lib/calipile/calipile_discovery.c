@@ -19,7 +19,7 @@ void calipile_generalCall(void)
 	* @param  regAdress: adress of the register to read from.
   * @retval the value from the sensor register
   */
-uint8_t calipile_ReadData(Calipile *sensor, uint8_t regAdress)
+uint8_t calipile_ReadData(calipile_t *sensor, uint8_t regAdress)
 {
   	uint8_t data = 0x00;
 	I2C_ReadRegister8(sensor->I2CAdress,regAdress,&data,1);  
@@ -34,7 +34,7 @@ uint8_t calipile_ReadData(Calipile *sensor, uint8_t regAdress)
 	* @param  val: value to write to the sensor register.
   * @retval None
   */
-void calipile_writeData(Calipile *sensor, uint8_t reg, uint8_t val)
+void calipile_writeData(calipile_t *sensor, uint8_t reg, uint8_t val)
 {
 	I2C_WriteRegister8(sensor->I2CAdress,reg,&val,1);
 }
@@ -44,7 +44,7 @@ void calipile_writeData(Calipile *sensor, uint8_t reg, uint8_t val)
   * @param  sensor: pointer to struct containing sensor settings.
   * @retval 17 bit value of raw thermopile data
   */
-uint32_t calipile_getTPObject(Calipile *sensor)
+uint32_t calipile_getTPObject(calipile_t *sensor)
 {
 	uint32_t reading = 0;
 	reading = ( (uint32_t) ( (uint32_t)calipile_ReadData(sensor,IR_TPOBJECT) << 16) | ( (uint32_t)calipile_ReadData(sensor,IR_TPOBJECT+1) << 8) | ( (uint32_t)calipile_ReadData(sensor,IR_TPOBJECT+2) & 0x80)) >> 7;
@@ -58,7 +58,7 @@ uint32_t calipile_getTPObject(Calipile *sensor)
   * @param  sensor: pointer to struct containing sensor settings.
   * @retval None
   */
-void calipile_init(Calipile *sensor)
+void calipile_init(calipile_t *sensor)
 {
 	uint8_t data = 0;
 	
@@ -95,10 +95,10 @@ void calipile_init(Calipile *sensor)
   * @param 	sensor: pointer to struct containing sensor settings.
   * @retval 9 bit signed motion value
   */
-int16_t calipile_getTPMotion(Calipile *sensor)
+int16_t calipile_getTPMotion(calipile_t *sensor)
 {
 	int16_t reading = 0;
-	reading |= calipile_ReadData(sensor,IR_TPMOTION);
+	reading = calipile_ReadData(sensor,IR_TPMOTION);
 	if((calipile_ReadData(sensor,IR_CHIPSTATUS)& (1<<6)))
 	{
 		reading *= -1;
@@ -112,7 +112,7 @@ int16_t calipile_getTPMotion(Calipile *sensor)
   * @param 	sensor: pointer to struct containing sensor settings.
   * @retval 9 bit signed presence value
   */
-int16_t calipile_getTPPresence(Calipile *sensor)
+int16_t calipile_getTPPresence(calipile_t *sensor)
 {
 	int16_t reading = 0;
 	reading |= calipile_ReadData(sensor,IR_TPPRESENCE);
@@ -129,7 +129,7 @@ int16_t calipile_getTPPresence(Calipile *sensor)
   * @param 	sensor: pointer to struct containing sensor settings.
   * @retval 9 bit signed presence value
   */
-uint32_t calipile_getLP1(Calipile *sensor)
+uint32_t calipile_getLP1(calipile_t *sensor)
 {
 	uint32_t reading = 0;
 	reading |= calipile_ReadData(sensor,IR_TPLOWPASS1)<<16;
