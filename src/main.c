@@ -7,7 +7,7 @@
 
 int main(void)
 {
-    uint8_t testLora[] = {'5'};
+    uint8_t testLora[] = {'c'};
 
     HAL_Init();
     UART_Init();

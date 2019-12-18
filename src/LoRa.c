@@ -2,6 +2,7 @@
 #include "stm32l0xx_hal.h"
 #include "sx1276Regs-LoRa.h"
 #include "mlm32l0xx_hw_conf.h"
+#include "uart.h"
 
 #define FREQ_STEP_8 15625
 #define FREQUENCY_LORA 868000000
