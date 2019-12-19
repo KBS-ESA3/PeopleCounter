@@ -3,17 +3,20 @@
 
 #include <stdint.h>
 
+// The different possible packet types.
 typedef enum{
     TYPE_BATTERY_STATUS = 0b0,
     TYPE_PEOPLE_COUNT = 0b1,
 } packet_type_t;
 
+// The different possible variables for the battery status.
 typedef enum{
     BATTERY_GOOD = 0b00,
     BATTERY_LOW = 0b01,
     BATTERY_CRITICAL = 0b10,
 } battery_status_t;
 
+// The content of a packet that needs to be send.
 typedef struct{
     packet_type_t type : 1;
     union{
