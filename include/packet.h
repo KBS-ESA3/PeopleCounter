@@ -29,5 +29,7 @@ typedef struct{
 void increment_people_count(void);
 void decrease_people_count(void);
 uint8_t get_people_count();
+LoRa_packet_t encode_people_count_packet();
+LoRa_packet_t encode_battery_status_packet();
 
 #endif /* __PACKET_H */
