@@ -295,13 +295,6 @@ VL53L1_Error VL53L1_GetTickCount(
 
 
 
-
-
-
-
-
-
-
 #define trace_print(level, ...) \
 	_LOG_TRACE_PRINT(VL53L1_TRACE_MODULE_PLATFORM, \
 	level, VL53L1_TRACE_FUNCTION_NONE, ##__VA_ARGS__)
@@ -309,16 +302,6 @@ VL53L1_Error VL53L1_GetTickCount(
 #define trace_i2c(...) \
 	_LOG_TRACE_PRINT(VL53L1_TRACE_MODULE_NONE, \
 	VL53L1_TRACE_LEVEL_NONE, VL53L1_TRACE_FUNCTION_I2C, ##__VA_ARGS__)
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -444,7 +427,3 @@ VL53L1_Error VL53L1_WaitValueMaskEx(
 
 	return status;
 }
-
-
-
-

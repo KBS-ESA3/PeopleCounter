@@ -13,8 +13,8 @@ void toggleLed(uint8_t led);
 void UART_Init();
 void UART_clearScreen(void);
 void UART_Hello(void);
-void UART_Putc(char c);
-void UART_PutStr(char* message);
+void UART_Putc(uint8_t c);
+void UART_PutStr(uint8_t* message);
 void UART_PutInt(uint32_t val);
 
 void I2C_Init();

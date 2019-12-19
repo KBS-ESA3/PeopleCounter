@@ -12,9 +12,6 @@
 #define CALIPILE_0_ADDR (0x0C << 1)
 #define CALIPILE_1_ADDR (0x0D << 1)
 
-// Uncomment the line below to enter debug mode
-#define debug
-
 // Declare Calipile objects for each sensor
 Calipile sensor0 = {CALIPILE_0_ADDR, 11, 8, 10, 50, 10, 10, 0x00, 0x08, 0x01, 0x00, 0, 0};
 Calipile sensor1 = {CALIPILE_1_ADDR, 11, 8, 10, 50, 10, 10, 0x00, 0x08, 0x01, 0x00, 0, 0};
@@ -28,12 +25,12 @@ int main(void)
   UART_Init();
   I2C_Init();
   calipile_init(&sensor0);
-  UART_clearScreen();
+  //UART_clearScreen();
   VL53_setup();
 
   while (1)
   {
-    VL53_get_distance();
+    VL53_PeopleCount();
   }
 }
 

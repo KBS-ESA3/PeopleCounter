@@ -30,7 +30,7 @@ void initLeds(void)
 
 void toggleLed(uint8_t led)
 {
-    char message[] = "ledx is not available on this board!\n\n";
+    uint8_t message[] = "ledx is not available on this board!\n\n";
     switch (led)
     {
 
@@ -75,7 +75,7 @@ void UART_Init()
     HAL_GPIO_Init(UART_GPIO_PORT, &GPIO_InitStructure);
 
     UART_Handler.Instance = USART1;
-    UART_Handler.Init.BaudRate = 115200;
+    UART_Handler.Init.BaudRate = 9600;
     UART_Handler.Init.Mode = UART_MODE_TX_RX;
     UART_Handler.Init.Parity = UART_PARITY_NONE;
     UART_Handler.Init.StopBits = UART_STOPBITS_1;
@@ -91,7 +91,7 @@ void UART_Hello(void)
     HAL_UART_Transmit(&UART_Handler, message, sizeof(message), HAL_UART_TIMEOUT_VALUE);
 }
 
-void UART_PutStr(char *message)
+void UART_PutStr(uint8_t *message)
 {
     uint8_t size = 0;
     while (message[size] != '\0')
@@ -99,14 +99,14 @@ void UART_PutStr(char *message)
     HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
 }
 
-void UART_Putc(char c)
+void UART_Putc(uint8_t c)
 {
-    HAL_UART_Transmit(&UART_Handler, (uint8_t)c, 1, HAL_UART_TIMEOUT_VALUE);
+    HAL_UART_Transmit(&UART_Handler, c, 1, HAL_UART_TIMEOUT_VALUE);
 }
 
 void UART_PutInt(uint32_t val)
 {
-    char message[UART_INT_BUFFER];
+    uint8_t message[UART_INT_BUFFER];
     uint8_t size = 0;
     itoa(val,message,10);    
     while (message[size] != '\0')
@@ -116,8 +116,8 @@ void UART_PutInt(uint32_t val)
 
 void UART_clearScreen(void)
 {
-    char cmd1[5] = {0x1B, '[', '2', 'J', '\0'}; // Clear screen
-    char cmd2[4] = {0x1B, '[', 'f', '\0'};      // Cursor home
+    uint8_t cmd1[5] = {0x1B, '[', '2', 'J', '\0'}; // Clear screen
+    uint8_t cmd2[4] = {0x1B, '[', 'f', '\0'};      // Cursor home
 
     UART_PutStr(cmd1);
     UART_PutStr(cmd2);
