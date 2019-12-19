@@ -61,7 +61,7 @@ int main(void)
     UART_clearScreen();
     UART_PutStr("motion\n");
 
-    while (1)
+    while (1)       // Test
     {
         int16_t motion = 0;
         motion = calipile_getTPMotion(&sensor0);
