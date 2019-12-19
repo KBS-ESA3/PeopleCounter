@@ -1,7 +1,6 @@
 #include "error_handling.h"
 
-void sendWarning(char* message)
+void sendWarning(char *message)
 {
-   UART_PutStr(message);
+    UART_PutStr(message);
 }
-

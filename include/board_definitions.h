@@ -20,39 +20,39 @@
 #define LED2_GPIO_CLK_ENABLE() __HAL_RCC_GPIOC_CLK_ENABLE()
 #define LED2_GPIO_CLK_DISABLE() __HAL_RCC_GPIOC_CLK_DISABLE()
 
-#define LEDx_GPIO_CLK_ENABLE(__INDEX__, __INITSTRUCT__) \
-  do                                                    \
-  {                                                     \
-    switch (__INDEX__)                                  \
-    {                                                   \
-    case LED1:                                          \
-      LED1_GPIO_CLK_ENABLE();                           \
-      HAL_GPIO_Init(LED1_GPIO_PORT, __INITSTRUCT__);    \
-      break;                                            \
-    case LED2:                                          \
-      LED2_GPIO_CLK_ENABLE();                           \
-      HAL_GPIO_Init(LED2_GPIO_PORT, __INITSTRUCT__);    \
-      break;                                            \
-    default:                                            \
-      break;                                            \
-    }                                                   \
-  } while (0)
+#define LEDx_GPIO_CLK_ENABLE(__INDEX__, __INITSTRUCT__)    \
+    do                                                     \
+    {                                                      \
+        switch (__INDEX__)                                 \
+        {                                                  \
+        case LED1:                                         \
+            LED1_GPIO_CLK_ENABLE();                        \
+            HAL_GPIO_Init(LED1_GPIO_PORT, __INITSTRUCT__); \
+            break;                                         \
+        case LED2:                                         \
+            LED2_GPIO_CLK_ENABLE();                        \
+            HAL_GPIO_Init(LED2_GPIO_PORT, __INITSTRUCT__); \
+            break;                                         \
+        default:                                           \
+            break;                                         \
+        }                                                  \
+    } while (0)
 
 #define LEDx_GPIO_CLK_DISABLE(__INDEX__) \
-  do                                     \
-  {                                      \
-    switch (__INDEX__)                   \
+    do                                   \
     {                                    \
-    case LED1:                           \
-      LED1_GPIO_CLK_DISABLE();           \
-      break;                             \
-    case LED2:                           \
-      LED2_GPIO_CLK_DISABLE();           \
-      break;                             \
-    default:                             \
-      break;                             \
-    }                                    \
-  } while (0)
+        switch (__INDEX__)               \
+        {                                \
+        case LED1:                       \
+            LED1_GPIO_CLK_DISABLE();     \
+            break;                       \
+        case LED2:                       \
+            LED2_GPIO_CLK_DISABLE();     \
+            break;                       \
+        default:                         \
+            break;                       \
+        }                                \
+    } while (0)
 
 #define I2C_CLK_PIN GPIO_PIN_6
 #define I2C_SDA_PIN GPIO_PIN_7
@@ -104,52 +104,52 @@
 #define LED4_GPIO_CLK_ENABLE() __HAL_RCC_GPIOB_CLK_ENABLE()
 #define LED4_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
 
-#define LEDx_GPIO_CLK_ENABLE(__INDEX__, __INITSTRUCT__) \
-  do                                                    \
-  {                                                     \
-    switch (__INDEX__)                                  \
-    {                                                   \
-    case LED1:                                          \
-      LED1_GPIO_CLK_ENABLE();                           \
-      HAL_GPIO_Init(LED1_GPIO_PORT, __INITSTRUCT__);    \
-      break;                                            \
-    case LED2:                                          \
-      LED2_GPIO_CLK_ENABLE();                           \
-      HAL_GPIO_Init(LED2_GPIO_PORT, __INITSTRUCT__);    \
-      break;                                            \
-    case LED3:                                          \
-      LED3_GPIO_CLK_ENABLE();                           \
-      HAL_GPIO_Init(LED3_GPIO_PORT, __INITSTRUCT__);    \
-      break;                                            \
-    case LED4:                                          \
-      LED4_GPIO_CLK_ENABLE();                           \
-      HAL_GPIO_Init(LED4GPIO_PORT, __INITSTRUCT__);     \
-      break;                                            \
-    default:                                            \
-      break;                                            \
-    }                                                   \
-  } while (0)
+#define LEDx_GPIO_CLK_ENABLE(__INDEX__, __INITSTRUCT__)    \
+    do                                                     \
+    {                                                      \
+        switch (__INDEX__)                                 \
+        {                                                  \
+        case LED1:                                         \
+            LED1_GPIO_CLK_ENABLE();                        \
+            HAL_GPIO_Init(LED1_GPIO_PORT, __INITSTRUCT__); \
+            break;                                         \
+        case LED2:                                         \
+            LED2_GPIO_CLK_ENABLE();                        \
+            HAL_GPIO_Init(LED2_GPIO_PORT, __INITSTRUCT__); \
+            break;                                         \
+        case LED3:                                         \
+            LED3_GPIO_CLK_ENABLE();                        \
+            HAL_GPIO_Init(LED3_GPIO_PORT, __INITSTRUCT__); \
+            break;                                         \
+        case LED4:                                         \
+            LED4_GPIO_CLK_ENABLE();                        \
+            HAL_GPIO_Init(LED4GPIO_PORT, __INITSTRUCT__);  \
+            break;                                         \
+        default:                                           \
+            break;                                         \
+        }                                                  \
+    } while (0)
 #define LEDx_GPIO_CLK_DISABLE(__INDEX__) \
-  do                                     \
-  {                                      \
-    switch (__INDEX__)                   \
+    do                                   \
     {                                    \
-    case LED1:                           \
-      LED1_GPIO_CLK_DISABLE();           \
-      break;                             \
-    case LED2:                           \
-      LED2_GPIO_CLK_DISABLE();           \
-      break;                             \
-    case LED3:                           \
-      LED3_GPIO_CLK_DISABLE();           \
-      break;                             \
-    case LED4:                           \
-      LED4_GPIO_CLK_DISABLE();           \
-      break;                             \
-    default:                             \
-      break;                             \
-    }                                    \
-  } while (0)
+        switch (__INDEX__)               \
+        {                                \
+        case LED1:                       \
+            LED1_GPIO_CLK_DISABLE();     \
+            break;                       \
+        case LED2:                       \
+            LED2_GPIO_CLK_DISABLE();     \
+            break;                       \
+        case LED3:                       \
+            LED3_GPIO_CLK_DISABLE();     \
+            break;                       \
+        case LED4:                       \
+            LED4_GPIO_CLK_DISABLE();     \
+            break;                       \
+        default:                         \
+            break;                       \
+        }                                \
+    } while (0)
 
 #define I2C_CLK_PIN GPIO_PIN_6
 #define I2C_SDA_PIN GPIO_PIN_7
@@ -172,7 +172,6 @@
 #define USER_BUTTON_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
 #define USER_BUTTON_EXTI_LINE GPIO_PIN_2
 #define USER_BUTTON_EXTI_IRQn EXTI2_3_IRQn
-
 
 #else
 #error "Unsupported STM32 Family"
