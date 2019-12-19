@@ -55,12 +55,8 @@ int VL53_setup()
   status = VL53L1X_SensorInit(VL53_I2C_Address);
   status += VL53L1X_SetDistanceMode(VL53_I2C_Address, LONG_RANGE);           /* LONGE_RANGE or SHORT_RANGE */
   status += VL53L1X_SetTimingBudgetInMs(VL53_I2C_Address, SPEED_50_HZ);      /* in ms possible values [20, 50, 100, 200, 500] */
-  status += VL53L1X_SetInterMeasurementInMs(VL53_I2C_Address, SPEED_50_HZ); /* in ms, IM must be > = TB */
-//status += VL53L1X_SetDistanceThreshold(VL53_I2C_Address, 200, 200, 1, 1);
-//status += VL53L1X_SetOffset(VL53_I2C_Address,20); /* offset compensation in mm */
-  status += VL53L1X_SetROI(VL53_I2C_Address, 8, 16); /* minimum ROI 4,4 */
-//status += VL53L1X_CalibrateOffset(VL53_I2C_Address, 140, &offset); /* may take few second to perform the offset cal*/
-//status += VL53L1X_CalibrateXtalk(VL53_I2C_Address, 1000, &xtalk); /* may take few second to perform the xtalk cal */
+  status += VL53L1X_SetInterMeasurementInMs(VL53_I2C_Address, SPEED_50_HZ);  /* in ms, IM must be > = TB */
+  status += VL53L1X_SetROI(VL53_I2C_Address, 8, 16);                         /* minimum ROI 4x4, maximum ROI 16x16 */
     
     #ifdef debug
     if (status == 0) UART_PutStr((uint8_t *)"Setup complete\r\n");
