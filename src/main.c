@@ -8,6 +8,9 @@
 #include "VL53L1X_api.h"
 #include "VL53L1X_calibration.h"
 
+// Disable i2c to prevent this fucking shit from crashing on the last day before the Xmas vacation.
+#define ENABLE_I2C 0
+
 #define CALIPILE_0_ADDR (0x0C<<1)
 #define CALIPILE_1_ADDR (0x0D<<1)
 #define CALIPILE_LOWPASS1 11
@@ -59,8 +62,10 @@ int main(void)
   HAL_Init();
   initLeds();
   UART_Init();
+  #if (ENABLE_I2C)
   I2C_Init();
   calipile_init(&sensor0);
+  #endif   /* ENABLE_I2C */
   UART_clearScreen();
   UART_PutStr("motion\n");
 
@@ -68,11 +73,13 @@ int main(void)
 
   while (1)
   {
+    #if (ENABLE_I2C)
     int16_t motion = 0;
     motion = calipile_getTPMotion(&sensor0);
     UART_PutInt(motion);
     UART_PutStr("\n");
-   // HAL_GPIO_TogglePin(LED1_GPIO_PORT, LED1_PIN);
-    HAL_Delay(10);
+    #endif  /* ENABLE_I2C */
+    HAL_GPIO_TogglePin(LED1_GPIO_PORT, LED1_PIN);
+    HAL_Delay(100);
   }
 }
