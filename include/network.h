@@ -27,9 +27,8 @@ typedef enum{
 
 } network_timing_protocol_t;
 
-network_timing_protocol_t current_timing_protocol = INITIAL_NETWORK_TIMING_PROTOCOL;
-
+// This function is called when someone passes the door.
 void on_passing();
-
+void FooBar();
 
 #endif /* __NETWORK_H */

@@ -2,6 +2,7 @@
 #include "board_definitions.h"
 #include "hardware_functions.h"
 #include "error_handling.h"
+#include "network.h"
 #include "calipile_discovery.h"
 #include "VL53L1_platform.h"
 #include "VL53L1X_api.h"
@@ -63,13 +64,15 @@ int main(void)
   UART_clearScreen();
   UART_PutStr("motion\n");
 
+ // FooBar();
+
   while (1)
   {
     int16_t motion = 0;
     motion = calipile_getTPMotion(&sensor0);
     UART_PutInt(motion);
     UART_PutStr("\n");
-    HAL_GPIO_TogglePin(LED1_GPIO_PORT, LED1_PIN);
+   // HAL_GPIO_TogglePin(LED1_GPIO_PORT, LED1_PIN);
     HAL_Delay(10);
   }
 }

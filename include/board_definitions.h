@@ -81,6 +81,7 @@
 #include "stm32l0xx_hal_gpio.h"
 #include "stm32l0xx_hal_uart.h"
 #include "stm32l0xx_hal_i2c.h"
+#include "stm32l0xx_hal_tim.h"
 
 #define LEDn 4
 
@@ -172,7 +173,6 @@
 #define USER_BUTTON_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
 #define USER_BUTTON_EXTI_LINE GPIO_PIN_2
 #define USER_BUTTON_EXTI_IRQn EXTI2_3_IRQn
-
 
 #else
 #error "Unsupported STM32 Family"
