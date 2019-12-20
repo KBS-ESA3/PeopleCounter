@@ -58,18 +58,20 @@ int main(void)
   HAL_Init();
   initLeds();
   UART_Init();
-  I2C_Init();
-  calipile_init(&sensor0);
-  UART_clearScreen();
-  UART_PutStr("motion\n");
+  
+UART_clearScreen();
+  UART_PutStr("lora test\r\n");
 
   while (1)
   {
-    int16_t motion = 0;
-    motion = calipile_getTPMotion(&sensor0);
-    UART_PutInt(motion);
-    UART_PutStr("\n");
-    HAL_GPIO_TogglePin(LED1_GPIO_PORT, LED1_PIN);
-    HAL_Delay(10);
+    uint8_t buffer[] = "tetten!";
+    #ifdef RECIEVER
+    
+    #endif
+    #ifndef RECIEVER
+      UART_PutStr("sent\r\n");
+      HAL_Delay(1000);
+    #endif
+
   }
 }

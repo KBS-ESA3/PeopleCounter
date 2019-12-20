@@ -1,6 +1,9 @@
 #ifndef __BOARD_DEFINITIONS_H
 #define __BOARD_DEFINITIONS_H
-#include "stdint.h"
+#include <string.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 #if DISCO_BOARD
 #include "stm32f0xx_hal.h"
@@ -54,8 +57,8 @@
     }                                    \
   } while (0)
 
-#define I2C_CLK_PIN GPIO_PIN_6
-#define I2C_SDA_PIN GPIO_PIN_7
+#define I2C_CLK_PIN GPIO_PIN_8
+#define I2C_SDA_PIN GPIO_PIN_9
 #define I2C_GPIO_PORT GPIOB
 #define I2C_GPIO_CLK_ENABLE() __HAL_RCC_GPIOB_CLK_ENABLE()
 #define I2C_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
@@ -151,8 +154,8 @@
     }                                    \
   } while (0)
 
-#define I2C_CLK_PIN GPIO_PIN_6
-#define I2C_SDA_PIN GPIO_PIN_7
+#define I2C_CLK_PIN GPIO_PIN_8
+#define I2C_SDA_PIN GPIO_PIN_9
 #define I2C_GPIO_PORT GPIOB
 #define I2C_GPIO_CLK_ENABLE() __HAL_RCC_GPIOB_CLK_ENABLE()
 #define I2C_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
