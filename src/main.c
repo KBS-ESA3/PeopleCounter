@@ -16,6 +16,10 @@
 Calipile sensor0 = {CALIPILE_0_ADDR, 11, 8, 10, 50, 10, 10, 0x00, 0x08, 0x01, 0x00, 0, 0};
 Calipile sensor1 = {CALIPILE_1_ADDR, 11, 8, 10, 50, 10, 10, 0x00, 0x08, 0x01, 0x00, 0, 0};
 
+// Global variables
+
+uint16_t PeopleCount = 0;
+
 
 int main(void)
 {
@@ -26,11 +30,11 @@ int main(void)
   I2C_Init();
   calipile_init(&sensor0);
   //UART_clearScreen();
-  VL53_setup();
+  VL53_Setup();
 
   while (1)
   {
-    VL53_PeopleCount();
+    start_couting();
   }
 }
 

@@ -1,4 +1,5 @@
 #include "hardware_functions.h"
+#include "stdio.h"
 
 UART_HandleTypeDef UART_Handler;
 I2C_HandleTypeDef I2C_Handler;
@@ -85,12 +86,6 @@ void UART_Init()
     HAL_UART_Init(&UART_Handler);
 }
 
-void UART_Hello(void)
-{
-    uint8_t message[] = "hello\n\r";
-    HAL_UART_Transmit(&UART_Handler, message, sizeof(message), HAL_UART_TIMEOUT_VALUE);
-}
-
 void UART_PutStr(uint8_t *message)
 {
     uint8_t size = 0;
@@ -101,14 +96,14 @@ void UART_PutStr(uint8_t *message)
 
 void UART_Putc(uint8_t c)
 {
-    HAL_UART_Transmit(&UART_Handler, c, 1, HAL_UART_TIMEOUT_VALUE);
+    HAL_UART_Transmit(&UART_Handler, (uint8_t *)c, 1, HAL_UART_TIMEOUT_VALUE);
 }
 
 void UART_PutInt(uint32_t val)
 {
     uint8_t message[UART_INT_BUFFER];
     uint8_t size = 0;
-    itoa(val,message,10);    
+    sprintf((char *)message, "%ld\r\n", val);
     while (message[size] != '\0')
         size++;
     HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);

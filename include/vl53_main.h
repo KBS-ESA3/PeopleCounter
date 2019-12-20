@@ -12,18 +12,19 @@
 #include "VL53L1X_calibration.h"
 
 // Functions
-int VL53_setup();
-void VL53_get_distance();
-int VL53_PeopleCount();
-int ProcessPeopleCountingData(int16_t Distance, uint8_t zone);
+int VL53_Setup();
+int start_couting();
+int CountingAlgorithm(int16_t Distance, uint8_t zone);
+#ifdef debug
 void display_peoplecounter(int peoplecounter);
+void display_zones();
+#endif
 
 // Defines
 #define NOBODY 0
 #define SOMEONE 1
-#define LEFT 0
-#define RIGHT 1
 #define SPEED_50_HZ 20 // 20ms time budget means 1/0.02 = 50 Hz
+#define SPAD_CENTERS {167, 231}
 
 #define DIST_THRESHOLD_MAX  1780
 #define LONG_RANGE 2 

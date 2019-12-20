@@ -12,7 +12,6 @@ void toggleLed(uint8_t led);
 
 void UART_Init();
 void UART_clearScreen(void);
-void UART_Hello(void);
 void UART_Putc(uint8_t c);
 void UART_PutStr(uint8_t* message);
 void UART_PutInt(uint32_t val);
