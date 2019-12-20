@@ -104,7 +104,7 @@ int main(void)
         // UART_PutStr(" ");
         // UART_PutInt(objectDifDif);
         // UART_PutStr(" ");
-        UART_PutInt(objectDif1);
+        // UART_PutInt(objectDif1);
         // UART_PutStr(" ");
         // UART_PutInt(object);
         // UART_PutStr(" ");
@@ -115,8 +115,30 @@ int main(void)
         //UART_PutInt(object);
         UART_PutStr("\n");
 
+        if((step == 0 || step == 1) && objectDif1 > 20){
+            if(objectDif1 > topPeak){
+                topPeak = objectDif1;
+            }
+            step = 1; 
+        }
+        if((step == 1 || step == 2) && objectDif1 < -20){
+            if(objectDif1 < botPeak){
+                botPeak = objectDif1;
+            }
+            step = 2;
+        }
+        if(step == 2 && objectDif1 > -20){
+            if(topPeak > (botPeak * -1)){
+                people++;
+            }else{
+                people--;
+            }
+            step = 0;
+            topPeak = 0;
+            botPeak = 0;
+        }
         
-        //UART_PutInt(people);
+        UART_PutInt(people);
 
         HAL_GPIO_TogglePin(LED1_GPIO_PORT, LED1_PIN);
         HAL_Delay(25);
