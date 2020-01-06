@@ -63,7 +63,6 @@ int main(void)
     UART_PutStr("motion\n");
     // int16_t motion = 0;
     int16_t object = 0;
-    // int16_t height = 0;
     int16_t objectOld = 0;
     int16_t objectDif = 0;
     int16_t objectDifOld = 0;
@@ -72,7 +71,6 @@ int main(void)
     int16_t botPeak = 0;
 
     int16_t object1 = 0;
-    // int16_t height = 0;
     int16_t objectOld1 = 0;
     int16_t objectDif1 = 0;
     int16_t objectDifOld1 = 0;
@@ -115,19 +113,19 @@ int main(void)
         //UART_PutInt(object);
         UART_PutStr("\n");
 
-        if((step == 0 || step == 1) && objectDif1 > 20){
-            if(objectDif1 > topPeak){
-                topPeak = objectDif1;
+        if((step == 0 || step == 1) && objectDif > 20){
+            if(objectDif > topPeak){
+                topPeak = objectDif;
             }
             step = 1; 
         }
-        if((step == 1 || step == 2) && objectDif1 < -20){
-            if(objectDif1 < botPeak){
-                botPeak = objectDif1;
+        if((step == 1 || step == 2) && objectDif < -20){
+            if(objectDif < botPeak){
+                botPeak = objectDif;
             }
             step = 2;
         }
-        if(step == 2 && objectDif1 > -20){
+        if(step == 2 && objectDif > -20){
             if(topPeak > (botPeak * -1)){
                 people++;
             }else{
@@ -138,7 +136,8 @@ int main(void)
             botPeak = 0;
         }
         
-        UART_PutInt(people);
+        //UART_PutInt(people);
+        UART_PutInt(objectDif);
 
         HAL_GPIO_TogglePin(LED1_GPIO_PORT, LED1_PIN);
         HAL_Delay(25);
