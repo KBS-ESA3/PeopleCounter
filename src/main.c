@@ -7,13 +7,10 @@
 
 int main(void)
 {
-    uint8_t testLora[] = {'c'};
-
     HAL_Init();
     UART_Init();
     HW_SPI_Init();
     LoRa_Tx_Init();
-
 
     while (1)
     {
@@ -21,6 +18,6 @@ int main(void)
         UART_PrintStr("Test\n");
         HAL_Delay(1000);
 
-        SX1276Send((uint8_t*)testLora, 1);
+        LoRa_Send_String((uint8_t*)"Test via LoRa");
     }
 }
