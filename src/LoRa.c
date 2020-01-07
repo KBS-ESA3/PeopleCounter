@@ -138,9 +138,8 @@ void SX1276_Send(uint8_t *buffer, uint8_t size)
 
     // Set TX Mode
     SX1276_Write(REG_LR_OPMODE, (SX1276_Read(REG_LR_OPMODE) & RFLR_OPMODE_MASK) | RFLR_OPMODE_TRANSMITTER);
-    // Polling if TX is done
-    while ((SX1276_Read(REG_LR_IRQFLAGS) & RFLR_IRQFLAGS_TXDONE) == 0)
-        ;
+    // Polling if TX is done. Never stays in the while
+    while ((SX1276_Read(REG_LR_IRQFLAGS) & RFLR_IRQFLAGS_TXDONE) == 0);
 }
 
 void LoRa_Send_String(uint8_t *textToSend)
