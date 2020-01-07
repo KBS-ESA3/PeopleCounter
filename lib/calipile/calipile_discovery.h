@@ -50,19 +50,19 @@ typedef struct{
 	objectIntDir,
 	timInt;
 	uint16_t objectTrshld;
-} Calipile;
+} calipile_t;
 
 // ----------------------------------------------------------------------------
 // Function prototypes
 // ----------------------------------------------------------------------------
 void calipile_generalCall(void);
-uint8_t calipile_ReadData(Calipile *sensor, uint8_t regAdress);
-void calipile_writeData(Calipile *sensor, uint8_t reg, uint8_t val);
-uint32_t calipile_getTPObject(Calipile *sensor);
-void calipile_init(Calipile *sensor);
-int16_t calipile_getTPMotion(Calipile *sensor);
-int16_t calipile_getTPPresence(Calipile *sensor);
-uint32_t calipile_getLP1(Calipile *sensor);
+uint8_t calipile_ReadData(calipile_t *sensor, uint8_t regAdress);
+void calipile_writeData(calipile_t *sensor, uint8_t reg, uint8_t val);
+uint32_t calipile_getTPObject(calipile_t *sensor);
+void calipile_init(calipile_t *sensor);
+int16_t calipile_getTPMotion(calipile_t *sensor);
+int16_t calipile_getTPPresence(calipile_t *sensor);
+uint32_t calipile_getLP1(calipile_t *sensor);
 
 #endif /* _CALIPILE_DISCOVERY_H_ */
 

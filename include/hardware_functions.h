@@ -6,6 +6,12 @@
 
 #define UART_INT_BUFFER 10
 #define print UART_PutStr
+#define UART_BAUD_RATE 9600
+//#define UART_BAUD_RATE 115200
+#define ITOA_DECIMAL 10
+
+UART_HandleTypeDef UART_Handler;
+I2C_HandleTypeDef I2C_Handler;
 
 void initLeds(void);
 void toggleLed(uint8_t led);
@@ -15,6 +21,7 @@ void UART_clearScreen(void);
 void UART_Putc(uint8_t c);
 void UART_PutStr(uint8_t* message);
 void UART_PutInt(uint32_t val);
+uint8_t Get_Strlen(char *string);
 
 void I2C_Init();
 void I2C_Write(uint8_t adress, uint8_t* data,uint8_t size);
