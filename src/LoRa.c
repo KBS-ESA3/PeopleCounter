@@ -141,7 +141,7 @@ void SX1276_Send(uint8_t *buffer, uint8_t size)
     // Polling if TX is done. Never stays in the while
     while ((SX1276_Read(REG_LR_IRQFLAGS) & RFLR_IRQFLAGS_TXDONE) == 0);
 
-    // set back to sleep mode
+    // Set to sleep mode
     SX1276_Write(REG_LR_OPMODE, (SX1276_Read(REG_LR_OPMODE) & RFLR_OPMODE_MASK) | RFLR_OPMODE_SLEEP);
 }
 
