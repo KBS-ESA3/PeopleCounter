@@ -1,2 +1,8 @@
 .pioenvs
 .piolibdeps
+*/*
+.pio/*
+*.*
+!*.c
+!*.h
+!platformio.ini
