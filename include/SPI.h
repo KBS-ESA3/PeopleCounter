@@ -12,5 +12,4 @@ static uint32_t SpiFrequency(uint32_t hz);
 void HW_GPIO_Init(GPIO_TypeDef *port, uint16_t GPIO_Pin, GPIO_InitTypeDef *initStruct);
 void Error_Handler(void);
 
-
 #endif /* SPI_H */

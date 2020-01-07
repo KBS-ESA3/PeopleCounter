@@ -121,7 +121,7 @@ void UART_clearScreen(void)
 uint8_t Get_Strlen(char *string)
 {
     uint8_t size = 0;
-    for (uint8_t i = 0; string[i] != '\0'; i++) // Get the size of bufferArray
+    for (uint8_t i = 0; string[i] != '\0'; i++) // Get the size of string
     {
         size++;
     }

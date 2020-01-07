@@ -3,20 +3,13 @@
 
 #include <stdint.h>
 
-// LoRa
 void LoRa_Tx_Init(void);
 void Set_Frequency_LoRa(void);
 
-void SX1276Write(uint16_t addr, uint8_t data);
-uint8_t SX1276Read(uint16_t addr);
-void SX1276WriteBuffer(uint16_t addr, uint8_t *buffer, uint8_t size);
-void SX1276ReadBuffer(uint16_t addr, uint8_t *buffer, uint8_t size);
-void SX1276WriteFifo(uint8_t *buffer, uint8_t size); 
-void SX1276ReadFifo(uint8_t *buffer, uint8_t size);
-void SX1276SetOpMode(uint8_t opMode);
+void SX1276Write(uint16_t addr, uint8_t data); // Write to SX1276 register
+uint8_t SX1276Read(uint16_t addr); // Read from SX1276 register
+void SX1276SetOpMode(uint8_t opMode); // set Op mode SX1276
 
-// Radio Send
-void SX1276Send(uint8_t *buffer, uint8_t size);
-void LoRa_Send_String(uint8_t *textToSend);
+void LoRa_Send_String(uint8_t *textToSend); // Send string via LoRa
 
 #endif /* LORA_H */

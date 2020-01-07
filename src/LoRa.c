@@ -5,6 +5,12 @@
 #include "mlm32l0xx_hw_conf.h"
 #include "hardware_functions.h"
 
+void SX1276WriteBuffer(uint16_t addr, uint8_t *buffer, uint8_t size);
+void SX1276ReadBuffer(uint16_t addr, uint8_t *buffer, uint8_t size);
+void SX1276WriteFifo(uint8_t *buffer, uint8_t size); 
+void SX1276ReadFifo(uint8_t *buffer, uint8_t size);
+void SX1276Send(uint8_t *buffer, uint8_t size); // Send data via LoRa
+
 #define FREQ_STEP_8 15625
 #define FREQUENCY_LORA 868000000
 

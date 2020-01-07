@@ -68,13 +68,13 @@ uint16_t HW_SPI_InOut(uint16_t txData)
 static uint32_t SpiFrequency(uint32_t hz)
 {
   uint32_t divisor = 0;
-  uint32_t SysClkTmp = SystemCoreClock;
+  uint32_t system_clock_temp = SystemCoreClock;
   uint32_t baudRate;
 
-  while (SysClkTmp > hz)
+  while (system_clock_temp > hz)
   {
     divisor++;
-    SysClkTmp = (SysClkTmp >> 1);
+    system_clock_temp = (system_clock_temp >> 1);
 
     if (divisor >= 7)
     {
