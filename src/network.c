@@ -8,7 +8,6 @@ TIM_HandleTypeDef timer_inactive;
 TIM_HandleTypeDef timer_continuous;
 
 // function prototype.
-void network_send_people_count();
 void initialise_inactive_timer();
 void initialise_continuous_timer();
 void enable_inactive_timer();

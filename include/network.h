@@ -31,6 +31,7 @@ typedef enum{
 void on_passing();
 void change_network_timing_protocol(network_timing_protocol_t change_to);
 void disable_inactive_timer();
+void network_send_people_count();
 
 
 #endif /* __NETWORK_H */
