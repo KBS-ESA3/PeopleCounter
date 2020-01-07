@@ -173,7 +173,6 @@
 #define USER_BUTTON_EXTI_LINE GPIO_PIN_2
 #define USER_BUTTON_EXTI_IRQn EXTI2_3_IRQn
 
-
 #else
 #error "Unsupported STM32 Family"
 #endif

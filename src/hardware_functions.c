@@ -105,7 +105,7 @@ void UART_PutInt(uint32_t val)
     while (message[size] != '\0')
     {
         size++;
-    }        
+    }
     HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
 }
 
@@ -116,6 +116,17 @@ void UART_clearScreen(void)
 
     UART_PutStr(cmd1);
     UART_PutStr(cmd2);
+}
+
+uint8_t Get_Strlen(char *string)
+{
+    uint8_t size = 0;
+    for (uint8_t i = 0; string[i] != '\0'; i++) // Get the size of string
+    {
+        size++;
+    }
+
+    return size;
 }
 
 void I2C_Init()
@@ -177,4 +188,3 @@ void I2C_ReadRegister16(uint8_t adress, uint16_t regg, uint8_t *destination, uin
 {
     HAL_I2C_Mem_Read(&I2C_Handler, adress, regg, 2, destination, size, HAL_MAX_DELAY);
 }
-
