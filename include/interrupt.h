@@ -1,5 +1,7 @@
-#ifndef __STM32L0xx_IT_H
-#define __STM32L0xx_IT_H
+#ifndef __INTERRUPT_H
+#define __INTERRUPT_H
+
+#include "board_definitions.h"
 
 void SysTick_Handler(void);
 void EXTI0_1_IRQHandler(void);
