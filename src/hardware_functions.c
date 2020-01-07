@@ -1,6 +1,6 @@
 #include "hardware_functions.h"
 
-void initLeds(void)
+void init_Leds(void)
 {
 
     LED1_GPIO_CLK_ENABLE();
@@ -25,19 +25,18 @@ void initLeds(void)
 #endif
 }
 
-void initButton(void)
+void init_Button(void)
 {
     USER_BUTTON_GPIO_CLK_ENABLE();
     GPIO_InitTypeDef GPIO_InitStruct;
     GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
     GPIO_InitStruct.Pull = GPIO_PULLDOWN;
     GPIO_InitStruct.Pin = USER_BUTTON_PIN;
-    HAL_GPIO_Init(USER_BUTTON_GPIO_PORT,&GPIO_InitStruct);
+    HAL_GPIO_Init(USER_BUTTON_GPIO_PORT, &GPIO_InitStruct);
     HAL_NVIC_EnableIRQ(USER_BUTTON_EXTI_IRQn);
-    
 }
 
-void toggleLed(uint8_t led)
+void toggle_Led(uint8_t led)
 {
     char message[] = "ledx is not available on this board!\n\n";
     switch (led)
@@ -64,9 +63,9 @@ void toggleLed(uint8_t led)
     }
 }
 
-void setLed(uint8_t led,uint8_t state)
+void set_Led(uint8_t led, uint8_t state)
 {
-        char message[] = "ledx is not available on this board!\n\n";
+    char message[] = "ledx is not available on this board!\n\n";
     switch (led)
     {
 
@@ -228,20 +227,20 @@ void I2C_ReadRegister16(uint8_t adress, uint16_t regg, uint8_t *destination, uin
     HAL_I2C_Mem_Read(&I2C_Handler, adress, regg, 2, destination, size, HAL_MAX_DELAY);
 }
 
-void powerSleep()
+void power_Sleep()
 {
-    setLed(LED1,LED_OFF);
-    HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON,PWR_SLEEPENTRY_WFI);
+    set_Led(LED1, LED_OFF);
+    HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
 }
 
-void powerDeepSleep()
+void power_Deepsleep()
 {
-    setLed(LED1,LED_OFF);
-    HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON,PWR_STOPENTRY_WFI);
+    set_Led(LED1, LED_OFF);
+    HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 }
 
-void powerOff()
+void power_Off()
 {
-    setLed(LED1,LED_OFF);
+    set_Led(LED1, LED_OFF);
     HAL_PWR_EnterSTANDBYMode();
 }

@@ -56,16 +56,16 @@ calipile_t sensor1 = {
 int main(void)
 {
   HAL_Init();
-  initLeds();
+  init_Leds();
   UART_Init();
-  initButton();
+  init_Button();
   UART_clearScreen();
   UART_PutStr("interrupt test\r\n");
 
   while (1)
   {
-    powerDeepSleep();
+    power_Deepsleep();
     HAL_Delay(1000);
-    toggleLed(LED1);
+    toggle_Led(LED1);
   }
 }

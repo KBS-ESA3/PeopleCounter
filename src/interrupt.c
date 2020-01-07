@@ -14,10 +14,10 @@ void USER_BUTTON_IT_HANDLER(void)
 {
     if (__HAL_GPIO_EXTI_GET_FLAG(USER_BUTTON_PIN))
     {
-        toggleLed(LED2);
+        toggle_Led(LED2);
         UART_PutStr("Can't touch this!\r\n");
-    }    
-    HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN);//let HAL clear the pending interrupt
+    }
+    HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN); //let HAL clear the pending interrupt
 }
 
 /**
@@ -25,7 +25,7 @@ void USER_BUTTON_IT_HANDLER(void)
   */
 void CALIPILE_INTERRUPT_HANDLER(void)
 {
- //TODO nog implementeren
+    //TODO nog implementeren
 }
 
 /******************************************************************************/
@@ -37,7 +37,7 @@ void CALIPILE_INTERRUPT_HANDLER(void)
   */
 void SysTick_Handler(void)
 {
-    setLed(LED1,LED_ON);
+    set_Led(LED1, LED_ON);
     HAL_IncTick();
 }
 
@@ -78,4 +78,3 @@ void EXTI4_15_IRQHandler()
     //handlers wich use EXTI4_15 on lora board
 #endif
 }
-
