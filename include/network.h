@@ -4,7 +4,7 @@
 // The number of times per day that the people_count needs to be send.
 #define CONSTANT_LORA_FREQUENCY 140
 
-// The number of seconds after which inactivity the number of people will be send.
+// The number of seconds after which inactivity the number of people will be send.          -- THIS VARIABLETY IS NOT IMPLEMENTED YET
 #define PASSING_INACTIVE_TIME 30
 
 #define INITIAL_NETWORK_TIMING_PROTOCOL SEND_EVERY_PASSAGE;
@@ -29,6 +29,8 @@ typedef enum{
 
 // This function is called when someone passes the door.
 void on_passing();
-void FooBar();
+void change_network_timing_protocol(network_timing_protocol_t change_to);
+void disable_inactive_timer();
+
 
 #endif /* __NETWORK_H */

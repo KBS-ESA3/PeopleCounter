@@ -62,15 +62,15 @@ int main(void)
   HAL_Init();
   initLeds();
   UART_Init();
+
   #if (ENABLE_I2C)
   I2C_Init();
   calipile_init(&sensor0);
   #endif   /* ENABLE_I2C */
+
   UART_clearScreen();
   UART_PutStr("motion\n");
-
- // FooBar();
-
+  
   while (1)
   {
     #if (ENABLE_I2C)
