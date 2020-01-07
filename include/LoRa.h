@@ -1,7 +1,9 @@
 #ifndef LORA_H
 #define LORA_H
 
-#include <stdint.h>
+#include "board_definitions.h"
+#include "hardware_functions.h"
+#include "SPI.h"
 
 void LoRa_Tx_Init(void);
 void Set_Frequency_LoRa(void);

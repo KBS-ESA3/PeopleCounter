@@ -25,6 +25,18 @@ void initLeds(void)
 #endif
 }
 
+void initButton(void)
+{
+    USER_BUTTON_GPIO_CLK_ENABLE();
+    GPIO_InitTypeDef GPIO_InitStruct;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    GPIO_InitStruct.Pin = USER_BUTTON_PIN;
+    HAL_GPIO_Init(USER_BUTTON_GPIO_PORT,&GPIO_InitStruct);
+    HAL_NVIC_EnableIRQ(USER_BUTTON_EXTI_IRQn);
+    
+}
+
 void toggleLed(uint8_t led)
 {
     char message[] = "ledx is not available on this board!\n\n";
@@ -43,6 +55,33 @@ void toggleLed(uint8_t led)
         break;
     case 4:
         HAL_GPIO_TogglePin(LED4_GPIO_PORT, LED4_PIN);
+        break;
+#endif
+    default:
+        message[3] = led;
+        sendWarning(message);
+        break;
+    }
+}
+
+void setLed(uint8_t led,uint8_t state)
+{
+        char message[] = "ledx is not available on this board!\n\n";
+    switch (led)
+    {
+
+    case 1:
+        HAL_GPIO_WritePin(LED1_GPIO_PORT, LED1_PIN, state);
+        break;
+    case 2:
+        HAL_GPIO_WritePin(LED2_GPIO_PORT, LED2_PIN, state);
+        break;
+#ifdef LORA_BOARD
+    case 3:
+        HAL_GPIO_WritePin(LED3_GPIO_PORT, LED3_PIN, state);
+        break;
+    case 4:
+        HAL_GPIO_WritePin(LED4_GPIO_PORT, LED4_PIN, state);
         break;
 #endif
     default:
@@ -187,4 +226,22 @@ void I2C_ReadRegister8(uint8_t adress, uint8_t regg, uint8_t *destination, uint8
 void I2C_ReadRegister16(uint8_t adress, uint16_t regg, uint8_t *destination, uint8_t size)
 {
     HAL_I2C_Mem_Read(&I2C_Handler, adress, regg, 2, destination, size, HAL_MAX_DELAY);
+}
+
+void powerSleep()
+{
+    setLed(LED1,LED_OFF);
+    HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON,PWR_SLEEPENTRY_WFI);
+}
+
+void powerDeepSleep()
+{
+    setLed(LED1,LED_OFF);
+    HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON,PWR_STOPENTRY_WFI);
+}
+
+void powerOff()
+{
+    setLed(LED1,LED_OFF);
+    HAL_PWR_EnterSTANDBYMode();
 }

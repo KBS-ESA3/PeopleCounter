@@ -1,9 +1,6 @@
 #include "LoRa.h"
-#include "SPI.h"
-#include "stm32l0xx_hal.h"
 #include "sx1276Regs-LoRa.h"
 #include "mlm32l0xx_hw_conf.h"
-#include "hardware_functions.h"
 
 void SX1276_Write_Buffer(uint16_t addr, uint8_t *buffer, uint8_t size);
 void SX1276_Read_Buffer(uint16_t addr, uint8_t *buffer, uint8_t size);

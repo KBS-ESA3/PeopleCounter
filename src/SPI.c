@@ -1,6 +1,6 @@
 #include "SPI.h"
 #include "sx1276Regs-LoRa.h"
-#include "board_definitions.h"
+#include "mlm32l0xx_hw_conf.h"
 
 SPI_HandleTypeDef hspi;
 
@@ -39,7 +39,7 @@ void HW_SPI_IoInit(void)
 
   initStruct.Mode = GPIO_MODE_AF_PP;
   initStruct.Pull = GPIO_NOPULL;
-  initStruct.Speed = GPIO_SPEED_HIGH;
+  initStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   initStruct.Alternate = SPI1_AF;
 
   HW_GPIO_Init(RADIO_SCLK_PORT, RADIO_SCLK_PIN, &initStruct);

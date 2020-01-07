@@ -1,9 +1,8 @@
-#include <stdlib.h>
+#include "board_definitions.h"
+#include "hardware_functions.h"
 #include "SPI.h"
 #include "LoRa.h"
 #include "interrupt.h"
-#include "board_definitions.h"
-#include "hardware_functions.h"
 #include "error_handling.h"
 #include "calipile_discovery.h"
 #include "VL53L1_platform.h"
@@ -59,20 +58,14 @@ int main(void)
   HAL_Init();
   initLeds();
   UART_Init();
-  
-UART_clearScreen();
-  UART_PutStr("lora test\r\n");
+  initButton();
+  UART_clearScreen();
+  UART_PutStr("interrupt test\r\n");
 
   while (1)
   {
-    uint8_t buffer[] = "tetten!";
-    #ifdef RECIEVER
-    
-    #endif
-    #ifndef RECIEVER
-      UART_PutStr("sent\r\n");
-      HAL_Delay(1000);
-    #endif
-
+    powerDeepSleep();
+    HAL_Delay(1000);
+    toggleLed(LED1);
   }
 }
