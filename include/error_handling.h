@@ -4,7 +4,6 @@
 #include "board_definitions.h"
 #include "hardware_functions.h"
 
-void sendWarning(char* message);
+void sendWarning(char *message);
 
 #endif /* __ERROR_HANDLING_H */
-

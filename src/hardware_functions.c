@@ -105,7 +105,7 @@ void UART_PutInt(uint32_t val)
     while (message[size] != '\0')
     {
         size++;
-    }        
+    }
     HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
 }
 
@@ -188,4 +188,3 @@ void I2C_ReadRegister16(uint8_t adress, uint16_t regg, uint8_t *destination, uin
 {
     HAL_I2C_Mem_Read(&I2C_Handler, adress, regg, 2, destination, size, HAL_MAX_DELAY);
 }
-
