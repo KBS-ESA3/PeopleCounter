@@ -1,6 +1,7 @@
 /************************************
  *         Main source file         *
  ************************************/
+
 // Includes
 #include "board_definitions.h"
 #include "hardware_functions.h"
@@ -17,9 +18,7 @@ Calipile sensor0 = {CALIPILE_0_ADDR, 11, 8, 10, 50, 10, 10, 0x00, 0x08, 0x01, 0x
 Calipile sensor1 = {CALIPILE_1_ADDR, 11, 8, 10, 50, 10, 10, 0x00, 0x08, 0x01, 0x00, 0, 0};
 
 // Global variables
-
-uint16_t PeopleCount = 0;
-
+int16_t PeopleCount = 0;  // Should never be less than 0
 
 int main(void)
 {
@@ -29,12 +28,12 @@ int main(void)
   UART_Init();
   I2C_Init();
   calipile_init(&sensor0);
-  //UART_clearScreen();
+  //UART_clearScreen(); // Not needed with bluetooth debugging
   VL53_Setup();
 
   while (1)
   {
-    start_couting();
+    start_measuring();
   }
 }
 
