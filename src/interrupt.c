@@ -12,20 +12,12 @@
   */
 void USER_BUTTON_IT_HANDLER(void)
 {
-    if (__HAL_GPIO_EXTI_GET_FLAG(USER_BUTTON_PIN))
-    {
-        toggle_Led(LED2);
-        UART_PutStr("Can't touch this!\r\n");
-    }
-    HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN); //let HAL clear the pending interrupt
-}
-
-/**
-  * @brief handler for calipile interrupt pin.
-  */
-void CALIPILE_INTERRUPT_HANDLER(void)
-{
-    //TODO nog implementeren
+  if (__HAL_GPIO_EXTI_GET_FLAG(USER_BUTTON_PIN))
+  {
+    toggle_Led(LED2);//toggle led to test interrupt
+    LoRa_Send_String((uint8_t *)"button press!\r\n"); // send via LoRa
+  }
+  HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN); //Let HAL clear the pending interrupt
 }
 
 /******************************************************************************/
@@ -37,8 +29,8 @@ void CALIPILE_INTERRUPT_HANDLER(void)
   */
 void SysTick_Handler(void)
 {
-    set_Led(LED1, LED_ON);
-    HAL_IncTick();
+  set_Led(LED1, LED_ON);//turn led on to show systick is running
+  HAL_IncTick();
 }
 
 /**
@@ -47,10 +39,10 @@ void SysTick_Handler(void)
 void EXTI0_1_IRQHandler()
 {
 #ifdef DISCO_BOARD
-    //handlers wich use EXTI0_1 on discovery board
-    USER_BUTTON_IT_HANDLER();
+  //handlers wich use EXTI0_1 on discovery board
+  USER_BUTTON_IT_HANDLER();
 #else
-    //handlers wich use EXTI0_1 on lora board
+  //handlers wich use EXTI0_1 on lora board
 #endif
 }
 
@@ -60,10 +52,10 @@ void EXTI0_1_IRQHandler()
 void EXTI2_3_IRQHandler()
 {
 #ifdef DISCO_BOARD
-    //handlers wich use EXTI2_3 on discovery board
+  //handlers wich use EXTI2_3 on discovery board
 #else
-    //handlers wich use EXTI2_3 on lora board
-    USER_BUTTON_IT_HANDLER();
+  //handlers wich use EXTI2_3 on lora board
+  USER_BUTTON_IT_HANDLER();
 #endif
 }
 
@@ -73,8 +65,8 @@ void EXTI2_3_IRQHandler()
 void EXTI4_15_IRQHandler()
 {
 #ifdef DISCO_BOARD
-    //handlers wich use EXTI4_15 on discovery board
+  //handlers wich use EXTI4_15 on discovery board
 #else
-    //handlers wich use EXTI4_15 on lora board
+  //handlers wich use EXTI4_15 on lora board
 #endif
 }

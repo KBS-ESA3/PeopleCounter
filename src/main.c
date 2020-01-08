@@ -59,11 +59,15 @@ int main(void)
   init_Leds();
   UART_Init();
   init_Button();
+  HW_SPI_Init();
+  LoRa_Tx_Init();
+  
   UART_clearScreen();
   UART_PutStr("interrupt test\r\n");
 
   while (1)
   {
+    LoRa_Send_String((uint8_t *)"going to sleep\r\n"); // send via LoRa
     power_Deepsleep();
     HAL_Delay(1000);
     toggle_Led(LED1);
