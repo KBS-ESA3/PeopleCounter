@@ -12,12 +12,12 @@
   */
 void USER_BUTTON_IT_HANDLER(void)
 {
-  if (__HAL_GPIO_EXTI_GET_FLAG(USER_BUTTON_PIN))
-  {
-    toggle_Led(LED2);//toggle led to test interrupt
-    LoRa_Send_String((uint8_t *)"button press!\r\n"); // send via LoRa
-  }
-  HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN); //Let HAL clear the pending interrupt
+    if (__HAL_GPIO_EXTI_GET_FLAG(USER_BUTTON_PIN))
+    {
+        toggle_Led(LED2);   // Toggle led to test interrupt
+        LoRa_Send_String((uint8_t *)"button press!\r\n"); // Send via LoRa
+    }
+    HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN);  // Let HAL clear the pending interrupt
 }
 
 /******************************************************************************/
@@ -29,8 +29,7 @@ void USER_BUTTON_IT_HANDLER(void)
   */
 void SysTick_Handler(void)
 {
-  set_Led(LED1, LED_ON);//turn led on to show systick is running
-  HAL_IncTick();
+    HAL_IncTick();
 }
 
 /**
@@ -39,10 +38,10 @@ void SysTick_Handler(void)
 void EXTI0_1_IRQHandler()
 {
 #ifdef DISCO_BOARD
-  //handlers wich use EXTI0_1 on discovery board
-  USER_BUTTON_IT_HANDLER();
+    // Handlers which use EXTI0_1 on discovery board
+    USER_BUTTON_IT_HANDLER();
 #else
-  //handlers wich use EXTI0_1 on lora board
+    // Handlers which use EXTI0_1 on lora board
 #endif
 }
 
@@ -52,10 +51,10 @@ void EXTI0_1_IRQHandler()
 void EXTI2_3_IRQHandler()
 {
 #ifdef DISCO_BOARD
-  //handlers wich use EXTI2_3 on discovery board
+    // Handlers which use EXTI2_3 on discovery board
 #else
-  //handlers wich use EXTI2_3 on lora board
-  USER_BUTTON_IT_HANDLER();
+    // Handlers which use EXTI2_3 on lora board
+    USER_BUTTON_IT_HANDLER();
 #endif
 }
 
@@ -65,8 +64,8 @@ void EXTI2_3_IRQHandler()
 void EXTI4_15_IRQHandler()
 {
 #ifdef DISCO_BOARD
-  //handlers wich use EXTI4_15 on discovery board
+    // Handlers which use EXTI4_15 on discovery board
 #else
-  //handlers wich use EXTI4_15 on lora board
+    // Handlers which use EXTI4_15 on lora board
 #endif
 }

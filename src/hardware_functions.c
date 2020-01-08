@@ -41,7 +41,6 @@ void toggle_Led(uint8_t led)
     char message[] = "ledx is not available on this board!\n\n";
     switch (led)
     {
-
     case 1:
         HAL_GPIO_TogglePin(LED1_GPIO_PORT, LED1_PIN);
         break;
@@ -58,7 +57,7 @@ void toggle_Led(uint8_t led)
 #endif
     default:
         message[3] = led;
-        sendWarning(message);
+        send_Warning(message);
         break;
     }
 }
@@ -68,7 +67,6 @@ void set_Led(uint8_t led, uint8_t state)
     char message[] = "ledx is not available on this board!\n\n";
     switch (led)
     {
-
     case 1:
         HAL_GPIO_WritePin(LED1_GPIO_PORT, LED1_PIN, state);
         break;
@@ -85,7 +83,7 @@ void set_Led(uint8_t led, uint8_t state)
 #endif
     default:
         message[3] = led;
-        sendWarning(message);
+        send_Warning(message);
         break;
     }
 }
@@ -227,18 +225,32 @@ void I2C_ReadRegister16(uint8_t adress, uint16_t regg, uint8_t *destination, uin
     HAL_I2C_Mem_Read(&I2C_Handler, adress, regg, 2, destination, size, HAL_MAX_DELAY);
 }
 
+/**
+  * @brief Puts the microcontroller in sleep mode.
+  * Only cpu clock is stopped.
+  */
 void power_Sleep()
 {
     set_Led(LED1, LED_OFF);
     HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
 }
 
+/**
+  * @brief Puts the microcontroller in stop mode.
+  * The cpu and peripheral clocks are stopped only wakes up on external interrupts or communication interrupts.
+  */
 void power_Deepsleep()
 {
     set_Led(LED1, LED_OFF);
     HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
 }
 
+/**
+  * @brief Puts the microcontroller in standby mode.
+  * Stops the microcontroller and shuts down all peripherals.
+  * Only wakes up on wakeup pins or reset.
+  * Processor starts at beginning of main on wakeup.
+  */
 void power_Off()
 {
     set_Led(LED1, LED_OFF);
