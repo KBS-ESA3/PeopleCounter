@@ -1,6 +1,7 @@
 #include "network.h"
 #include "packet.h"
 #include "board_definitions.h"
+#include "hardware_functions.h"
 
 network_timing_protocol_t current_timing_protocol = INITIAL_NETWORK_TIMING_PROTOCOL;
 
@@ -44,6 +45,9 @@ void on_passing()
 
 void network_send_people_count()
 {
+    LoRa_packet_t packet = encode_people_count_packet();
+    UART_PutStr("size: ");
+    UART_PutInt(sizeof(packet));
     // TODO: implement the funtion that sends the followning paramter:
     // encode_people_count_packet()
 }

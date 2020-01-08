@@ -16,7 +16,6 @@
 
 #define CALIPILE_0_ADDR (0x0C << 1)
 #define CALIPILE_1_ADDR (0x0D << 1)
-=======
 
 #define CALIPILE_LOWPASS1 11
 #define CALIPILE_LOWPASS2 8
