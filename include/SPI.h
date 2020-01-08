@@ -1,9 +1,8 @@
 #ifndef SPI_H
 #define SPI_H
 
-#include <stdint.h>
-#include "mlm32l0xx_hw_conf.h"
-#include "stm32l0xx_hal.h"
+#include "board_definitions.h"
+#include "hardware_functions.h"
 
 void HW_SPI_IoInit(void);
 void HW_SPI_Init(void);

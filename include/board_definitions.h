@@ -1,6 +1,9 @@
 #ifndef __BOARD_DEFINITIONS_H
 #define __BOARD_DEFINITIONS_H
-#include "stdint.h"
+#include <string.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 #if DISCO_BOARD
 #include "stm32f0xx_hal.h"
@@ -9,6 +12,12 @@
 #include "stm32f0xx_hal_i2c.h"
 
 #define LEDn 2
+
+#define LED1 1
+#define LED2 2
+
+#define LED_OFF 0
+#define LED_ON 1
 
 #define LED1_PIN GPIO_PIN_9
 #define LED1_GPIO_PORT GPIOC
@@ -54,8 +63,8 @@
     }                                    \
   } while (0)
 
-#define I2C_CLK_PIN GPIO_PIN_6
-#define I2C_SDA_PIN GPIO_PIN_7
+#define I2C_CLK_PIN GPIO_PIN_8
+#define I2C_SDA_PIN GPIO_PIN_9
 #define I2C_GPIO_PORT GPIOB
 #define I2C_GPIO_CLK_ENABLE() __HAL_RCC_GPIOB_CLK_ENABLE()
 #define I2C_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
@@ -75,6 +84,7 @@
 #define USER_BUTTON_GPIO_CLK_DISABLE() __HAL_RCC_GPIOA_CLK_DISABLE()
 #define USER_BUTTON_EXTI_LINE GPIO_PIN_0
 #define USER_BUTTON_EXTI_IRQn EXTI0_1_IRQn
+#define USER_BUTTEN_EXTI_HANDLER() EXTI0_1_IRQHandler()
 
 #elif LORA_BOARD
 #include "stm32l0xx_hal.h"
@@ -83,6 +93,14 @@
 #include "stm32l0xx_hal_i2c.h"
 
 #define LEDn 4
+
+#define LED1 1
+#define LED2 2
+#define LED3 3
+#define LED4 4
+
+#define LED_OFF 0
+#define LED_ON 1
 
 #define LED1_PIN GPIO_PIN_5
 #define LED1_GPIO_PORT GPIOB
@@ -151,8 +169,8 @@
     }                                    \
   } while (0)
 
-#define I2C_CLK_PIN GPIO_PIN_6
-#define I2C_SDA_PIN GPIO_PIN_7
+#define I2C_CLK_PIN GPIO_PIN_8
+#define I2C_SDA_PIN GPIO_PIN_9
 #define I2C_GPIO_PORT GPIOB
 #define I2C_GPIO_CLK_ENABLE() __HAL_RCC_GPIOB_CLK_ENABLE()
 #define I2C_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
@@ -172,6 +190,7 @@
 #define USER_BUTTON_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
 #define USER_BUTTON_EXTI_LINE GPIO_PIN_2
 #define USER_BUTTON_EXTI_IRQn EXTI2_3_IRQn
+#define USER_BUTTEN_EXTI_HANDLER EXTI2_3_IRQHandler
 
 #else
 #error "Unsupported STM32 Family"

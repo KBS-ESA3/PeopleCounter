@@ -1,9 +1,8 @@
-#include <stdlib.h>
+#include "board_definitions.h"
+#include "hardware_functions.h"
 #include "SPI.h"
 #include "LoRa.h"
 #include "interrupt.h"
-#include "board_definitions.h"
-#include "hardware_functions.h"
 #include "error_handling.h"
 #include "calipile_discovery.h"
 #include "VL53L1_platform.h"
@@ -56,25 +55,21 @@ calipile_t sensor1 = {
 
 int main(void)
 {
-    HAL_Init();
-    initLeds();
-    UART_Init();
-    //I2C_Init();
-    HW_SPI_Init();
-    LoRa_Tx_Init();
-    calipile_init(&sensor0);
-    UART_clearScreen();
-    UART_PutStr("motion\n");
+  HAL_Init();
+  init_Leds();
+  UART_Init();
+  init_Button();
+  HW_SPI_Init();
+  LoRa_Tx_Init();
 
-    while (1)
-    {
-        int16_t motion = 0;
-        motion = calipile_getTPMotion(&sensor0);
-        UART_PutInt(motion);
-        UART_PutStr("\n");
-        HAL_GPIO_TogglePin(LED1_GPIO_PORT, LED1_PIN);
-        HAL_Delay(1000);
+  UART_clearScreen();
+  UART_PutStr("interrupt test\r\n");
 
-        LoRa_Send_String((uint8_t *)"Test via LoRa"); // send via LoRa
-    }
+  while (1)
+  {
+    LoRa_Send_String((uint8_t *)"going to sleep\r\n");  // Send via LoRa
+    power_Deepsleep();
+    HAL_Delay(1000);
+    toggle_Led(LED1);
+  }
 }
