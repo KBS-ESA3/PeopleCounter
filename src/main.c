@@ -1,13 +1,13 @@
-#include "board_definitions.h"
-#include "hardware_functions.h"
-#include "SPI.h"
 #include "LoRa.h"
-#include "interrupt.h"
-#include "error_handling.h"
-#include "calipile_discovery.h"
-#include "VL53L1_platform.h"
+#include "SPI.h"
 #include "VL53L1X_api.h"
 #include "VL53L1X_calibration.h"
+#include "VL53L1_platform.h"
+#include "board_definitions.h"
+#include "calipile_discovery.h"
+#include "error_handling.h"
+#include "hardware_functions.h"
+#include "interrupt.h"
 #include "network.h"
 
 #define CALIPILE_0_ADDR (0x0C << 1)
@@ -54,23 +54,20 @@ calipile_t sensor1 = {
     CALIPILE_INTTIM,
     CALIPILE_OBJTRSHLD};
 
-int main(void)
-{
-  HAL_Init();
-  init_Leds();
-  UART_Init();
-  init_Button();
-  HW_SPI_Init();
-  LoRa_Tx_Init();
+int main(void) {
+    HAL_Init();
+    init_Leds();
+    UART_Init();
+    init_Button();
+    HW_SPI_Init();
+    LoRa_Tx_Init();
 
-  UART_clearScreen();
-  UART_PutStr("interrupt test\r\n");
+    UART_clearScreen();
+    UART_PutStr("interrupt test\r\n");
 
-  while (1)
-  {
-    LoRa_Send_String((uint8_t *)"going to sleep\r\n");  // Send via LoRa
-    power_Deepsleep();
-    HAL_Delay(1000);
-    toggle_Led(LED1);
-  }
+    while (1) {
+        power_Deepsleep();
+        HAL_Delay(1000);
+        toggle_Led(LED1);
+    }
 }

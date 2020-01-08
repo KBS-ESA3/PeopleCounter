@@ -114,12 +114,12 @@ void UART_PutStr(char *message)
     {
         size++;
     }
-    HAL_UART_Transmit(&UART_Handler, (uint8_t)message, size, HAL_UART_TIMEOUT_VALUE);
+    HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
 }
 
 void UART_Putc(char c)
 {
-    HAL_UART_Transmit(&UART_Handler, (uint8_t)c, 1, HAL_UART_TIMEOUT_VALUE);
+    HAL_UART_Transmit(&UART_Handler, c, 1, HAL_UART_TIMEOUT_VALUE);
 }
 
 void UART_PutInt(uint32_t val)
@@ -131,7 +131,7 @@ void UART_PutInt(uint32_t val)
     {
         size++;
     }
-    HAL_UART_Transmit(&UART_Handler, (uint8_t)message, size, HAL_UART_TIMEOUT_VALUE);
+    HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
 }
 
 void UART_clearScreen(void)
@@ -141,6 +141,20 @@ void UART_clearScreen(void)
 
     UART_PutStr(cmd1);
     UART_PutStr(cmd2);
+}
+
+void UART_PutWord(uint16_t Word){
+    int i;
+    char result[19] = { '0','0','0','0',
+                        '0','0','0','0',
+                        '0','0','0','0',
+                        '0','0','0','0',
+                        '\n','\r','\0',};
+    
+    for(i=0; i < 16; i++){
+        result[i] = (Word & 1 << (15-i)) ? '1' : '0'; 
+    }
+    UART_PutStr(result);
 }
 
 uint8_t Get_Strlen(char *string)

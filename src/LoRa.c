@@ -155,3 +155,15 @@ void LoRa_Send_String(uint8_t *textToSend)
 #warning this board does not have lora
 #endif
 }
+
+void LoRa_Send_Word(uint16_t Word)
+{
+#ifdef LORA_BOARD
+    uint8_t to_send[] = {(Word >> 8), Word};
+
+    // temp. disabled fot debugging.    
+    //SX1276_Send((uint8_t*)to_send, 2);
+#else
+#warning this board does not have lora
+#endif
+}

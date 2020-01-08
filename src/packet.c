@@ -1,5 +1,6 @@
 #include "packet.h"
 #include "network.h"
+#include "hardware_functions.h"
 
 uint8_t people_count = 0;
 
@@ -33,4 +34,22 @@ LoRa_packet_t encode_battery_status_packet()
     packet.type = TYPE_BATTERY_STATUS;
     packet.number_of_people =  people_count;
     return packet;
+}
+
+uint16_t encode_frame(LoRa_packet_t packet){
+    uint16_t frame = 0;
+    frame |= packet.type << 8;
+    if(packet.type == TYPE_PEOPLE_COUNT){
+        frame |= packet.number_of_people;
+    } else if(packet.type  == TYPE_BATTERY_STATUS){
+        frame |= packet.battery_status;
+    }   else {
+        UART_PutStr("There was a problem encoding this frame");
+    }
+
+    return frame;
+}
+
+LoRa_packet_t decode_frame(uint16_t frame){
+    // TODO - implement this bitch.
 }

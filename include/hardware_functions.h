@@ -21,6 +21,7 @@ void UART_clearScreen(void);
 void UART_Putc(char c);
 void UART_PutStr(char *message);
 void UART_PutInt(uint32_t val);
+void UART_PutWord(uint16_t Word);
 uint8_t Get_Strlen(char *string);
 
 void I2C_Init();

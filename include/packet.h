@@ -34,5 +34,7 @@ void decrease_people_count(void);
 uint8_t get_people_count();
 LoRa_packet_t encode_people_count_packet();
 LoRa_packet_t encode_battery_status_packet();
+uint16_t encode_frame(LoRa_packet_t);
+LoRa_packet_t decode_frame(uint16_t);
 
 #endif /* __PACKET_H */
