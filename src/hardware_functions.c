@@ -114,12 +114,12 @@ void UART_PutStr(char *message)
     {
         size++;
     }
-    HAL_UART_Transmit(&UART_Handler, (uint8_t)message, size, HAL_UART_TIMEOUT_VALUE);
+    HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
 }
 
 void UART_Putc(char c)
 {
-    HAL_UART_Transmit(&UART_Handler, (uint8_t)c, 1, HAL_UART_TIMEOUT_VALUE);
+    HAL_UART_Transmit(&UART_Handler, c, 1, HAL_UART_TIMEOUT_VALUE);
 }
 
 void UART_PutInt(uint32_t val)
@@ -131,7 +131,7 @@ void UART_PutInt(uint32_t val)
     {
         size++;
     }
-    HAL_UART_Transmit(&UART_Handler, (uint8_t)message, size, HAL_UART_TIMEOUT_VALUE);
+    HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
 }
 
 void UART_clearScreen(void)
