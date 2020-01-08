@@ -1,9 +1,6 @@
 #include "LoRa.h"
-#include "SPI.h"
-#include "stm32l0xx_hal.h"
 #include "sx1276Regs-LoRa.h"
 #include "mlm32l0xx_hw_conf.h"
-#include "hardware_functions.h"
 
 void SX1276_Write_Buffer(uint16_t addr, uint8_t *buffer, uint8_t size);
 void SX1276_Read_Buffer(uint16_t addr, uint8_t *buffer, uint8_t size);
@@ -25,6 +22,7 @@ void SX1276_Send(uint8_t *buffer, uint8_t size); // Send data via LoRa
 
 void LoRa_Tx_Init(void)
 {
+#ifdef LORA_BOARD
     // Sleep mode on to change settings
     SX1276_Write(REG_LR_OPMODE, (SX1276_Read(REG_LR_OPMODE) & RFLR_OPMODE_MASK) | RFLR_OPMODE_SLEEP);
 
@@ -50,6 +48,9 @@ void LoRa_Tx_Init(void)
 
     // Set frequency LoRa
     Set_Frequency_LoRa();
+#else
+#warning this board does not have lora
+#endif
 }
 
 void Set_Frequency_LoRa(void)
@@ -139,10 +140,18 @@ void SX1276_Send(uint8_t *buffer, uint8_t size)
     // Set TX Mode
     SX1276_Write(REG_LR_OPMODE, (SX1276_Read(REG_LR_OPMODE) & RFLR_OPMODE_MASK) | RFLR_OPMODE_TRANSMITTER);
     // Polling if TX is done. Never stays in the while
-    while ((SX1276_Read(REG_LR_IRQFLAGS) & RFLR_IRQFLAGS_TXDONE) == 0);
+    while ((SX1276_Read(REG_LR_IRQFLAGS) & RFLR_IRQFLAGS_TXDONE) == 0)
+    {
+    }
+    // Set to sleep mode
+    SX1276_Write(REG_LR_OPMODE, (SX1276_Read(REG_LR_OPMODE) & RFLR_OPMODE_MASK) | RFLR_OPMODE_SLEEP);
 }
 
 void LoRa_Send_String(uint8_t *textToSend)
 {
+#ifdef LORA_BOARD
     SX1276_Send((uint8_t *)textToSend, Get_Strlen(textToSend));
+#else
+#warning this board does not have lora
+#endif
 }

@@ -1,6 +1,26 @@
 #include "interrupt.h"
+#include "board_definitions.h"
 #include "hardware_functions.h"
+#include "error_handling.h"
 #include "network.h"
+
+/******************************************************************************/
+/*                       User interrupt handlers                              */
+/******************************************************************************/
+
+/**
+  * @brief handler for pressing the user button.
+  */
+void USER_BUTTON_IT_HANDLER(void)
+{
+    if (__HAL_GPIO_EXTI_GET_FLAG(USER_BUTTON_PIN))
+    {
+        toggle_Led(LED2);   // Toggle led to test interrupt
+        LoRa_Send_String((uint8_t *)"button press!\r\n"); // Send via LoRa
+    }
+    HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN);  // Let HAL clear the pending interrupt
+}
+
 /******************************************************************************/
 /*           Cortex-M0+ Processor Interruption and Exception Handlers          */
 /******************************************************************************/
@@ -10,32 +30,20 @@
   */
 void SysTick_Handler(void)
 {
-  HAL_IncTick();
-}
-
-/******************************************************************************/
-/* STM32L0xx Peripheral Interrupt Handlers                                    */
-/* Add here the Interrupt Handlers for the used peripherals.                  */
-/* For the available peripheral interrupt handler names,                      */
-/* please refer to the startup file (startup_stm32l0xx.s).                    */
-/******************************************************************************/
-
-/**
-  * @brief This function handles EXTI line 0 and line 1 interrupts.
-  */
-void EXTI0_1_IRQHandler(void)
-{
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
+    HAL_IncTick();
 }
 
 /**
-  * @brief This function handles EXTI line 4 to 15 interrupts.
+  * @brief This function handles external interrupt channel 0 and 1.
   */
-void EXTI4_15_IRQHandler(void)
+void EXTI0_1_IRQHandler()
 {
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
+#ifdef DISCO_BOARD
+    // Handlers which use EXTI0_1 on discovery board
+    USER_BUTTON_IT_HANDLER();
+#else
+    // Handlers which use EXTI0_1 on lora board
+#endif
 }
 void TIM7_IRQHandler(void)
 {
@@ -63,4 +71,27 @@ void TIM6_IRQHandler(void)
     __HAL_TIM_CLEAR_FLAG(&timer, TIM_IT_UPDATE);
 }
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+/**
+  * @brief This function handles external interrupt channel 2 and 3.
+  */
+void EXTI2_3_IRQHandler()
+{
+#ifdef DISCO_BOARD
+    // Handlers which use EXTI2_3 on discovery board
+#else
+    // Handlers which use EXTI2_3 on lora board
+    USER_BUTTON_IT_HANDLER();
+#endif
+}
+
+/**
+  * @brief This function handles external interrupt channel 4 to 15.
+  */
+void EXTI4_15_IRQHandler()
+{
+#ifdef DISCO_BOARD
+    // Handlers which use EXTI4_15 on discovery board
+#else
+    // Handlers which use EXTI4_15 on lora board
+#endif
+}
