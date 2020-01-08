@@ -2,24 +2,19 @@
 
 void init_Leds(void)
 {
-
     LED1_GPIO_CLK_ENABLE();
     LED2_GPIO_CLK_ENABLE();
-
     GPIO_InitTypeDef GPIO_InitStruct;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-
     GPIO_InitStruct.Pin = LED1_PIN;
     HAL_GPIO_Init(LED1_GPIO_PORT, &GPIO_InitStruct);
-
     GPIO_InitStruct.Pin = LED2_PIN;
     HAL_GPIO_Init(LED2_GPIO_PORT, &GPIO_InitStruct);
 #ifdef LORA_BOARD
     GPIO_InitStruct.Pin = LED3_PIN;
     HAL_GPIO_Init(LED3_GPIO_PORT, &GPIO_InitStruct);
-
     GPIO_InitStruct.Pin = LED4_PIN;
     HAL_GPIO_Init(LED4_GPIO_PORT, &GPIO_InitStruct);
 #endif
@@ -91,22 +86,17 @@ void set_Led(uint8_t led, uint8_t state)
 void UART_Init()
 {
     GPIO_InitTypeDef GPIO_InitStructure;
-
     __HAL_RCC_USART1_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
-
     GPIO_InitStructure.Alternate = UART_GPIO_AF;
     GPIO_InitStructure.Pull = GPIO_NOPULL;
     GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
-
     GPIO_InitStructure.Pin = UART_TX_PIN;
     GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
     HAL_GPIO_Init(UART_GPIO_PORT, &GPIO_InitStructure);
-
     GPIO_InitStructure.Pin = UART_RX_PIN;
     GPIO_InitStructure.Mode = GPIO_MODE_AF_OD;
     HAL_GPIO_Init(UART_GPIO_PORT, &GPIO_InitStructure);
-
     UART_Handler.Instance = USART1;
     UART_Handler.Init.BaudRate = UART_BAUD_RATE;
     UART_Handler.Init.Mode = UART_MODE_TX_RX;
@@ -114,7 +104,6 @@ void UART_Init()
     UART_Handler.Init.StopBits = UART_STOPBITS_1;
     UART_Handler.Init.WordLength = UART_WORDLENGTH_8B;
     UART_Handler.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-
     HAL_UART_Init(&UART_Handler);
 }
 
@@ -125,7 +114,7 @@ void UART_PutStr(char *message)
     {
         size++;
     }
-    HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
+    HAL_UART_Transmit(&UART_Handler, (uint8_t)message, size, HAL_UART_TIMEOUT_VALUE);
 }
 
 void UART_Putc(char c)
@@ -142,7 +131,7 @@ void UART_PutInt(uint32_t val)
     {
         size++;
     }
-    HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
+    HAL_UART_Transmit(&UART_Handler, (uint8_t)message, size, HAL_UART_TIMEOUT_VALUE);
 }
 
 void UART_clearScreen(void)
@@ -161,7 +150,6 @@ uint8_t Get_Strlen(char *string)
     {
         size++;
     }
-
     return size;
 }
 
@@ -170,19 +158,15 @@ void I2C_Init()
     GPIO_InitTypeDef GPIO_InitStructure;
     __HAL_RCC_I2C1_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
-
     GPIO_InitStructure.Alternate = I2C_GPIO_AF;
     GPIO_InitStructure.Pull = GPIO_PULLUP;
     GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
-
     GPIO_InitStructure.Pin = I2C_SDA_PIN;
     GPIO_InitStructure.Mode = GPIO_MODE_AF_OD;
     HAL_GPIO_Init(I2C_GPIO_PORT, &GPIO_InitStructure);
-
     GPIO_InitStructure.Pin = I2C_CLK_PIN;
     GPIO_InitStructure.Mode = GPIO_MODE_AF_OD;
     HAL_GPIO_Init(I2C_GPIO_PORT, &GPIO_InitStructure);
-
     I2C_Handler.Instance = I2C1;
     I2C_Handler.Init.Timing = I2C_TIMING;
     I2C_Handler.Init.OwnAddress1 = 0;
@@ -191,7 +175,6 @@ void I2C_Init()
     I2C_Handler.Init.OwnAddress2 = 0;
     I2C_Handler.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
     I2C_Handler.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-
     HAL_I2C_Init(&I2C_Handler);
 }
 
