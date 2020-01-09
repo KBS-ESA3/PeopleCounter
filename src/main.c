@@ -28,7 +28,8 @@
 #define CALIPILE_OBJTRSHLD 0
 
 // Global variables
-int16_t PeopleCount = 0; // Should never be less than 0
+int16_t PeopleCount = 0;    // Should never be less than 0
+uint8_t vl53_Counting = 0;  // Boolean, set to start counting with VL53
 
 calipile_t sensor0 = {
     CALIPILE_0_ADDR,
@@ -70,7 +71,8 @@ int main(void)
     LoRa_Tx_Init();
     I2C_Init();
     VL53_Setup();
-
+    
+    vl53_Counting = 1;
     while (1)
     {
         start_measuring();

@@ -16,6 +16,7 @@
 int VL53_Setup();
 int start_measuring();
 int CountingAlgorithm(int16_t Distance, uint8_t zone);
+int Check_PeopleCount(uint16_t PeopleCount);
 #ifdef debug
 void display_peoplecounter(int peoplecounter);
 void display_zones();

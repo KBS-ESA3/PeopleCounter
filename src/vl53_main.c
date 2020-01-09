@@ -5,16 +5,18 @@
 // Includes
 #include "vl53_main.h"
 #include "hardware_functions.h"
+#include "error_handling.h"
 
 //Global variables
 extern uint16_t PeopleCount;
+extern uint8_t vl53_Counting;
 
 // Programmable I2C address of the VL53L1X sensor
 uint16_t VL53_I2C_Address = (0x29 << 1); // 7 bit, MSB
 
-uint8_t buffer[50];
-uint16_t wordData, Distance, AmbientRate, SpadNum, SignalRate, SensorID;
-uint8_t status, byteData, sensorState = 0, RangeStatus, ToFSensor = 1, dataReady;
+// Local variables
+static uint16_t Distance = 0, last_PeopleCount = 0;
+static uint8_t status = 0, sensorState = 0, RangeStatus = 0, dataReady = 0;
 
 int VL53_Setup()
 {
@@ -46,8 +48,8 @@ int VL53_Setup()
 
     // Of any error occured, terminate process
     if (status != 0)
-    {
-        UART_PutStr((uint8_t *)"Error in VL53 Ssetup function\n\r");
+    {   
+        send_Warning("Error in VL53 Ssetup function\n\r");
         return (-1);
     }
     return status;
@@ -70,7 +72,7 @@ int start_measuring()
     status = VL53L1X_StartRanging(VL53_I2C_Address);
 
     // Read and display data
-    while (1)
+    while (vl53_Counting)
     {
         dataReady = 0; // Set dataReady to 0 before reading
         while (!dataReady)
@@ -84,8 +86,8 @@ int start_measuring()
 
         // If any error occured, terminate process
         if (status != 0)
-        {
-            UART_PutStr((uint8_t *)"Error: could not read measurement\n\r");
+        {   
+            send_Warning("Error: could not read measurement\n\r");
             return (-1);
         }
 
@@ -96,21 +98,19 @@ int start_measuring()
         // If any error occured, terminate process
         if (status != 0)
         {
-            UART_PutStr((uint8_t *)"Error: could not set new zone\n\r");
+            send_Warning("Error: could not set new zone\n\r");
             return (-1);
         }
 
         // Inject the measured distance in the people counting algorithm, return new number of people
         PeopleCount = CountingAlgorithm(Distance, Zone);
+        // Check PeopleCount for faulty value (i.e. when the value becomes negative)
+        PeopleCount = Check_PeopleCount(PeopleCount);
+        display_peoplecounter(PeopleCount);
 
         // Toggle Zone integer between 0 and 1
         Zone++;
         Zone = Zone % 2;
-
-#ifdef debug
-        // Print number of people to a screen
-        display_peoplecounter(PeopleCount);
-#endif
     }
     return status;
 }
@@ -121,7 +121,6 @@ int CountingAlgorithm(int16_t Distance, uint8_t zone)
     static int PathTrackFillingSize = 1; // init this to 1 as we start from state where nobody is any of the zones
     static int LeftPreviousStatus = NOBODY;
     static int RightPreviousStatus = NOBODY;
-    static int PeopleCount = 0;
 
 // Print process, debug purposes
 #ifdef debug
@@ -201,30 +200,49 @@ int CountingAlgorithm(int16_t Distance, uint8_t zone)
     return (PeopleCount);
 }
 
-#ifdef debug
-// Function displays amount of people that entered the room
-void display_peoplecounter(int peoplecounter)
+// Function checks if the PeoleCount value is not faulty
+// E
+int Check_PeopleCount(uint16_t PeopleCount)
 {
-    static int counter = 0;
-    if (peoplecounter != counter)
+    if (PeopleCount & ((uint16_t)1 << 15)) // In Two's complement, MSB is set and the other bits are flipped when value is negative. Check if MSB is set.
     {
-        sprintf((char *)buffer, "People Counter: %d\n", peoplecounter);
+        set_Led(LED1, LED_ON); // Turn on green error led
+        if (PeopleCount != last_PeopleCount)
+        {   
+            send_Warning("Negative Value: Error in count!\r\n");
+            send_Warning("People Counter set to 0!\r\n");
+            PeopleCount = last_PeopleCount = 0;
+        }
+    }
+    return PeopleCount;
+}
+
+// These functions are only needed in debug mode
+#ifdef debug
+
+// Function displays amount of people that entered the room
+void display_peoplecounter(int PeopleCount)
+{
+    char buffer[50];
+    if (PeopleCount != last_PeopleCount)
+    {
+        sprintf((char *)buffer, "People Counter: %d\r\n", PeopleCount);
         UART_PutStr(buffer);
-        counter = peoplecounter;
+        last_PeopleCount = PeopleCount;
     }
 }
 
 // Function displays if either of the 'zones' see anything
 void display_zones()
 {
-#define treshhold 1780
-    static int center[2] = {167, 231}; /* these are the spad center of the 2 8*16 zones */
+    char buffer[50];
+    const int center[2] = {167, 231}; /* these are the spad center of the 2 8*16 zones */
     static int zone[2] = {0, 0};
     static int Zonenr = 0;
 
     status = VL53L1X_StartRanging(VL53_I2C_Address);
 
-    /* read and display data */
+    // Read and display data, similar to start_measuring()
     while (1)
     {
         HAL_Delay(10);
@@ -238,11 +256,11 @@ void display_zones()
         status += VL53L1X_GetRangeStatus(VL53_I2C_Address, &RangeStatus);
         status += VL53L1X_GetDistance(VL53_I2C_Address, &Distance);
         status += VL53L1X_ClearInterrupt(VL53_I2C_Address); /* clear interrupt has to be called to enable next interrupt*/
-        if (Distance < treshhold)
+        if (Distance < DIST_THRESHOLD_MAX)
             zone[Zonenr] = 1;
         else
             zone[Zonenr] = 0;
-        sprintf((char *)buffer, "Zone 1: %u, Zone 2: %u\n", zone[0], zone[1]);
+        sprintf((char *)buffer, "Zone 1: %u, Zone 2: %u\r\n", zone[0], zone[1]);
         UART_PutStr(buffer);
 
         Zonenr++;
