@@ -18,7 +18,8 @@ void on_passing()
 {
     static uint8_t highest_people_count = 0;
 
-    switch(current_timing_protocol){
+    switch(current_timing_protocol)
+    {
         case SEND_EVERY_PASSAGE:
             network_send_people_count();
             break;
@@ -26,7 +27,8 @@ void on_passing()
             // Do nothing because sending happens with a constant frequency.
             break;
         case SEND_PEAK_AT_ZERO:
-            if(get_people_count() > highest_people_count){
+            if(get_people_count() > highest_people_count)
+            {
                 highest_people_count++;
             } else if(get_people_count() == 0){
                 highest_people_count = 0;
@@ -50,7 +52,6 @@ void network_send_people_count()
 
     UART_put_LoRaPacket(decode_frame(encode_frame(packet)));
     LoRa_Send_Word(encode_frame(packet));
-    
 }
 
 
@@ -136,7 +137,8 @@ void change_network_timing_protocol(network_timing_protocol_t change_to)
    // Disable continious timer.
     disable_continuous_timer();
 
-    switch(change_to){
+    switch(change_to)
+    {
         case SEND_EVERY_PASSAGE:
             break;
         case SEND_CONSTANT_FREQUENCY:
@@ -155,4 +157,3 @@ void change_network_timing_protocol(network_timing_protocol_t change_to)
 
     current_timing_protocol = change_to;
 }
-

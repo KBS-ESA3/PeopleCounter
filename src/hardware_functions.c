@@ -150,7 +150,8 @@ void UART_PutByte(uint8_t Byte)
                         '0','0','0','0',
                         '\n','\r','\0',};
     
-    for(i=0; i < 8; i++){
+    for(i=0; i < 8; i++)
+    {
         result[i] = (Byte & 1 << (7-i)) ? '1' : '0'; 
     }
     UART_PutStr(result);
@@ -165,7 +166,8 @@ void UART_PutWord(uint16_t Word)
                         '0','0','0','0',
                         '\n','\r','\0',};
     
-    for(i=0; i < 16; i++){
+    for(i=0; i < 16; i++)
+    {
         result[i] = (Word & 1 << (15-i)) ? '1' : '0'; 
     }
     UART_PutStr(result);
@@ -173,7 +175,8 @@ void UART_PutWord(uint16_t Word)
 
 void UART_put_LoRaPacket(LoRa_packet_t packet)
 {
-    if(packet.type == TYPE_PEOPLE_COUNT){
+    if(packet.type == TYPE_PEOPLE_COUNT)
+    {
         // Output the number of people.
         UART_PutStr("People count: ");
         UART_PutInt(packet.number_of_people);
