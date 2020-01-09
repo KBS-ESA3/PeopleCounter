@@ -20,13 +20,8 @@ void init_Button(void);
 
 void UART_Init();
 void UART_clearScreen(void);
-<<<<<<< HEAD
 void UART_Putc(uint8_t c);
-void UART_PutStr(uint8_t* message);
-=======
-void UART_Putc(char c);
-void UART_PutStr(char *message);
->>>>>>> 6a419479a3137a8d21d163f4a8dacea83efca643
+void UART_PutStr(uint8_t * message);
 void UART_PutInt(uint32_t val);
 uint8_t Get_Strlen(char *string);
 

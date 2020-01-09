@@ -527,7 +527,6 @@ VL53L1X_ERROR VL53L1X_BootState(uint16_t dev, uint8_t *state)
 {
 	VL53L1X_ERROR status = 0;
 	uint8_t tmp = 0;
-
 	status = VL53L1_RdByte(dev,VL53L1_FIRMWARE__SYSTEM_STATUS, &tmp);
 	*state = tmp;
 	return status;

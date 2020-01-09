@@ -28,7 +28,7 @@
 #define CALIPILE_OBJTRSHLD 0
 
 // Global variables
-int16_t PeopleCount = 0;  // Should never be less than 0
+int16_t PeopleCount = 0; // Should never be less than 0
 
 calipile_t sensor0 = {
     CALIPILE_0_ADDR,
@@ -61,81 +61,19 @@ calipile_t sensor1 = {
 
 int main(void)
 {
-  // Init functions
-  HAL_Init();
-  init_Leds();
-  UART_Init();
-  init_Button();
-  HW_SPI_Init();
-  LoRa_Tx_Init();
-<<<<<<< HEAD
-  calipile_init(&sensor0);
-  //UART_clearScreen(); // Not needed with bluetooth debugging
-  VL53_Setup();
+    // Init functions
+    HAL_Init();
+    init_Leds();
+    UART_Init();
+    init_Button();
+    HW_SPI_Init();
+    LoRa_Tx_Init();
+    I2C_Init();
+    VL53_Setup();
 
-  while (1)
-  {
-    start_measuring();
-  }
-}
-
-void SysTick_Handler(void)
-{
-  HAL_IncTick();
-}
-
-void NMI_Handler(void)
-{
-}
-
-void HardFault_Handler(void)
-{
-  while (1)
-  {
-  }
-}
-
-void MemManage_Handler(void)
-{
-  while (1)
-  {
-  }
-}
-=======
-
-  UART_clearScreen();
-  UART_PutStr("interrupt test\r\n");
->>>>>>> 6a419479a3137a8d21d163f4a8dacea83efca643
-
-void BusFault_Handler(void)
-{
-  while (1)
-  {
-<<<<<<< HEAD
-  }
-}
-
-void UsageFault_Handler(void)
-{
-  while (1)
-  {
-=======
-    LoRa_Send_String((uint8_t *)"going to sleep\r\n");  // Send via LoRa
-    power_Deepsleep();
-    HAL_Delay(1000);
-    toggle_Led(LED1);
->>>>>>> 6a419479a3137a8d21d163f4a8dacea83efca643
-  }
-}
-
-void SVC_Handler(void)
-{
-}
-
-void DebugMon_Handler(void)
-{
-}
-
-void PendSV_Handler(void)
-{
+    while (1)
+    {
+        start_measuring();
+    }
+    return 0;
 }

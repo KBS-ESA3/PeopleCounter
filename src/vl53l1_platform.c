@@ -67,13 +67,7 @@
 uint8_t _I2CBuffer[256];
 I2C_HandleTypeDef I2C_Handler;
 
-/*
-For all read-functions:
-First, write 2 bytes to address to request data
-Then, read data and write to local buffer
-*/
 
-// Write data to address over I2C
 int _I2CWrite(uint16_t Dev, uint8_t *pdata, uint32_t count)
 {
     int status;
@@ -84,7 +78,6 @@ int _I2CWrite(uint16_t Dev, uint8_t *pdata, uint32_t count)
     return status;
 }
 
-// Read data from address over I2C
 int _I2CRead(uint16_t Dev, uint8_t *pdata, uint32_t count)
 {
     int status;
@@ -95,7 +88,6 @@ int _I2CRead(uint16_t Dev, uint8_t *pdata, uint32_t count)
     return status;
 }
 
-// Write multiple bytes of data from buffer
 VL53L1_Error VL53L1_WriteMulti(uint16_t Dev, uint16_t index, uint8_t *pdata, uint32_t count)
 {
     int status_int;
@@ -117,7 +109,6 @@ VL53L1_Error VL53L1_WriteMulti(uint16_t Dev, uint16_t index, uint8_t *pdata, uin
     return Status;
 }
 
-// Read multiple bytes of data
 VL53L1_Error VL53L1_ReadMulti(uint16_t Dev, uint16_t index, uint8_t *pdata, uint32_t count)
 {
     VL53L1_Error Status = VL53L1_ERROR_NONE;
@@ -142,7 +133,6 @@ done:
     return Status;
 }
 
-// Write 1 byte of data
 VL53L1_Error VL53L1_WrByte(uint16_t Dev, uint16_t index, uint8_t data)
 {
     VL53L1_Error Status = VL53L1_ERROR_NONE;
@@ -218,7 +208,6 @@ done:
     return Status;
 }
 
-// Read 1 byte of data
 VL53L1_Error VL53L1_RdByte(uint16_t Dev, uint16_t index, uint8_t *data)
 {
     VL53L1_Error Status = VL53L1_ERROR_NONE;
