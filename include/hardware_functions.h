@@ -3,6 +3,7 @@
 
 #include "stdint.h"
 #include "error_handling.h"
+#include "packet.h"
 
 #define UART_INT_BUFFER 10
 #define UART_BAUD_RATE 115200
@@ -22,6 +23,7 @@ void UART_Putc(char c);
 void UART_PutStr(char *message);
 void UART_PutInt(uint32_t val);
 void UART_PutWord(uint16_t Word);
+void UART_put_LoRaPacket(LoRa_packet_t packet);
 uint8_t Get_Strlen(char *string);
 
 void I2C_Init();

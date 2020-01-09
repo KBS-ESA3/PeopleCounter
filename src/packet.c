@@ -52,4 +52,13 @@ uint16_t encode_frame(LoRa_packet_t packet){
 
 LoRa_packet_t decode_frame(uint16_t frame){
     // TODO - implement this bitch.
+    LoRa_packet_t packet = {0,0};
+    if(frame & (TYPE_PEOPLE_COUNT << 8)){
+        packet.type = TYPE_PEOPLE_COUNT;
+        packet.number_of_people = (uint8_t)frame;
+    }  else {
+        packet.type = TYPE_BATTERY_STATUS;
+        packet.battery_status = (uint8_t)frame;
+    }
+    return packet;
 }

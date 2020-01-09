@@ -48,8 +48,7 @@ void network_send_people_count()
 {
     LoRa_packet_t packet = encode_people_count_packet();
 
-    UART_PutStr("packet: ");
-    UART_PutWord(encode_frame(packet));
+    UART_put_LoRaPacket(decode_frame(encode_frame(packet)));
     LoRa_Send_Word(encode_frame(packet));
     
 }

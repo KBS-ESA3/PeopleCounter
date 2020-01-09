@@ -143,7 +143,8 @@ void UART_clearScreen(void)
     UART_PutStr(cmd2);
 }
 
-void UART_PutWord(uint16_t Word){
+void UART_PutWord(uint16_t Word)
+{
     int i;
     char result[19] = { '0','0','0','0',
                         '0','0','0','0',
@@ -155,6 +156,35 @@ void UART_PutWord(uint16_t Word){
         result[i] = (Word & 1 << (15-i)) ? '1' : '0'; 
     }
     UART_PutStr(result);
+}
+
+void UART_put_LoRaPacket(LoRa_packet_t packet)
+{
+    if(packet.type == TYPE_PEOPLE_COUNT){
+        // Output the number of people.
+        UART_PutStr("People count: ");
+        UART_PutInt(packet.number_of_people);
+    } else {
+        // This must be the battery status.
+        UART_PutStr("battery status: ");
+        switch (packet.battery_status)
+        {
+            case BATTERY_GOOD:
+                UART_PutStr("Good!");
+                break;
+            case BATTERY_LOW:
+                UART_PutStr("low");
+                break;
+            case BATTERY_CRITICAL:
+                UART_PutStr("critical!");
+                break;
+            default:
+            // Invalid data.
+                break;
+                UART_PutStr("invalid packet!!");
+        }
+    }
+    UART_PutStr("\n\r");
 }
 
 uint8_t Get_Strlen(char *string)

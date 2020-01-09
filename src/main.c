@@ -67,7 +67,5 @@ int main(void) {
 
     while (1) {
         power_Deepsleep();
-        HAL_Delay(1000);
-        toggle_Led(LED1);
     }
 }
