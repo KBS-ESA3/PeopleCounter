@@ -44,14 +44,13 @@ uint16_t encode_frame(LoRa_packet_t packet){
     } else if(packet.type  == TYPE_BATTERY_STATUS){
         frame |= packet.battery_status;
     }   else {
-        UART_PutStr("There was a problem encoding this frame");
+        UART_PutStr("There was a problem encoding this frame.");
     }
 
     return frame;
 }
 
 LoRa_packet_t decode_frame(uint16_t frame){
-    // TODO - implement this bitch.
     LoRa_packet_t packet = {0,0};
     if(frame & (TYPE_PEOPLE_COUNT << 8)){
         packet.type = TYPE_PEOPLE_COUNT;

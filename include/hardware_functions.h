@@ -23,6 +23,7 @@ void UART_Putc(char c);
 void UART_PutStr(char *message);
 void UART_PutInt(uint32_t val);
 void UART_PutWord(uint16_t Word);
+void UART_PutByte(uint8_t Byte);
 void UART_put_LoRaPacket(LoRa_packet_t packet);
 uint8_t Get_Strlen(char *string);
 
