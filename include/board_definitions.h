@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <math.h>
 
 #if DISCO_BOARD
 #include "stm32f0xx_hal.h"

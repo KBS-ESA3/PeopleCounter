@@ -4,6 +4,12 @@
 #include "hardware_functions.h"
 #include "LoRa.h"
 
+#define INACTIVE_TIMER_PRESCALER 8008
+#define INACTIVE_TIMER_PERIOD (round(((2097152/INACTIVE_TIMER_PRESCALER) * PASSING_INACTIVE_TIME) + 1))
+
+#define CONTINUOUS_TIMER_PRESCALER 36001
+#define CONTINUOUS_TIMER_PERIOD (round(((2097152/CONTINUOUS_TIMER_PRESCALER) * ((60*60*24)/CONSTANT_LORA_FREQUENCY)) + 1))
+
 network_timing_protocol_t current_timing_protocol = INITIAL_NETWORK_TIMING_PROTOCOL;
 
 TIM_HandleTypeDef timer_inactive;
@@ -67,10 +73,9 @@ void initialise_inactive_timer()
     Period = 7865
     */
 
-   // TODO - Let this thing run just once, not continious.
     timer_inactive.Instance = TIM7;
-    timer_inactive.Init.Prescaler = 8000;
-    timer_inactive.Init.Period = 7864;
+    timer_inactive.Init.Prescaler = INACTIVE_TIMER_PRESCALER;
+    timer_inactive.Init.Period = INACTIVE_TIMER_PERIOD;
     timer_inactive.Init.CounterMode = TIM_COUNTERMODE_UP;
     timer_inactive.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 }
@@ -90,13 +95,14 @@ void initialise_continious_timer()
 */
 
     timer_continuous.Instance = TIM6;
-    timer_continuous.Init.Prescaler = 36001;
-    timer_continuous.Init.Period = 35952;
+    timer_continuous.Init.Prescaler = CONTINUOUS_TIMER_PRESCALER;
+    timer_continuous.Init.Period = CONTINUOUS_TIMER_PERIOD;
     timer_continuous.Init.CounterMode = TIM_COUNTERMODE_UP;
     timer_continuous.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
     __TIM6_CLK_ENABLE();
     HAL_TIM_Base_Init(&timer_continuous);
+    __HAL_TIM_CLEAR_FLAG(&timer_continuous, TIM_IT_UPDATE);
     HAL_TIM_Base_Start_IT(&timer_continuous);
 
     HAL_NVIC_SetPriority(TIM6_IRQn, 0, 0);
@@ -105,8 +111,10 @@ void initialise_continious_timer()
 
 void enable_inactive_timer()
 {
+    UART_PutStr("Enabling inactive timer\n\r");
     __TIM7_CLK_ENABLE();
     HAL_TIM_Base_Init(&timer_inactive);
+    __HAL_TIM_CLEAR_FLAG(&timer_inactive, TIM_IT_UPDATE);
     HAL_TIM_Base_Start_IT(&timer_inactive);
 
     HAL_NVIC_SetPriority(TIM7_IRQn, 0, 0);
@@ -132,7 +140,7 @@ void disable_continuous_timer()
 void change_network_timing_protocol(network_timing_protocol_t change_to)
 {
     // Disable inactive mode by default.
-   disable_inactive_timer();
+    disable_inactive_timer();
 
    // Disable continious timer.
     disable_continuous_timer();

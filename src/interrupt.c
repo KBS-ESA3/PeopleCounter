@@ -17,7 +17,7 @@ void USER_BUTTON_IT_HANDLER(void)
     if (__HAL_GPIO_EXTI_GET_FLAG(USER_BUTTON_PIN))
     {
         toggle_Led(LED2);   // Toggle led to test interrupt
-        increment_people_count();
+        increment_people_count();                           // This should not be called from here! this should be called from the person that implements the sensors! it is just in the interrupt for testing.
     }
     HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN);  // Let HAL clear the pending interrupt
 }
@@ -46,13 +46,14 @@ void EXTI0_1_IRQHandler()
     // Handlers which use EXTI0_1 on lora board
 #endif
 }
+
 void TIM7_IRQHandler(void)
 {
-
     TIM_HandleTypeDef timer;
     
     timer.Instance = TIM7;
-    if(__HAL_TIM_GET_FLAG(&timer, TIM_FLAG_UPDATE) != RESET){
+    if(__HAL_TIM_GET_FLAG(&timer, TIM_FLAG_UPDATE) != RESET)
+    {
         network_send_people_count();
 
         disable_inactive_timer();
@@ -65,9 +66,9 @@ void TIM6_IRQHandler(void)
     TIM_HandleTypeDef timer;
     timer.Instance = TIM6;
 
-    if(__HAL_TIM_GET_FLAG(&timer, TIM_FLAG_UPDATE) != RESET){
+    if(__HAL_TIM_GET_FLAG(&timer, TIM_FLAG_UPDATE) != RESET)
+    {
         network_send_people_count();
-
     }
     __HAL_TIM_CLEAR_FLAG(&timer, TIM_IT_UPDATE);
 }

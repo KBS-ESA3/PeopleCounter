@@ -54,7 +54,8 @@ calipile_t sensor1 = {
     CALIPILE_INTTIM,
     CALIPILE_OBJTRSHLD};
 
-int main(void) {
+int main(void)
+{
     HAL_Init();
     init_Leds();
     UART_Init();
@@ -65,7 +66,9 @@ int main(void) {
     UART_clearScreen();
     UART_PutStr("interrupt test\r\n");
 
+    change_network_timing_protocol(SEND_CONSTANT_FREQUENCY);
+
     while (1) {
-        power_Deepsleep();
+        //power_Deepsleep();                    // This line is commented out because it is very, very dangerous, and can easily fuck up your whole afternoon!!
     }
 }

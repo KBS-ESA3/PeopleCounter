@@ -1,8 +1,8 @@
 #ifndef __NETWORK_H
 #define __NETWORK_H
 
-// The number of times per day that the people_count needs to be send.
-#define CONSTANT_LORA_FREQUENCY 140
+// The number of times per day that the people_count needs to be send.                      -- THIS VARIABLETY IS NOT IMPLEMENTED YET
+#define CONSTANT_LORA_FREQUENCY 600
 
 // The number of seconds after which inactivity the number of people will be send.          -- THIS VARIABLETY IS NOT IMPLEMENTED YET
 #define PASSING_INACTIVE_TIME 30
