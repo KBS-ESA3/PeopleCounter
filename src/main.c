@@ -74,7 +74,10 @@ int main(void)
     vl53_enable = 1;  // Enable VL53
     while (1)
     {
-        if(vl53_enable) VL53_start_measuring();
+        if(vl53_enable) 
+        {
+            VL53_start_measuring();
+        }
     }
     return 0;
 }

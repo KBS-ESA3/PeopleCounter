@@ -127,7 +127,7 @@ void UART_Putc(char c)
 
 void UART_PutInt(uint32_t val)
 {
-    uint8_t message[UART_INT_BUFFER];
+    char message[UART_INT_BUFFER];
     uint8_t size = 0;
     sprintf((char *)message, "%ld\r\n", val);
     while (message[size] != '\0')

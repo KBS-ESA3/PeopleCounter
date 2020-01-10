@@ -35,6 +35,9 @@ void VL53_display_zones();   // Zones are the areas the sensor reads from
 // Function initializes VL53 sensor with I2C 
 void VL53_setup()
 {
+    #ifdef DEBUG
+    UART_PutStr((uint8_t *)"Booting sensor...\r\n");
+    #endif
     // Wait for sensor to boot
     while (!sensor_state)
     {
@@ -57,12 +60,12 @@ void VL53_setup()
 
 // Print process, debug purposes
 #ifdef DEBUG
-    if (status == 0)
+    if (!status)
         UART_PutStr((uint8_t *)"Setup complete\r\n");
 #endif
 
     // Of any error occured, terminate process
-    if (status != 0)
+    if (status)
     {   
         ERROR_send_warning("Error in VL53 Setup function\r\n");
         return;
@@ -73,14 +76,16 @@ void VL53_setup()
 // Wakes up sensor, and starts ranging (in while loop), injecting data in algorithm
 void VL53_start_measuring()
 {
-    static int center[2] = SPAD_CENTERS; // These are the spad center of the 2 8x16 zones
+    static int zone_center[2] = SPAD_CENTERS; // These are the spad center of the 2 8x16 zones
     static int zone = 0;                 // Index for center array
     static uint8_t data_ready = 0;
 
 #ifdef DEBUG
     static uint8_t start_done = 0;
     if (!start_done)
+    {
         UART_PutStr((uint8_t *)"Start Ranging\r\n");
+    }
     start_done = 1;
 #endif
 
@@ -103,18 +108,18 @@ void VL53_start_measuring()
         if (status)
         {   
             ERROR_send_warning("Error: could not read measurement\r\n");
-            return (-1);
+            return;
         }
 
         // Wait a few milliseconds to make sure measurung is done, then change the ROI
         HAL_Delay(5);
-        status = VL53L1X_SetROICenter(VL53_I2C_address, center[zone]);
+        status = VL53L1X_SetROICenter(VL53_I2C_address, zone_center[zone]);
 
         // If any error occured, terminate process
         if (status)
         {
             ERROR_send_warning("Error: could not set new zone\r\n");
-            return (-1);
+            return;
         }
 
         // Inject the measured distance in the people counting algorithm, return new number of people
@@ -141,7 +146,9 @@ int16_t VL53_counting_algorithm(uint16_t distance, uint8_t zone)
 #ifdef DEBUG
     static uint8_t start_done = 0;
     if (!start_done)
+    {
         UART_PutStr((uint8_t *)"Start counting\r\n");
+    }
     start_done = 1;
 #endif
 
@@ -150,7 +157,9 @@ int16_t VL53_counting_algorithm(uint16_t distance, uint8_t zone)
     uint8_t event_occured = 0;
 
     if (distance < DIST_THRESHOLD_MAX)
+    {
         current_zone_status = SOMEONE; // Someone is visible
+    }
 
     if (!zone)  // Zone 0
     {
@@ -158,9 +167,13 @@ int16_t VL53_counting_algorithm(uint16_t distance, uint8_t zone)
         {
             event_occured = 1; // Event in left zone has occured
             if (current_zone_status == SOMEONE)
+            {
                 all_zones_current_status += 1;
+            }
             if (right_previous_status == SOMEONE)     // Need to check right zone as well ...
+            {
                 all_zones_current_status += 2;         // Event in left zone has occured
+            } 
             left_previous_status = current_zone_status; // Remember for next time
         }
     }
@@ -170,16 +183,22 @@ int16_t VL53_counting_algorithm(uint16_t distance, uint8_t zone)
         {
             event_occured = 1; // Event in left zone has occured
             if (current_zone_status == SOMEONE)
+            {
                 all_zones_current_status += 2;
+            }  
             if (left_previous_status == SOMEONE)       // Need to left right zone as well ...
+            {
                 all_zones_current_status += 1;          // Event in left zone has occured
+            }
             right_previous_status = current_zone_status; // Remember for next time
         }
     }
     if (event_occured)
     {
         if (path_track_filling_size < 4)
+        {
             path_track_filling_size++;
+        }
 
         // If nobody anywhere lets check if an exit or entry has happened
         if ((left_previous_status == NOBODY) && (right_previous_status == NOBODY))
@@ -189,9 +208,13 @@ int16_t VL53_counting_algorithm(uint16_t distance, uint8_t zone)
             {
                 // Check exit or entry. No need to check path_track[0] == 0 , it is always the case
                 if ((path_track[1] == 1) && (path_track[2] == 3) && (path_track[3] == 2))
+                {
                     people_count++; // This an entry
+                }
                 else if ((path_track[1] == 2) && (path_track[2] == 3) && (path_track[3] == 1))
+                {
                     people_count--; // This an exit
+                }
             }
             path_track_filling_size = 1;
         }
@@ -220,8 +243,8 @@ int16_t VL53_check_people_count(uint16_t people_count)
         if (people_count != last_people_count)
         {   
             ERROR_send_warning("Negative Value: Error in count!\r\n");
-            ERROR_send_warning("People Counter set to 0!\r\n");
             people_count = last_people_count = 0;
+            ERROR_send_warning("People Counter set to 0!\r\n");
         }
     }
     return people_count;
