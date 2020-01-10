@@ -4,7 +4,7 @@
 #include "hardware_functions.h"
 #include "LoRa.h"
 
-#define INACTIVE_TIMER_PRESCALER 8008
+#define INACTIVE_TIMER_PRESCALER 8001
 #define INACTIVE_TIMER_PERIOD (round(((2097152/INACTIVE_TIMER_PRESCALER) * PASSING_INACTIVE_TIME) + 1))
 
 #define CONTINUOUS_TIMER_PRESCALER 36001
@@ -60,7 +60,6 @@ void network_send_people_count()
     LoRa_Send_Word(encode_frame(packet));
 }
 
-
 void initialise_inactive_timer()
 {
 /*
@@ -84,6 +83,7 @@ void initialise_inactive_timer()
 void initialise_continious_timer()
 {
 /*
+-- This calculation is not true anymore, since the period is variable.
     140 timer per 86400 seconds
     F = 0.0016Hz
     TIMupdateFreq(HZ) = Clock/((PSC-1)*(Period-1))
