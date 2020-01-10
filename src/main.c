@@ -28,7 +28,7 @@
 #define CALIPILE_OBJTRSHLD 0
 
 // Global variables
-uint8_t vl53_Enable = 0;  // Boolean, set to start counting with VL53
+uint8_t vl53_enable = 0;  // Boolean, set to start counting with VL53
 
 calipile_t sensor0 = {
     CALIPILE_0_ADDR,
@@ -69,14 +69,12 @@ int main(void)
     HW_SPI_Init();
     LoRa_Tx_Init();
     I2C_Init();
-    VL53_Setup();
+    VL53_setup();
     
-    vl53_Enable = 0;  // Enable VL53
+    vl53_enable = 1;  // Enable VL53
     while (1)
     {
-        uint16_t peopleeee = Get_PeopleCount();
-        UART_PutInt((uint32_t) peopleeee);
-        if(vl53_Enable) start_measuring();
+        if(vl53_enable) VL53_start_measuring();
     }
     return 0;
 }

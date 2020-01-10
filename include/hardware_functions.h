@@ -6,8 +6,8 @@
 
 #define UART_INT_BUFFER 10
 #define print UART_PutStr
-//#define UART_BAUD_RATE 9600     // Bluetooth
-#define UART_BAUD_RATE 115200   //FTDI
+#define UART_BAUD_RATE 9600     // Bluetooth
+//#define UART_BAUD_RATE 115200   //FTDI
 #define ITOA_DECIMAL 10
 
 UART_HandleTypeDef UART_Handler;
@@ -21,7 +21,7 @@ void init_Button(void);
 void UART_Init();
 void UART_clearScreen(void);
 void UART_Putc(char c);
-void UART_PutStr(char * message);
+void UART_PutStr(char *message);
 void UART_PutInt(uint32_t val);
 uint8_t Get_Strlen(char *string);
 

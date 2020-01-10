@@ -55,7 +55,7 @@ void toggle_Led(uint8_t led)
 #endif
     default:
         message[3] = led;
-        send_Warning(message);
+        ERROR_send_warning(message);
         break;
     }
 }
@@ -81,7 +81,7 @@ void set_Led(uint8_t led, uint8_t state)
 #endif
     default:
         message[3] = led;
-        send_Warning(message);
+        ERROR_send_warning(message);
         break;
     }
 }
