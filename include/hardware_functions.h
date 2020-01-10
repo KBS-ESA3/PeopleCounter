@@ -6,7 +6,9 @@
 #include "packet.h"
 
 #define UART_INT_BUFFER 10
-#define UART_BAUD_RATE 115200
+#define print UART_PutStr
+//#define UART_BAUD_RATE 9600     // Bluetooth
+#define UART_BAUD_RATE 115200   //FTDI
 #define ITOA_DECIMAL 10
 
 UART_HandleTypeDef UART_Handler;

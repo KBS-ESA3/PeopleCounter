@@ -66,9 +66,6 @@ LoRa_packet_t decode_frame(uint16_t frame)
         packet.type = TYPE_BATTERY_STATUS;
         packet.battery_status = (uint8_t)frame;
     }
-
-    // TODO - decode device ID.
-
     packet.device_id = ((uint8_t)(frame >> 9));
     return packet;
 }

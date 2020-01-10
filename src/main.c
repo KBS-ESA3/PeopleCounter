@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "LoRa.h"
 #include "SPI.h"
 #include "VL53L1X_api.h"
@@ -9,6 +10,21 @@
 #include "hardware_functions.h"
 #include "interrupt.h"
 #include "network.h"
+=======
+/************************************
+ *         Main source file         *
+ ************************************/
+
+// Includes
+#include "board_definitions.h"
+#include "hardware_functions.h"
+#include "SPI.h"
+#include "LoRa.h"
+#include "interrupt.h"
+#include "error_handling.h"
+#include "calipile_discovery.h"
+#include "vl53_main.h"
+>>>>>>> bee87afacc7cbdef075a49e64ab9e1dbb1ad6069
 
 #define CALIPILE_0_ADDR (0x0C << 1)
 #define CALIPILE_1_ADDR (0x0D << 1)
@@ -24,6 +40,9 @@
 #define CALIPILE_INTDIR 0X00
 #define CALIPILE_INTTIM 0
 #define CALIPILE_OBJTRSHLD 0
+
+// Global variables
+uint8_t vl53_enable = 0;  // Boolean, set to start counting with VL53
 
 calipile_t sensor0 = {
     CALIPILE_0_ADDR,
@@ -56,12 +75,17 @@ calipile_t sensor1 = {
 
 int main(void)
 {
+<<<<<<< HEAD
+=======
+    // Init functions
+>>>>>>> bee87afacc7cbdef075a49e64ab9e1dbb1ad6069
     HAL_Init();
     init_Leds();
     UART_Init();
     init_Button();
     HW_SPI_Init();
     LoRa_Tx_Init();
+<<<<<<< HEAD
 
     UART_clearScreen();
     UART_PutStr("interrupt test\r\n");
@@ -72,3 +96,18 @@ int main(void)
         //power_Deepsleep();                    // This line is commented out because it is very, very dangerous, and can easily fuck up your whole afternoon!!
     }
 }
+=======
+    I2C_Init();
+    VL53_setup();
+    
+    vl53_enable = 1;  // Enable VL53
+    while (1)
+    {
+        if(vl53_enable) 
+        {
+            VL53_start_measuring();
+        }
+    }
+    return 0;
+}
+>>>>>>> bee87afacc7cbdef075a49e64ab9e1dbb1ad6069

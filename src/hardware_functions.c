@@ -1,5 +1,8 @@
 #include "hardware_functions.h"
 
+UART_HandleTypeDef UART_Handler;
+I2C_HandleTypeDef I2C_Handler;
+
 void init_Leds(void)
 {
     LED1_GPIO_CLK_ENABLE();
@@ -52,7 +55,7 @@ void toggle_Led(uint8_t led)
 #endif
     default:
         message[3] = led;
-        send_Warning(message);
+        ERROR_send_warning(message);
         break;
     }
 }
@@ -78,7 +81,7 @@ void set_Led(uint8_t led, uint8_t state)
 #endif
     default:
         message[3] = led;
-        send_Warning(message);
+        ERROR_send_warning(message);
         break;
     }
 }
@@ -126,7 +129,7 @@ void UART_PutInt(uint32_t val)
 {
     char message[UART_INT_BUFFER];
     uint8_t size = 0;
-    itoa(val, message, ITOA_DECIMAL);
+    sprintf((char *)message, "%ld\r\n", val);
     while (message[size] != '\0')
     {
         size++;
