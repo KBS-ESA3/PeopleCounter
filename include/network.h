@@ -3,7 +3,7 @@
 
 // The number of times per day that the people_count needs to be send.
 // This can be anything between 77 (send every 18 minutes.) and 65534 (send every 1.3s).
-#define CONSTANT_LORA_FREQUENCY 77
+#define CONSTANT_LORA_FREQUENCY 10000
 
 // The number of seconds after which inactivity the number of people will be send.
 // Based on the max. value possible in the period (65534), this can be integer

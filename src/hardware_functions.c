@@ -175,14 +175,18 @@ void UART_PutWord(uint16_t Word)
 
 void UART_put_LoRaPacket(LoRa_packet_t packet)
 {
+    // Print device ID.
+    UART_PutStr("Device id: ");
+    UART_PutInt(packet.device_id);
+    
     if(packet.type == TYPE_PEOPLE_COUNT)
     {
         // Output the number of people.
-        UART_PutStr("People count: ");
+        UART_PutStr(" People count: ");
         UART_PutInt(packet.number_of_people);
     } else {
         // This must be the battery status.
-        UART_PutStr("battery status: ");
+        UART_PutStr(" Battery status: ");
         switch (packet.battery_status)
         {
             case BATTERY_GOOD:

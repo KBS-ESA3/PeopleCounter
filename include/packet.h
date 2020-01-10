@@ -18,6 +18,7 @@ typedef enum{
 
 // The content of a packet that needs to be send.
 typedef struct{
+    uint8_t device_id : 7;
     packet_type_t type : 1;
     union{
         // To be used when BATTERY_STATUS is send.

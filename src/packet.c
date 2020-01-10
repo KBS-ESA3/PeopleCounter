@@ -1,6 +1,7 @@
 #include "packet.h"
 #include "network.h"
 #include "hardware_functions.h"
+#include "defines.h"
 
 uint8_t people_count = 0;
 
@@ -22,7 +23,8 @@ uint8_t get_people_count(){
 
 LoRa_packet_t encode_people_count_packet()
 {
-    LoRa_packet_t packet = {0,0};
+    LoRa_packet_t packet = {0,0,0};
+    packet.device_id = DEVICE_ID;
     packet.type = TYPE_PEOPLE_COUNT;
     packet.number_of_people =  people_count;
     return packet;
@@ -30,7 +32,8 @@ LoRa_packet_t encode_people_count_packet()
 
 LoRa_packet_t encode_battery_status_packet()
 {
-    LoRa_packet_t packet = {0,0};
+    LoRa_packet_t packet = {0,0,0};
+    packet.device_id = DEVICE_ID;
     packet.type = TYPE_BATTERY_STATUS;
     packet.number_of_people =  people_count;
     return packet;
@@ -38,6 +41,7 @@ LoRa_packet_t encode_battery_status_packet()
 
 uint16_t encode_frame(LoRa_packet_t packet){
     uint16_t frame = 0;
+    frame |= packet.device_id << 9;
     frame |= packet.type << 8;
     if(packet.type == TYPE_PEOPLE_COUNT)
     {
@@ -48,13 +52,12 @@ uint16_t encode_frame(LoRa_packet_t packet){
     }   else {
         UART_PutStr("There was a problem encoding this frame.");
     }
-
     return frame;
 }
 
 LoRa_packet_t decode_frame(uint16_t frame)
 {
-    LoRa_packet_t packet = {0,0};
+    LoRa_packet_t packet = {0,0,0};
     if(frame & (TYPE_PEOPLE_COUNT << 8))
     {
         packet.type = TYPE_PEOPLE_COUNT;
@@ -63,5 +66,9 @@ LoRa_packet_t decode_frame(uint16_t frame)
         packet.type = TYPE_BATTERY_STATUS;
         packet.battery_status = (uint8_t)frame;
     }
+
+    // TODO - decode device ID.
+
+    packet.device_id = ((uint8_t)(frame >> 9));
     return packet;
 }
