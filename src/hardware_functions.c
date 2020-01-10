@@ -1,5 +1,4 @@
 #include "hardware_functions.h"
-#include "stdio.h"
 
 UART_HandleTypeDef UART_Handler;
 I2C_HandleTypeDef I2C_Handler;
@@ -37,7 +36,7 @@ void init_Button(void)
 
 void toggle_Led(uint8_t led)
 {
-    uint8_t message[] = "ledx is not available on this board!\n\n";
+    char message[] = "ledx is not available on this board!\n\n";
     switch (led)
     {
     case 1:
@@ -111,7 +110,7 @@ void UART_Init()
     HAL_UART_Init(&UART_Handler);
 }
 
-void UART_PutStr(uint8_t *message)
+void UART_PutStr(char *message)
 {
     uint8_t size = 0;
     while (message[size] != '\0')
@@ -121,7 +120,7 @@ void UART_PutStr(uint8_t *message)
     HAL_UART_Transmit(&UART_Handler, message, size, HAL_UART_TIMEOUT_VALUE);
 }
 
-void UART_Putc(uint8_t c)
+void UART_Putc(char c)
 {
     HAL_UART_Transmit(&UART_Handler, c, 1, HAL_UART_TIMEOUT_VALUE);
 }
@@ -140,8 +139,8 @@ void UART_PutInt(uint32_t val)
 
 void UART_clearScreen(void)
 {
-    uint8_t cmd1[5] = {0x1B, '[', '2', 'J', '\0'}; // Clear screen
-    uint8_t cmd2[4] = {0x1B, '[', 'f', '\0'};      // Cursor home
+    char cmd1[5] = {0x1B, '[', '2', 'J', '\0'}; // Clear screen
+    char cmd2[4] = {0x1B, '[', 'f', '\0'};      // Cursor home
 
     UART_PutStr(cmd1);
     UART_PutStr(cmd2);

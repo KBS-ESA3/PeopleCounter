@@ -5,23 +5,40 @@
 // Includes
 #include "vl53_main.h"
 #include "hardware_functions.h"
-#include "error_handling.h"
 
-//Global variables
-extern uint16_t PeopleCount;
-extern uint8_t vl53_Counting;
+// Defines
+#define SPEED_50_HZ 20              // 20ms time budget, means 1/0.02 = 50 Hz
+#define SPAD_CENTERS {167, 231}     // Zone 0 and zone 1, 
+#define NOBODY 0                    // Boolean, sensor does not see anyone
+#define SOMEONE 1                   // Boolean, sensor sees someone
+#define DIST_THRESHOLD_MAX  1780    // Distance from where the sensor sees an object in mm, measured from top down (of the doorframe)
+#define SHORT_RANGE 1               // Up to 1300 mm
+#define LONG_RANGE 2                // Up to 3600 mm
+#define VL53_ADDRESS (0x29 << 1)    // 7 bit, MSB
 
+// Global variables
+int16_t PeopleCount = 45;            // Should never be less than 0
+extern uint8_t vl53_Enable;
 // Programmable I2C address of the VL53L1X sensor
-uint16_t VL53_I2C_Address = (0x29 << 1); // 7 bit, MSB
+uint8_t VL53_I2C_Address = VL53_ADDRESS;   // 7 bit, MSB
 
 // Local variables
 static uint16_t Distance = 0, last_PeopleCount = 0;
-static uint8_t status = 0, sensorState = 0, RangeStatus = 0, dataReady = 0;
+static uint8_t status = 0, sensorState = 0, rangeStatus = 0, dataReady = 0;
+
+// Local functions
+int CountingAlgorithm(int16_t Distance, uint8_t zone);
+int Check_PeopleCount(uint16_t PeopleCount);
+
+#ifdef debug            // Only declare these functions if debug mode is active
+void display_peoplecounter(uint16_t peoplecounter);
+void display_zones();   // Zones are the areas the sensor reads from 
+#endif
 
 int VL53_Setup()
 {
     // Wait for sensor to boot
-    while (sensorState == 0)
+    while (!sensorState)
     {
         status = VL53L1X_BootState(VL53_I2C_Address, &sensorState);
         HAL_Delay(2);
@@ -72,20 +89,19 @@ int start_measuring()
     status = VL53L1X_StartRanging(VL53_I2C_Address);
 
     // Read and display data
-    while (vl53_Counting)
+    while (vl53_Enable)
     {
         dataReady = 0; // Set dataReady to 0 before reading
         while (!dataReady)
         {
             status = VL53L1X_CheckForDataReady(VL53_I2C_Address, &dataReady);
-            HAL_Delay(2);
         }
-        status += VL53L1X_GetRangeStatus(VL53_I2C_Address, &RangeStatus);
+        status += VL53L1X_GetRangeStatus(VL53_I2C_Address, &rangeStatus);
         status += VL53L1X_GetDistance(VL53_I2C_Address, &Distance);
         status += VL53L1X_ClearInterrupt(VL53_I2C_Address); // Clear interrupt before next measurement is called
 
         // If any error occured, terminate process
-        if (status != 0)
+        if (status)
         {   
             send_Warning("Error: could not read measurement\n\r");
             return (-1);
@@ -96,7 +112,7 @@ int start_measuring()
         status = VL53L1X_SetROICenter(VL53_I2C_Address, center[Zone]);
 
         // If any error occured, terminate process
-        if (status != 0)
+        if (status)
         {
             send_Warning("Error: could not set new zone\n\r");
             return (-1);
@@ -118,7 +134,7 @@ int start_measuring()
 int CountingAlgorithm(int16_t Distance, uint8_t zone)
 {
     static int PathTrack[] = {0, 0, 0, 0};
-    static int PathTrackFillingSize = 1; // init this to 1 as we start from state where nobody is any of the zones
+    static int PathTrackFillingSize = 1;        // init this to 1 as we start from state where nobody is any of the zones
     static int LeftPreviousStatus = NOBODY;
     static int RightPreviousStatus = NOBODY;
 
@@ -163,8 +179,6 @@ int CountingAlgorithm(int16_t Distance, uint8_t zone)
             RightPreviousStatus = CurrentZoneStatus; // remember for next time
         }
     }
-
-    // if an event has occured
     if (AnEventHasOccured)
     {
         if (PathTrackFillingSize < 4)
@@ -201,7 +215,6 @@ int CountingAlgorithm(int16_t Distance, uint8_t zone)
 }
 
 // Function checks if the PeoleCount value is not faulty
-// E
 int Check_PeopleCount(uint16_t PeopleCount)
 {
     if (PeopleCount & ((uint16_t)1 << 15)) // In Two's complement, MSB is set and the other bits are flipped when value is negative. Check if MSB is set.
@@ -217,11 +230,15 @@ int Check_PeopleCount(uint16_t PeopleCount)
     return PeopleCount;
 }
 
+uint16_t Get_PeopleCount()
+{
+    return PeopleCount;
+}
 // These functions are only needed in debug mode
 #ifdef debug
 
 // Function displays amount of people that entered the room
-void display_peoplecounter(int PeopleCount)
+void display_peoplecounter(uint16_t PeopleCount)
 {
     char buffer[50];
     if (PeopleCount != last_PeopleCount)
@@ -253,7 +270,7 @@ void display_zones()
             HAL_Delay(2);
         }
         dataReady = 0;
-        status += VL53L1X_GetRangeStatus(VL53_I2C_Address, &RangeStatus);
+        status += VL53L1X_GetRangeStatus(VL53_I2C_Address, &rangeStatus);
         status += VL53L1X_GetDistance(VL53_I2C_Address, &Distance);
         status += VL53L1X_ClearInterrupt(VL53_I2C_Address); /* clear interrupt has to be called to enable next interrupt*/
         if (Distance < DIST_THRESHOLD_MAX)
@@ -267,4 +284,4 @@ void display_zones()
         Zonenr = Zonenr % 2;
     }
 }
-#endif
+#endif // End debug 
