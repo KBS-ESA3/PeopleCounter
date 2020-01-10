@@ -129,7 +129,10 @@ int main(void)
         //     botPeak = 0;
         // }
 
-        // UART_PutInt(people);
+        UART_PutInt(objectDif1);
+        UART_PutStr(" ");
+        UART_PutStr("\n");
+
         // UART_PutInt(object);
         // UART_PutInt(objectDif);
         // UART_PutStr(" ");
@@ -142,8 +145,8 @@ int main(void)
         // UART_PutInt(objectDifDif);
         // UART_PutInt(objectDif);
 
-        UART_PutInt(object1);
-        UART_PutStr("\n");
+        // UART_PutInt(objectDif);
+        // UART_PutStr("\n");
 
         // if (objectDif1 > topPeak)
         // {
