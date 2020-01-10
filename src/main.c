@@ -1,3 +1,8 @@
+/************************************
+ *         Main source file         *
+ ************************************/
+
+// Includes
 #include "board_definitions.h"
 #include "hardware_functions.h"
 #include "SPI.h"
@@ -5,9 +10,7 @@
 #include "interrupt.h"
 #include "error_handling.h"
 #include "calipile_discovery.h"
-#include "VL53L1_platform.h"
-#include "VL53L1X_api.h"
-#include "VL53L1X_calibration.h"
+#include "vl53_main.h"
 
 #define CALIPILE_0_ADDR (0x0C << 1)
 #define CALIPILE_1_ADDR (0x0D << 1)
@@ -23,6 +26,9 @@
 #define CALIPILE_INTDIR 0X00
 #define CALIPILE_INTTIM 0
 #define CALIPILE_OBJTRSHLD 0
+
+// Global variables
+uint8_t vl53_enable = 0;  // Boolean, set to start counting with VL53
 
 calipile_t sensor0 = {
     CALIPILE_0_ADDR,
@@ -55,21 +61,23 @@ calipile_t sensor1 = {
 
 int main(void)
 {
-  HAL_Init();
-  init_Leds();
-  UART_Init();
-  init_Button();
-  HW_SPI_Init();
-  LoRa_Tx_Init();
-
-  UART_clearScreen();
-  UART_PutStr("interrupt test\r\n");
-
-  while (1)
-  {
-    LoRa_Send_String((uint8_t *)"going to sleep\r\n");  // Send via LoRa
-    power_Deepsleep();
-    HAL_Delay(1000);
-    toggle_Led(LED1);
-  }
+    // Init functions
+    HAL_Init();
+    init_Leds();
+    UART_Init();
+    init_Button();
+    HW_SPI_Init();
+    LoRa_Tx_Init();
+    I2C_Init();
+    VL53_setup();
+    
+    vl53_enable = 1;  // Enable VL53
+    while (1)
+    {
+        if(vl53_enable) 
+        {
+            VL53_start_measuring();
+        }
+    }
+    return 0;
 }
