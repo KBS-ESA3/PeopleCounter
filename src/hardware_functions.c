@@ -129,7 +129,7 @@ void UART_PutInt(uint32_t val)
 {
     char message[UART_INT_BUFFER];
     uint8_t size = 0;
-    sprintf((char *)message, "%ld\r\n", val);
+    itoa(val, message, ITOA_DECIMAL);
     while (message[size] != '\0')
     {
         size++;
@@ -181,7 +181,7 @@ void UART_put_LoRaPacket(LoRa_packet_t packet)
     // Print device ID.
     UART_PutStr("Device id: ");
     UART_PutInt(packet.device_id);
-    
+
     if(packet.type == TYPE_PEOPLE_COUNT)
     {
         // Output the number of people.

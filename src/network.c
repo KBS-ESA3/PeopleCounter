@@ -3,6 +3,7 @@
 #include "board_definitions.h"
 #include "hardware_functions.h"
 #include "LoRa.h"
+#include "vl53_main.h"
 
 #define INACTIVE_TIMER_PRESCALER 8001
 #define INACTIVE_TIMER_PERIOD (round(((2097152/INACTIVE_TIMER_PRESCALER) * PASSING_INACTIVE_TIME) + 1))
@@ -33,10 +34,10 @@ void on_passing()
             // Do nothing because sending happens with a constant frequency.
             break;
         case SEND_PEAK_AT_ZERO:
-            if(get_people_count() > highest_people_count)
+            if(VL53_get_people_count() > highest_people_count)
             {
                 highest_people_count++;
-            } else if(get_people_count() == 0){
+            } else if(VL53_get_people_count() == 0){
                 highest_people_count = 0;
                 network_send_people_count();
             }

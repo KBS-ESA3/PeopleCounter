@@ -2,23 +2,16 @@
 #include "network.h"
 #include "hardware_functions.h"
 #include "defines.h"
-
-uint8_t people_count = 0;
+#include "vl53_main.h"
 
 void increment_people_count(void)
 {
-    people_count++;
     on_passing();
 }
 
 void decrease_people_count(void)
 {
-    people_count--;
     on_passing();
-}
-
-uint8_t get_people_count(){
-    return people_count;
 }
 
 LoRa_packet_t encode_people_count_packet()
@@ -26,7 +19,7 @@ LoRa_packet_t encode_people_count_packet()
     LoRa_packet_t packet = {0,0,0};
     packet.device_id = DEVICE_ID;
     packet.type = TYPE_PEOPLE_COUNT;
-    packet.number_of_people =  people_count;
+    packet.number_of_people =  VL53_get_people_count();
     return packet;
 }
 
@@ -35,7 +28,7 @@ LoRa_packet_t encode_battery_status_packet()
     LoRa_packet_t packet = {0,0,0};
     packet.device_id = DEVICE_ID;
     packet.type = TYPE_BATTERY_STATUS;
-    packet.number_of_people =  people_count;
+    // TODO - ADD BATTERY STATUS TO THIS PACKET!!!!
     return packet;
 }
 
@@ -66,6 +59,7 @@ LoRa_packet_t decode_frame(uint16_t frame)
         packet.type = TYPE_BATTERY_STATUS;
         packet.battery_status = (uint8_t)frame;
     }
+
     packet.device_id = ((uint8_t)(frame >> 9));
     return packet;
 }
