@@ -3,6 +3,8 @@
 
 #include "board_definitions.h"
 
+extern uint8_t vl53_enable;
+
 void SysTick_Handler(void);
 void EXTI0_1_IRQHandler(void);
 void EXTI4_15_IRQHandler(void);

@@ -15,6 +15,8 @@ void USER_BUTTON_IT_HANDLER(void)
     if (__HAL_GPIO_EXTI_GET_FLAG(USER_BUTTON_PIN))
     {
         toggle_Led(LED2);   // Toggle led to test interrupt
+        vl53_enable++;
+        vl53_enable = vl53_enable % 2;
         LoRa_Send_String((uint8_t *)"button press!\r\n"); // Send via LoRa
     }
     HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN);  // Let HAL clear the pending interrupt
@@ -30,6 +32,7 @@ void USER_BUTTON_IT_HANDLER(void)
 void SysTick_Handler(void)
 {
     HAL_IncTick();
+    //UART_PutStr("hoi\r\n");
 }
 
 /**

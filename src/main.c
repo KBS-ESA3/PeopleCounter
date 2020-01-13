@@ -71,13 +71,21 @@ int main(void)
     I2C_Init();
     VL53_setup();
     
-    vl53_enable = 1;  // Enable VL53
+    // Should be triggered by interrupt, uncomment line if not imlemented
+    //vl53_enable = 1;  // Enable VL53
     while (1)
     {
         if(vl53_enable) 
         {
+            #ifdef DEBUG
+            UART_PutStr("Sensor wake up\r\n");
+            #endif
             VL53_start_measuring();
         }
+        #ifdef DEBUG 
+        UART_PutStr("Sensor put to sleep\r\n");
+        #endif
+        power_Sleep();
     }
     return 0;
 }

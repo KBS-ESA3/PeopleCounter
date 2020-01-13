@@ -17,7 +17,7 @@
 int16_t people_count = 0;            // Should never be less than 0
 extern uint8_t vl53_enable;
 // Programmable I2C address of the VL53L1X sensor
-uint8_t VL53_I2C_address = VL53_ADDRESS;   // 7 bit, MSB
+uint8_t VL53_I2C_address = VL53_ADDRESS;   // 7 bit, MSB (1234567x)
 
 // Local variables
 static uint16_t distance = 0, last_people_count = 0;
