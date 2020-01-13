@@ -44,7 +44,11 @@ void on_passing()
             break;
         case SEND_AFTER_INACTIVE_PEDIOD:
             // Start the timer_inactive at 0 so it will be exactly 30s.
+            #ifdef LORA_BOARD
             TIM7->CNT = 0;
+            #else
+            // This function is not implemented for this board.
+            #endif /* LORA_BOARD */
             enable_inactive_timer();
             break;
         default:
@@ -62,6 +66,7 @@ void network_send_people_count()
 
 void initialise_inactive_timer()
 {
+    #ifdef LORA_BOARD
 /*
     T = 30s so F = 0.033Hz
     TIMupdateFreq(HZ) = Clock/((PSC-1)*(Period-1))
@@ -77,11 +82,15 @@ void initialise_inactive_timer()
     timer_inactive.Init.Period = INACTIVE_TIMER_PERIOD;
     timer_inactive.Init.CounterMode = TIM_COUNTERMODE_UP;
     timer_inactive.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+    #else
+    // This is not implemented for this board
+    #endif /* LORA_BOARD */
 }
 
 
 void initialise_continious_timer()
 {
+    #ifdef LORA_BOARD
 /*
 -- This calculation is not true anymore, since the period is variable.
     140 timer per 86400 seconds
@@ -107,10 +116,14 @@ void initialise_continious_timer()
 
     HAL_NVIC_SetPriority(TIM6_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(TIM6_IRQn);
+    #else
+    // This is not implemented for this board
+    #endif /* LORA_BOARD */
 }
 
 void enable_inactive_timer()
 {
+    #ifdef LORA_BOARD
     UART_PutStr("Enabling inactive timer\n\r");
     __TIM7_CLK_ENABLE();
     HAL_TIM_Base_Init(&timer_inactive);
@@ -119,22 +132,33 @@ void enable_inactive_timer()
 
     HAL_NVIC_SetPriority(TIM7_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(TIM7_IRQn);
+    #else
+    // This function is not implemented yet for the disco board.
+    #endif /* LORA_BOARD */
 }
 
 void disable_inactive_timer()
 {
+    #ifdef LORA_BOARD
     __TIM7_CLK_DISABLE();
     HAL_TIM_Base_DeInit(&timer_inactive);
 
     HAL_NVIC_DisableIRQ(TIM7_IRQn);
+    #else
+    // This is not implemented for the Disco board yet.
+    #endif /* LORA_BOARD */
 }
 
 void disable_continuous_timer()
 {
+    #ifdef LORA_BOARD
     __TIM6_CLK_DISABLE();
     HAL_TIM_Base_DeInit(&timer_continuous);
 
     HAL_NVIC_DisableIRQ(TIM6_IRQn);
+    #else
+    // This functionality is not implemented yet.
+    #endif /* LORA_BOARD */
 }
 
 void change_network_timing_protocol(network_timing_protocol_t change_to)

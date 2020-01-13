@@ -48,6 +48,7 @@ void EXTI0_1_IRQHandler()
 
 void TIM7_IRQHandler(void)
 {
+    #ifdef LORA_BOARD
     TIM_HandleTypeDef timer;
     
     timer.Instance = TIM7;
@@ -58,10 +59,12 @@ void TIM7_IRQHandler(void)
         disable_inactive_timer();
     }
     __HAL_TIM_CLEAR_FLAG(&timer, TIM_IT_UPDATE);
+    #endif /* LORA_BOARD */
 }
 
 void TIM6_IRQHandler(void)
 {
+    #ifdef LORA_BOARD
     TIM_HandleTypeDef timer;
     timer.Instance = TIM6;
 
@@ -70,6 +73,10 @@ void TIM6_IRQHandler(void)
         network_send_people_count();
     }
     __HAL_TIM_CLEAR_FLAG(&timer, TIM_IT_UPDATE);
+    #else
+    // This board does not support LoRa
+    #endif /* LORA_BOARD */
+
 }
 
 /**
