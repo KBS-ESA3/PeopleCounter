@@ -147,10 +147,20 @@ void SX1276_Send(uint8_t *buffer, uint8_t size)
     SX1276_Write(REG_LR_OPMODE, (SX1276_Read(REG_LR_OPMODE) & RFLR_OPMODE_MASK) | RFLR_OPMODE_SLEEP);
 }
 
-void LoRa_Send_String(uint8_t *textToSend)
+void LoRa_Send_String(uint8_t *text_to_send)
 {
 #ifdef LORA_BOARD
-    SX1276_Send((uint8_t *)textToSend, Get_Strlen(textToSend));
+    SX1276_Send((uint8_t *)text_to_send, Get_Strlen(text_to_send));
+#else
+#warning this board does not have lora
+#endif
+}
+
+void LoRa_Send_Word(uint16_t word)
+{
+#ifdef LORA_BOARD
+    uint8_t to_send[] = {(word >> 8), word};
+    SX1276_Send((uint8_t*)to_send, 2);
 #else
 #warning this board does not have lora
 #endif

@@ -129,7 +129,7 @@ void UART_PutInt(uint32_t val)
 {
     char message[UART_INT_BUFFER];
     uint8_t size = 0;
-    sprintf((char *)message, "%ld\r\n", val);
+    itoa(val, message, ITOA_DECIMAL);
     while (message[size] != '\0')
     {
         size++;
@@ -144,6 +144,70 @@ void UART_clearScreen(void)
 
     UART_PutStr(cmd1);
     UART_PutStr(cmd2);
+}
+
+void UART_PutByte(uint8_t byte)
+{
+    int i;
+    char result[11] = { '0','0','0','0',
+                        '0','0','0','0',
+                        '\n','\r','\0',};
+    
+    for(i=0; i < 8; i++)
+    {
+        result[i] = (byte & 1 << (7-i)) ? '1' : '0'; 
+    }
+    UART_PutStr(result);
+}
+
+void UART_PutWord(uint16_t word)
+{
+    int i;
+    char result[19] = { '0','0','0','0',
+                        '0','0','0','0',
+                        '0','0','0','0',
+                        '0','0','0','0',
+                        '\n','\r','\0',};
+    
+    for(i=0; i < 16; i++)
+    {
+        result[i] = (word & 1 << (15-i)) ? '1' : '0'; 
+    }
+    UART_PutStr(result);
+}
+
+void UART_put_LoRaPacket(LoRa_packet_t packet)
+{
+    // Print device ID.
+    UART_PutStr("Device id: ");
+    UART_PutInt(packet.device_id);
+
+    if(packet.type == TYPE_PEOPLE_COUNT)
+    {
+        // Output the number of people.
+        UART_PutStr(" People count: ");
+        UART_PutInt(packet.number_of_people);
+    } else {
+        // This must be the battery status.
+        UART_PutStr(" Battery status: ");
+        switch (packet.battery_status)
+        {
+            case BATTERY_GOOD:
+                UART_PutStr("Good!");
+                break;
+            case BATTERY_LOW:
+                UART_PutStr("low");
+                break;
+            case BATTERY_CRITICAL:
+                UART_PutStr("critical!");
+                break;
+            default:
+            // Invalid data.
+                break;
+                UART_PutStr("invalid packet!!");
+        }
+    }
+    UART_PutStr("\n\r");
 }
 
 uint8_t Get_Strlen(char *string)

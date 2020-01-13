@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <math.h>
 
 #if DISCO_BOARD
 #include "stm32f0xx_hal.h"
@@ -91,6 +92,7 @@
 #include "stm32l0xx_hal_gpio.h"
 #include "stm32l0xx_hal_uart.h"
 #include "stm32l0xx_hal_i2c.h"
+#include "stm32l0xx_hal_tim.h"
 
 #define LEDn 4
 

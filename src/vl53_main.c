@@ -1,6 +1,8 @@
 // Includes
 #include "vl53_main.h"
 #include "hardware_functions.h"
+#include "packet.h"
+#include "network.h"
 
 // Defines
 #define SPEED_50_HZ 20              // 20ms time budget, means 1/0.02 = 50 Hz
@@ -126,7 +128,6 @@ void VL53_start_measuring()
         people_count = VL53_counting_algorithm(distance, zone);
         // Check people_count for faulty value (i.e. when the value becomes negative)
         people_count = VL53_check_people_count(people_count);
-        VL53_display_people_counter(people_count);
 
         // Toggle zone integer between 0 and 1
         zone++;
@@ -210,10 +211,12 @@ int16_t VL53_counting_algorithm(uint16_t distance, uint8_t zone)
                 if ((path_track[1] == 1) && (path_track[2] == 3) && (path_track[3] == 2))
                 {
                     people_count++; // This an entry
+                    on_passing();
                 }
                 else if ((path_track[1] == 2) && (path_track[2] == 3) && (path_track[3] == 1))
                 {
                     people_count--; // This an exit
+                    on_passing();    
                 }
             }
             path_track_filling_size = 1;
@@ -298,9 +301,13 @@ void VL53_display_zones()
         status += VL53L1X_GetDistance(VL53_I2C_address, &distance);
         status += VL53L1X_ClearInterrupt(VL53_I2C_address);
         if (distance < DIST_THRESHOLD_MAX)
+        {
             zone[zone_index] = 1;
-        else
+        }
+        else 
+        {
             zone[zone_index] = 0;
+        }
         sprintf((char *)buffer, "Zone 1: %u, Zone 2: %u\r\n", zone[0], zone[1]);
         UART_PutStr(buffer);
 
