@@ -8,8 +8,8 @@
 void LoRa_Tx_Init(void);
 void Set_Frequency_LoRa(void);
 
-void SX1276_Write(uint16_t addr, uint8_t data); // write a single byte to sx1276 register adress over spi
-uint8_t SX1276_Read(uint16_t addr);             // read a single byte from sx1276 register over spi
+void SX1276_Write(uint16_t addr, uint8_t data); // Write a single byte to sx1276 register adress over SPI.
+uint8_t SX1276_Read(uint16_t addr);             // Read a single byte from sx1276 register over SPI.
 void SX1276_Set_OpMode(uint8_t opMode);
 /*
     OpModes SX1276:
@@ -19,6 +19,7 @@ void SX1276_Set_OpMode(uint8_t opMode);
     RFLR_OPMODE_RECEIVER    - Mode for receiving data
 */
 
-void LoRa_Send_String(uint8_t *textToSend); // Send string via LoRa
+void LoRa_Send_String(uint8_t *text_to_send); // Send string via LoRa.
+void LoRa_Send_Word(uint16_t word);         // Send a word(16b) via LoRa.
 
 #endif /* LORA_H */

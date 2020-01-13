@@ -1,15 +1,12 @@
-/************************************
- *         Main source file         *
- ************************************/
-
 // Includes
-#include "board_definitions.h"
-#include "hardware_functions.h"
-#include "SPI.h"
 #include "LoRa.h"
-#include "interrupt.h"
-#include "error_handling.h"
+#include "SPI.h"
+#include "board_definitions.h"
 #include "calipile_discovery.h"
+#include "error_handling.h"
+#include "hardware_functions.h"
+#include "interrupt.h"
+#include "network.h"
 #include "vl53_main.h"
 
 #define CALIPILE_0_ADDR (0x0C << 1)
@@ -70,8 +67,14 @@ int main(void)
     LoRa_Tx_Init();
     I2C_Init();
     VL53_setup();
-    
+
     vl53_enable = 1;  // Enable VL53
+
+    UART_clearScreen();
+    UART_PutStr("interrupt test\r\n");
+
+    change_network_timing_protocol(SEND_CONSTANT_FREQUENCY);
+
     while (1)
     {
         if(vl53_enable) 
