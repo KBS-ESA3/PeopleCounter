@@ -146,7 +146,7 @@ void UART_clearScreen(void)
     UART_PutStr(cmd2);
 }
 
-void UART_PutByte(uint8_t Byte)
+void UART_PutByte(uint8_t byte)
 {
     int i;
     char result[11] = { '0','0','0','0',
@@ -155,12 +155,12 @@ void UART_PutByte(uint8_t Byte)
     
     for(i=0; i < 8; i++)
     {
-        result[i] = (Byte & 1 << (7-i)) ? '1' : '0'; 
+        result[i] = (byte & 1 << (7-i)) ? '1' : '0'; 
     }
     UART_PutStr(result);
 }
 
-void UART_PutWord(uint16_t Word)
+void UART_PutWord(uint16_t word)
 {
     int i;
     char result[19] = { '0','0','0','0',
@@ -171,7 +171,7 @@ void UART_PutWord(uint16_t Word)
     
     for(i=0; i < 16; i++)
     {
-        result[i] = (Word & 1 << (15-i)) ? '1' : '0'; 
+        result[i] = (word & 1 << (15-i)) ? '1' : '0'; 
     }
     UART_PutStr(result);
 }

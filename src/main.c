@@ -1,9 +1,6 @@
 // Includes
 #include "LoRa.h"
 #include "SPI.h"
-#include "VL53L1X_api.h"
-#include "VL53L1X_calibration.h"
-#include "VL53L1_platform.h"
 #include "board_definitions.h"
 #include "calipile_discovery.h"
 #include "error_handling.h"

@@ -36,7 +36,7 @@ void on_passing()
         case SEND_PEAK_AT_ZERO:
             if(VL53_get_people_count() > highest_people_count)
             {
-                highest_people_count++;
+                highest_people_count = VL53_get_people_count();
             } else if(VL53_get_people_count() == 0){
                 highest_people_count = 0;
                 network_send_people_count();

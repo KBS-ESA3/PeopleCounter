@@ -19,7 +19,7 @@ void SX1276_Set_OpMode(uint8_t opMode);
     RFLR_OPMODE_RECEIVER    - Mode for receiving data
 */
 
-void LoRa_Send_String(uint8_t *textToSend); // Send string via LoRa.
+void LoRa_Send_String(uint8_t *text_to_send); // Send string via LoRa.
 void LoRa_Send_Word(uint16_t Word);         // Send a word(16b) via LoRa.
 
 #endif /* LORA_H */
