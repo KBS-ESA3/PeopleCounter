@@ -83,6 +83,9 @@ int main(void)
     int8_t step = 0;
     int16_t people = 0;
 
+    int8_t reset = 1;
+
+    UART_PutStr("start");
     while (1)
     {
         // int16_t motionOld = motion;
@@ -97,6 +100,23 @@ int main(void)
         objectDifOld1 = objectDif1;
         objectDif1 = object1 - objectOld1;
         objectDifDif1 = objectDif1 - objectDifOld1;
+
+        // if(reset == 1 && objectDif1 > 30)
+        // {
+        //     reset = 0;
+        //     people++;
+        // }
+        // if(reset == 1 && objectDif1 < -30)
+        // {
+        //     reset = 0;
+        //     people--;
+        // }
+        // if(objectDif1 < 10 && objectDif1 > -10)
+        // {
+        //     reset = 1;
+        // }
+
+
 
         // if ((step == 0 || step == 1) && objectDif > CALIPILE_TRSHLD)
         // {
@@ -128,10 +148,8 @@ int main(void)
         //     topPeak = 0;
         //     botPeak = 0;
         // }
+        
 
-        UART_PutInt(objectDif1);
-        UART_PutStr(" ");
-        UART_PutStr("\n");
 
         // UART_PutInt(object);
         // UART_PutInt(objectDif);
@@ -148,20 +166,22 @@ int main(void)
         // UART_PutInt(objectDif);
         // UART_PutStr("\n");
 
-        // if (objectDif1 > topPeak)
-        // {
-        //     topPeak = objectDif1;
-        //     UART_PutInt(topPeak);
-        //     UART_PutStr(" ");
-        //     UART_PutStr("\n");
-        // }
-        // if (objectDif1 < botPeak)
-        // {
-        //     botPeak = objectDif1;
-        //     UART_PutInt(botPeak);
-        //     UART_PutStr(" ");
-        //     UART_PutStr("\n");
-        // }
+        if (objectDif1 > topPeak)
+        {
+            topPeak = objectDif1;
+            UART_PutInt(topPeak);
+            UART_PutStr(" ");
+            UART_PutStr("\n");
+        }
+        if (objectDif1 < botPeak)
+        {
+            botPeak = objectDif1;
+            UART_PutInt(botPeak);
+            UART_PutStr(" ");
+            UART_PutStr("\n");
+        }
+        UART_PutInt(object);
+        UART_PutStr("\n");
 
         HAL_GPIO_TogglePin(LED1_GPIO_PORT, LED1_PIN);
         HAL_Delay(50);
