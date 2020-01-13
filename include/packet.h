@@ -30,8 +30,7 @@ typedef struct{
 
 } LoRa_packet_t;
 
-void increment_people_count(void);
-void decrease_people_count(void);
+
 LoRa_packet_t encode_people_count_packet();
 LoRa_packet_t encode_battery_status_packet();
 uint16_t encode_frame(LoRa_packet_t packet);

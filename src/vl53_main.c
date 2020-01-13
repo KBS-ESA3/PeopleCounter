@@ -2,6 +2,7 @@
 #include "vl53_main.h"
 #include "hardware_functions.h"
 #include "packet.h"
+#include "network.h"
 
 // Defines
 #define SPEED_50_HZ 20              // 20ms time budget, means 1/0.02 = 50 Hz
@@ -210,13 +211,12 @@ int16_t VL53_counting_algorithm(uint16_t distance, uint8_t zone)
                 if ((path_track[1] == 1) && (path_track[2] == 3) && (path_track[3] == 2))
                 {
                     people_count++; // This an entry
-                    increment_people_count();
-                    
+                    on_passing();
                 }
                 else if ((path_track[1] == 2) && (path_track[2] == 3) && (path_track[3] == 1))
                 {
                     people_count--; // This an exit
-                    decrease_people_count();
+                    on_passing();    
                 }
             }
             path_track_filling_size = 1;
@@ -304,7 +304,8 @@ void VL53_display_zones()
         {
             zone[zone_index] = 1;
         }
-        else {
+        else 
+        {
             zone[zone_index] = 0;
         }
         sprintf((char *)buffer, "Zone 1: %u, Zone 2: %u\r\n", zone[0], zone[1]);

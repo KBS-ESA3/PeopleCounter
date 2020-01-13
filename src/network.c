@@ -5,9 +5,21 @@
 #include "LoRa.h"
 #include "vl53_main.h"
 
+/*
+T = 1/F
+F = SysCoreClock / ((PSC-1) * (Period-1))
+SysCoreClock = 2097152.
+
+1/T = 2097152 / ((8001-1) * (Period-1))
+2097152 * T = 1 * ((8000) * (Period-1)) 
+Period = ((2091752 / prescaler) * T) + 1
+*/
 #define INACTIVE_TIMER_PRESCALER 8001
 #define INACTIVE_TIMER_PERIOD (round(((2097152/INACTIVE_TIMER_PRESCALER) * PASSING_INACTIVE_TIME) + 1))
 
+// Practicly the same calculation as with
+// The inactive timer, but the number of seconds
+// per etmal is devided as well.
 #define CONTINUOUS_TIMER_PRESCALER 36001
 #define CONTINUOUS_TIMER_PERIOD (round(((2097152/CONTINUOUS_TIMER_PRESCALER) * ((60*60*24)/CONSTANT_LORA_FREQUENCY)) + 1))
 

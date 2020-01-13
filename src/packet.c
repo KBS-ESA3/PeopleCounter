@@ -5,16 +5,6 @@
 #include "vl53_main.h"
 #include "battery.h"
 
-void increment_people_count(void)
-{
-    on_passing();
-}
-
-void decrease_people_count(void)
-{
-    on_passing();
-}
-
 LoRa_packet_t encode_people_count_packet()
 {
     LoRa_packet_t packet = {0,0,0};
@@ -41,10 +31,12 @@ uint16_t encode_frame(LoRa_packet_t packet){
     if(packet.type == TYPE_PEOPLE_COUNT)
     {
         frame |= packet.number_of_people;
-    } else if(packet.type  == TYPE_BATTERY_STATUS)
+    } 
+    else if(packet.type  == TYPE_BATTERY_STATUS)
     {
         frame |= packet.battery_status;
-    }   else {
+    }   
+    else {
         #ifdef DEBUG
         UART_PutStr("There was a problem encoding this frame.");
         #endif /* DEBUG */
@@ -59,7 +51,8 @@ LoRa_packet_t decode_frame(uint16_t frame)
     {
         packet.type = TYPE_PEOPLE_COUNT;
         packet.number_of_people = (uint8_t)frame;
-    }  else {
+    }  
+    else {
         packet.type = TYPE_BATTERY_STATUS;
         packet.battery_status = (uint8_t)frame;
     }

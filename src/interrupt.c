@@ -46,6 +46,8 @@ void EXTI0_1_IRQHandler()
 #endif
 }
 
+// This interrupt is from the network protocol SEND_AFTER_INACTIVE_PEDIOD
+// and is customizable in network.h
 void TIM7_IRQHandler(void)
 {
     #ifdef LORA_BOARD
@@ -62,6 +64,8 @@ void TIM7_IRQHandler(void)
     #endif /* LORA_BOARD */
 }
 
+// This interrupt is from the network protocol SEND_CONSTANT_FREQUENCY
+// and is customizable in network.h
 void TIM6_IRQHandler(void)
 {
     #ifdef LORA_BOARD
