@@ -3,6 +3,7 @@
 #include "hardware_functions.h"
 #include "defines.h"
 #include "vl53_main.h"
+#include "battery.h"
 
 void increment_people_count(void)
 {
@@ -28,7 +29,8 @@ LoRa_packet_t encode_battery_status_packet()
     LoRa_packet_t packet = {0,0,0};
     packet.device_id = DEVICE_ID;
     packet.type = TYPE_BATTERY_STATUS;
-    // TODO - ADD BATTERY STATUS TO THIS PACKET!!!!
+    packet.battery_status = battery_get_status();
+    
     return packet;
 }
 

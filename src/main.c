@@ -76,7 +76,7 @@ int main(void)
     UART_clearScreen();
     UART_PutStr("interrupt test\r\n");
 
-    change_network_timing_protocol(SEND_EVERY_PASSAGE);
+    change_network_timing_protocol(SEND_CONSTANT_FREQUENCY);
 
     while (1)
     {
