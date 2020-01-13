@@ -60,7 +60,9 @@ void on_passing()
 void network_send_people_count()
 {
     LoRa_packet_t packet = encode_people_count_packet();
+    #ifdef DEBUG
     UART_put_LoRaPacket(decode_frame(encode_frame(packet)));
+    #endif /* DEBUG */
     LoRa_Send_Word(encode_frame(packet));
 }
 
@@ -124,7 +126,9 @@ void initialise_continious_timer()
 void enable_inactive_timer()
 {
     #ifdef LORA_BOARD
+    #ifdef DEBUG
     UART_PutStr("Enabling inactive timer\n\r");
+    #endif /* DEBUG */
     __TIM7_CLK_ENABLE();
     HAL_TIM_Base_Init(&timer_inactive);
     __HAL_TIM_CLEAR_FLAG(&timer_inactive, TIM_IT_UPDATE);

@@ -301,9 +301,12 @@ void VL53_display_zones()
         status += VL53L1X_GetDistance(VL53_I2C_address, &distance);
         status += VL53L1X_ClearInterrupt(VL53_I2C_address);
         if (distance < DIST_THRESHOLD_MAX)
+        {
             zone[zone_index] = 1;
-        else
+        }
+        else {
             zone[zone_index] = 0;
+        }
         sprintf((char *)buffer, "Zone 1: %u, Zone 2: %u\r\n", zone[0], zone[1]);
         UART_PutStr(buffer);
 

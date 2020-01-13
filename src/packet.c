@@ -45,7 +45,9 @@ uint16_t encode_frame(LoRa_packet_t packet){
     {
         frame |= packet.battery_status;
     }   else {
+        #ifdef DEBUG
         UART_PutStr("There was a problem encoding this frame.");
+        #endif /* DEBUG */
     }
     return frame;
 }
