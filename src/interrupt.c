@@ -17,7 +17,6 @@ void USER_BUTTON_IT_HANDLER(void)
     if (__HAL_GPIO_EXTI_GET_FLAG(USER_BUTTON_PIN))
     {
         toggle_Led(LED2);   // Toggle led to test interrupt
-        increment_people_count();                           // This should not be called from here! this should be called from the person that implements the sensors! it is just in the interrupt for testing.
     }
     HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN);  // Let HAL clear the pending interrupt
 }
