@@ -25,8 +25,8 @@ typedef enum{
     // time the room was completely empty.
     SEND_PEAK_AT_ZERO,
 
-    //Send people_count after there was no passage for PASSING_INACTIVE_TIME.
-    SEND_AFTER_INACTIVE_PEDIOD,
+    // Send people_count after there was no passage for PASSING_INACTIVE_TIME.
+    SEND_AFTER_INACTIVE_PERIOD,
 } network_timing_protocol_t;
 
 // This function is called when someone passes the door.
