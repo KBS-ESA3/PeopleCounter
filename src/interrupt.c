@@ -46,7 +46,7 @@ void EXTI0_1_IRQHandler()
 #endif
 }
 
-// This interrupt is from the network protocol SEND_AFTER_INACTIVE_PEDIOD
+// This interrupt is from the network protocol SEND_AFTER_INACTIVE_PERIOD
 // and is customizable in network.h
 void TIM7_IRQHandler(void)
 {

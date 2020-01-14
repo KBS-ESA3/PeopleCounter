@@ -54,7 +54,7 @@ void on_passing()
                 network_send_people_count();
             }
             break;
-        case SEND_AFTER_INACTIVE_PEDIOD:
+        case SEND_AFTER_INACTIVE_PERIOD:
             // Start the timer_inactive at 0 so it will be exactly 30s.
             #ifdef LORA_BOARD
             TIM7->CNT = 0;
@@ -195,7 +195,7 @@ void change_network_timing_protocol(network_timing_protocol_t change_to)
             break;
         case SEND_PEAK_AT_ZERO:
             break;
-        case SEND_AFTER_INACTIVE_PEDIOD:
+        case SEND_AFTER_INACTIVE_PERIOD:
             initialise_inactive_timer();
             break;
         default:
