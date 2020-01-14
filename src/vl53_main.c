@@ -129,6 +129,9 @@ void VL53_start_measuring()
         // Check people_count for faulty value (i.e. when the value becomes negative)
         people_count = VL53_check_people_count(people_count);
 
+        #ifdef DEBUG
+        VL53_display_people_counter(people_count);
+        #endif
         // Toggle zone integer between 0 and 1
         zone++;
         zone = zone % 2;
@@ -211,12 +214,14 @@ int16_t VL53_counting_algorithm(uint16_t distance, uint8_t zone)
                 if ((path_track[1] == 1) && (path_track[2] == 3) && (path_track[3] == 2))
                 {
                     people_count++; // This an entry
-                    on_passing();
+                    //on_passing();
+                    toggle_Led(LED1);
                 }
                 else if ((path_track[1] == 2) && (path_track[2] == 3) && (path_track[3] == 1))
                 {
                     people_count--; // This an exit
-                    on_passing();    
+                    //on_passing();    
+                    toggle_Led(LED1);
                 }
             }
             path_track_filling_size = 1;

@@ -14,10 +14,10 @@
 #define CALIPILE_LOWPASS1 11
 #define CALIPILE_LOWPASS2 8
 #define CALIPILE_LOWPASS3 10
-#define CALIPILE_PRTRSHLD 50
+#define CALIPILE_PRTRSHLD 100
 #define CALIPILE_MTNTRSHLD 10
 #define CALIPILE_AMBTRSHLD 10
-#define CALIPILE_INTERRUPT 0X00
+#define CALIPILE_INTERRUPT 0x08
 #define CALIPILE_CYCLETIME 0X08
 #define CALIPILE_SOURCE 0X01
 #define CALIPILE_INTDIR 0X00
@@ -58,6 +58,8 @@ calipile_t sensor1 = {
 
 int main(void)
 {
+
+    uint16_t temp = 0;
     // Init functions
     HAL_Init();
     init_Leds();
@@ -66,13 +68,22 @@ int main(void)
     HW_SPI_Init();
     LoRa_Tx_Init();
     I2C_Init();
+    calipile_init(&sensor1);
     VL53_setup();
+    init_sensor_interrupt();
     // Should be triggered by interrupt, uncomment line if not imlemented
     //vl53_enable = 1;  // Enable VL53
     change_network_timing_protocol(SEND_CONSTANT_FREQUENCY);
     while (1)
     {
-        if(vl53_enable) 
+        UART_PutInt(calipile_getTPPresence(&sensor1));
+        UART_PutStr("       ");
+        temp = calipile_ReadData(&sensor1, 18)&8;
+        UART_PutInt(temp);
+        UART_PutStr("\r\n");
+        HAL_Delay(1000);
+        
+        if(0) 
         {
             #ifdef DEBUG
             UART_PutStr("Sensor wake up\r\n");
@@ -80,9 +91,11 @@ int main(void)
             VL53_start_measuring();
         }
         #ifdef DEBUG 
-        UART_PutStr("Sensor put to sleep\r\n");
+        //UART_PutStr("Sensor put to sleep\r\n");
         #endif
-        power_Sleep();
+        // Turn of Systick to prevent it Systck Interrupt to wake up the MCU again
+        //SysTick->CTRL &= ~(SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk);
+        //power_Sleep();
     }
     return 0;
 }

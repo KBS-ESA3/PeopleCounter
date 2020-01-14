@@ -18,6 +18,7 @@ void init_Leds(void);
 void toggle_Led(uint8_t led);
 void set_Led(uint8_t led, uint8_t state);
 void init_Button(void);
+void init_sensor_interrupt(void);
 
 void UART_Init();
 void UART_clearScreen(void);

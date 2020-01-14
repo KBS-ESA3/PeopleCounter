@@ -34,6 +34,18 @@ void init_Button(void)
     HAL_NVIC_EnableIRQ(USER_BUTTON_EXTI_IRQn);
 }
 
+void init_sensor_interrupt(void)
+{
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    GPIO_InitTypeDef GPIO_InitStruct;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Pin = I2C_INT_PIN;
+    HAL_GPIO_Init(I2C_GPIO_PORT, &GPIO_InitStruct);
+    HAL_NVIC_EnableIRQ(I2C_INT_EXTI_IRQn);
+}
+
+
 void toggle_Led(uint8_t led)
 {
     char message[] = "ledx is not available on this board!\n\n";
