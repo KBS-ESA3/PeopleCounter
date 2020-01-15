@@ -66,6 +66,7 @@ int main(void)
     HW_SPI_Init();
     LoRa_Tx_Init();
     I2C_Init();
+    calipile_init(&sensor0);
     VL53_setup();
 
     vl53_enable = 1;  // Enable VL53
@@ -79,7 +80,9 @@ int main(void)
     {
         if(vl53_enable) 
         {
-            VL53_start_measuring();
+            UART_PutInt(calipile_getTPObject(&sensor0));
+            UART_PutStr("\r\n");
+            //VL53_start_measuring();
         }
     }
     return 0;

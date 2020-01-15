@@ -3,6 +3,7 @@
 #include "hardware_functions.h"
 #include "packet.h"
 #include "network.h"
+#include "calipile_discovery.h"
 
 // Defines
 #define SPEED_50_HZ 20              // 20ms time budget, means 1/0.02 = 50 Hz
@@ -113,8 +114,9 @@ void VL53_start_measuring()
             return;
         }
 
-        // Wait a few milliseconds to make sure measurung is done, then change the ROI
-        HAL_Delay(5);
+        // Wait a few milliseconds to make sure measurung is done, then change the ROI  
+        // MEasurement becomes unstable below 3 milliseconds, still fast enough
+        HAL_Delay(3);
         status = VL53L1X_SetROICenter(VL53_I2C_address, zone_center[zone]);
 
         // If any error occured, terminate process
