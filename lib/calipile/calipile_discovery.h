@@ -59,10 +59,19 @@ void calipile_generalCall(void);
 uint8_t calipile_ReadData(calipile_t *sensor, uint8_t regAdress);
 void calipile_writeData(calipile_t *sensor, uint8_t reg, uint8_t val);
 uint32_t calipile_getTPObject(calipile_t *sensor);
-void calipile_init(calipile_t *sensor);
+void calipile_Init(calipile_t *sensor);
 int16_t calipile_getTPMotion(calipile_t *sensor);
 int16_t calipile_getTPPresence(calipile_t *sensor);
+int16_t calipile_getTPAmbshock(calipile_t *sensor);
 uint32_t calipile_getLP1(calipile_t *sensor);
+
+// Secondary functions!!!EFAWF
+
+int16_t calipile_get_presence();
+uint8_t calipile_read_data(uint8_t register_address);
+void calipile_write_data(uint8_t register_address, uint8_t val);
+void calipile_general_call(void);
+void calipile_init();
 
 #endif /* _CALIPILE_DISCOVERY_H_ */
 

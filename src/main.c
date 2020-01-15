@@ -23,24 +23,25 @@
 #define CALIPILE_INTDIR 0X00
 #define CALIPILE_INTTIM 0
 #define CALIPILE_OBJTRSHLD 0
+#define MIN_PRESENCE 100
 
 // Global variables
 uint8_t vl53_enable = 0;  // Boolean, set to start counting with VL53
 
-calipile_t sensor0 = {
-    CALIPILE_0_ADDR,
-    CALIPILE_LOWPASS1,
-    CALIPILE_LOWPASS2,
-    CALIPILE_LOWPASS3,
-    CALIPILE_PRTRSHLD,
-    CALIPILE_MTNTRSHLD,
-    CALIPILE_AMBTRSHLD,
-    CALIPILE_INTERRUPT,
-    CALIPILE_CYCLETIME,
-    CALIPILE_SOURCE,
-    CALIPILE_INTDIR,
-    CALIPILE_INTTIM,
-    CALIPILE_OBJTRSHLD};
+// calipile_t sensor0 = {
+//     CALIPILE_0_ADDR,
+//     CALIPILE_LOWPASS1,
+//     CALIPILE_LOWPASS2,
+//     CALIPILE_LOWPASS3,
+//     CALIPILE_PRTRSHLD,
+//     CALIPILE_MTNTRSHLD,
+//     CALIPILE_AMBTRSHLD,
+//     CALIPILE_INTERRUPT,
+//     CALIPILE_CYCLETIME,
+//     CALIPILE_SOURCE,
+//     CALIPILE_INTDIR,
+//     CALIPILE_INTTIM,
+//     CALIPILE_OBJTRSHLD};
 calipile_t sensor1 = {
     CALIPILE_1_ADDR,
     CALIPILE_LOWPASS1,
@@ -66,23 +67,27 @@ int main(void)
     HW_SPI_Init();
     LoRa_Tx_Init();
     I2C_Init();
-    calipile_init(&sensor0);
+    calipile_init();
     VL53_setup();
 
-    vl53_enable = 1;  // Enable VL53
+    //vl53_enable = 1;  // Enable VL53
 
     UART_clearScreen();
     UART_PutStr("interrupt test\r\n");
 
-    change_network_timing_protocol(SEND_CONSTANT_FREQUENCY);
-
+    change_network_timing_protocol(SEND_EVERY_PASSAGE);
     while (1)
-    {
+    {   
+        int16_t temp;
+        temp = calipile_get_presence();
+        if(temp > 100)
+        {
+            vl53_enable = 1;
+            UART_PutStr("WAKKER\r\n");
+        }
         if(vl53_enable) 
         {
-            UART_PutInt(calipile_getTPObject(&sensor0));
-            UART_PutStr("\r\n");
-            //VL53_start_measuring();
+            VL53_start_measuring();
         }
     }
     return 0;
