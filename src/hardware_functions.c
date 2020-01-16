@@ -187,7 +187,8 @@ void UART_put_LoRaPacket(LoRa_packet_t packet)
         // Output the number of people.
         UART_PutStr(" People count: ");
         UART_PutInt(packet.number_of_people);
-    } else {
+    } 
+    else if (packet.type = TYPE_BATTERY_STATUS) {
         // This must be the battery status.
         UART_PutStr(" Battery status: ");
         switch (packet.battery_status)
@@ -203,8 +204,30 @@ void UART_put_LoRaPacket(LoRa_packet_t packet)
                 break;
             default:
             // Invalid data.
-                break;
                 UART_PutStr("invalid packet!!");
+                break;
+        }
+    }
+    else if(packet.type == TYPE_SWITCH_ALGORITHM)
+    {
+        UART_PutStr(" Switch method packet: ");
+        switch (packet.network_protocol)
+        {
+            case SEND_CONSTANT_FREQUENCY:
+                UART_PutStr("send constant frequency");
+                break;
+            case SEND_EVERY_PASSAGE:
+                UART_PutStr("send every passage");
+                break;
+            case SEND_PEAK_AT_ZERO:
+                UART_PutStr("send peak at zero");
+                break;
+            case SEND_AFTER_INACTIVE_PERIOD:
+                UART_PutStr("send inactive period");
+                break;
+            default:
+            // invalid data.
+                break;
         }
     }
     UART_PutStr("\n\r");
