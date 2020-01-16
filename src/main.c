@@ -67,6 +67,7 @@ int main(void)
     LoRa_Tx_Init();
     I2C_Init();
     VL53_setup();
+    enable_downlink_timer();
 
     vl53_enable = 1;  // Enable VL53
 

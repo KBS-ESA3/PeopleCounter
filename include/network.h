@@ -10,6 +10,9 @@
 // between 0 and 250.
 #define PASSING_INACTIVE_TIME 30
 
+// The number of seconds after which a downlink message can be received.
+#define DOWNLINK_TIME 600
+
 #define INITIAL_NETWORK_TIMING_PROTOCOL SEND_EVERY_PASSAGE;
 
 typedef enum{
@@ -34,5 +37,6 @@ void on_passing();
 void change_network_timing_protocol(network_timing_protocol_t change_to);
 void disable_inactive_timer();
 void network_send_people_count();
+void enable_downlink_timer();
 
 #endif /* __NETWORK_H */

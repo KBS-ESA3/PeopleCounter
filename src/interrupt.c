@@ -83,6 +83,26 @@ void TIM6_IRQHandler(void)
 
 }
 
+void TIM2_IRQHandler(void)
+{
+    #ifdef LORA_BOARD
+    TIM_HandleTypeDef timer;
+    timer.Instance = TIM2;
+
+    if(__HAL_TIM_GET_FLAG(&timer, TIM_FLAG_UPDATE) != RESET)
+    {
+        // ENABLE DOWNLINK MESSAGE!!!!!
+        #ifdef DEBUG
+        UART_PutStr("receiving lora");
+        #endif /* DEBUG */
+    }
+    __HAL_TIM_CLEAR_FLAG(&timer, TIM_IT_UPDATE);
+    #else
+    // This board does not support LoRa
+    #endif /* LORA_BOARD */
+
+}
+
 /**
   * @brief This function handles external interrupt channel 2 and 3.
   */

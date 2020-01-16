@@ -23,10 +23,14 @@ Period = ((2091752 / prescaler) * T) + 1
 #define CONTINUOUS_TIMER_PRESCALER 36001
 #define CONTINUOUS_TIMER_PERIOD (round(((2097152/CONTINUOUS_TIMER_PRESCALER) * ((60*60*24)/CONSTANT_LORA_FREQUENCY)) + 1))
 
+#define DOWNLINK_TIMER_PRESCALER 40001
+#define DOWNLINK_TIMER_PERIOD (round(((2097152/DOWNLINK_TIMER_PRESCALER) * DOWNLINK_TIME) + 1))
+
 network_timing_protocol_t current_timing_protocol = INITIAL_NETWORK_TIMING_PROTOCOL;
 
 TIM_HandleTypeDef timer_inactive;
 TIM_HandleTypeDef timer_continuous;
+TIM_HandleTypeDef timer_downlink;
 
 // function prototype.
 void initialise_inactive_timer();
@@ -207,4 +211,27 @@ void change_network_timing_protocol(network_timing_protocol_t change_to)
     }
 
     current_timing_protocol = change_to;
+}
+
+void enable_downlink_timer(){
+    #ifdef LORA_BOARD
+
+
+    timer_downlink.Instance = TIM2;
+    timer_downlink.Init.Prescaler = CONTINUOUS_TIMER_PRESCALER;
+    timer_downlink.Init.Period = CONTINUOUS_TIMER_PERIOD;
+    timer_downlink.Init.CounterMode = TIM_COUNTERMODE_UP;
+    timer_downlink.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+
+    __TIM6_CLK_ENABLE();
+    HAL_TIM_Base_Init(&timer_downlink);
+    __HAL_TIM_CLEAR_FLAG(&timer_downlink, TIM_IT_UPDATE);
+    HAL_TIM_Base_Start_IT(&timer_downlink);
+
+    HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(TIM2_IRQn);
+    #else
+    // This is not implemented for this board
+    #endif /* LORA_BOARD */
+
 }
