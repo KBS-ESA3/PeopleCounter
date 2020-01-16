@@ -208,9 +208,31 @@ void UART_put_LoRaPacket(LoRa_packet_t packet)
                 break;
         }
     }
-    else if(packet.type == TYPE_SWITCH_ALGORITHM)
+    else if(packet.type == TYPE_SWITCH_ALGORITHM_REQUEST)
     {
-        UART_PutStr(" Switch method packet: ");
+        UART_PutStr(" Switch method packet requested: ");
+        switch (packet.network_protocol)
+        {
+            case SEND_CONSTANT_FREQUENCY:
+                UART_PutStr("send constant frequency");
+                break;
+            case SEND_EVERY_PASSAGE:
+                UART_PutStr("send every passage");
+                break;
+            case SEND_PEAK_AT_ZERO:
+                UART_PutStr("send peak at zero");
+                break;
+            case SEND_AFTER_INACTIVE_PERIOD:
+                UART_PutStr("send inactive period");
+                break;
+            default:
+            // invalid data.
+                break;
+        }
+    }
+    else if(packet.type == TYPE_SWITCH_ALGORITHM_CONFIRMATION)
+    {
+        UART_PutStr(" Switch method packet confirmation: ");
         switch (packet.network_protocol)
         {
             case SEND_CONSTANT_FREQUENCY:

@@ -23,11 +23,20 @@ LoRa_packet_t encode_battery_status_packet()
     return packet;
 }
 
-LoRa_packet_t encode_switch_algorithm_packet(network_timing_protocol_t protocol)
+LoRa_packet_t encode_switch_algorithm_confirmation_packet(network_timing_protocol_t protocol)
 {
     LoRa_packet_t packet = {0,0,0};
     packet.device_id = DEVICE_ID;
-    packet.type = TYPE_SWITCH_ALGORITHM;
+    packet.type = TYPE_SWITCH_ALGORITHM_CONFIRMATION;
+    packet.network_protocol = protocol;
+    return packet;
+}
+
+LoRa_packet_t encode_switch_algorithm_request_packet(network_timing_protocol_t protocol)
+{
+    LoRa_packet_t packet = {0,0,0};
+    packet.device_id = DEVICE_ID;
+    packet.type = TYPE_SWITCH_ALGORITHM_REQUEST;
     packet.network_protocol = protocol;
     return packet;
 }
@@ -44,7 +53,7 @@ uint16_t encode_frame(LoRa_packet_t packet){
     {
         frame |= packet.battery_status;
     }
-    else if(packet.type == TYPE_SWITCH_ALGORITHM)
+    else if(packet.type == TYPE_SWITCH_ALGORITHM_REQUEST | packet.type == TYPE_SWITCH_ALGORITHM_CONFIRMATION)
     {
         frame |= packet.network_protocol;
     }   
@@ -68,9 +77,15 @@ LoRa_packet_t decode_frame(uint16_t frame)
     {
         packet.type = TYPE_BATTERY_STATUS;
         packet.battery_status = (uint8_t)frame;    }
-    else if (frame & (TYPE_SWITCH_ALGORITHM << 8))
+    else if (frame & (TYPE_SWITCH_ALGORITHM_REQUEST << 8))
     {
-        packet.type = TYPE_SWITCH_ALGORITHM;
+        packet.type = TYPE_SWITCH_ALGORITHM_REQUEST;
+        packet.network_protocol = (uint8_t) frame;
+    }
+    else
+    {
+        // must be type_switch_algorith_confirmation.
+        packet.type = TYPE_SWITCH_ALGORITHM_CONFIRMATION;
         packet.network_protocol = (uint8_t) frame;
     }
 

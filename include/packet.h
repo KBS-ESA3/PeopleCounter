@@ -6,9 +6,10 @@
 
 // The different possible packet types.
 typedef enum{
+    TYPE_SWITCH_ALGORITHM_CONFIRMATION = 0b00,
     TYPE_BATTERY_STATUS = 0b01,
     TYPE_PEOPLE_COUNT = 0b10,
-    TYPE_SWITCH_ALGORITHM = 0b11,
+    TYPE_SWITCH_ALGORITHM_REQUEST = 0b11,
 } packet_type_t;
 
 // The different possible variables for the battery status.
@@ -17,8 +18,6 @@ typedef enum{
     BATTERY_LOW = 0b01,
     BATTERY_CRITICAL = 0b10,
 } battery_status_t;
-
-
 
 // The content of a packet that needs to be send.
 typedef struct{
@@ -40,7 +39,8 @@ typedef struct{
 
 LoRa_packet_t encode_people_count_packet();
 LoRa_packet_t encode_battery_status_packet();
-LoRa_packet_t encode_switch_algorithm_packet(network_timing_protocol_t protocol);
+LoRa_packet_t encode_switch_algorithm_confirmation_packet(network_timing_protocol_t protocol);
+LoRa_packet_t encode_switch_algorithm_request_packet(network_timing_protocol_t protocol);
 uint16_t encode_frame(LoRa_packet_t packet);
 LoRa_packet_t decode_frame(uint16_t frame);
 

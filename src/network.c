@@ -185,6 +185,9 @@ void change_network_timing_protocol(network_timing_protocol_t change_to)
    // Disable continious timer.
     disable_continuous_timer();
 
+    // Send a message to the server that we are going to change the protocol.
+    LoRa_Send_Word(encode_frame(encode_switch_algorithm_confirmation_packet(change_to)));
+
     switch(change_to)
     {
         case SEND_EVERY_PASSAGE:
