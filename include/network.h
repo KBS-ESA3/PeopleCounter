@@ -15,18 +15,18 @@
 typedef enum{
     // With this mode the number of people in the room is
     // send everytime someone enters or exits the room.
-    SEND_EVERY_PASSAGE,
+    SEND_EVERY_PASSAGE = 0b00,
 
     // In this mode the people_count is send a constant number of
     // times a day. 
-    SEND_CONSTANT_FREQUENCY,
+    SEND_CONSTANT_FREQUENCY = 0b01,
 
     // Send the highest number of people in the room since the last
     // time the room was completely empty.
-    SEND_PEAK_AT_ZERO,
+    SEND_PEAK_AT_ZERO = 0b10,
 
     // Send people_count after there was no passage for PASSING_INACTIVE_TIME.
-    SEND_AFTER_INACTIVE_PERIOD,
+    SEND_AFTER_INACTIVE_PERIOD = 0b11,
 } network_timing_protocol_t;
 
 // This function is called when someone passes the door.
