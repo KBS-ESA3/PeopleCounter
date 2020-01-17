@@ -209,6 +209,7 @@ int16_t VL53_counting_algorithm(uint16_t distance, uint8_t zone)
             right_previous_status = current_zone_status; // Remember for next time
         }
     }
+
     if (event_occured)
     {
         if (path_track_filling_size < 4)
@@ -236,7 +237,7 @@ int16_t VL53_counting_algorithm(uint16_t distance, uint8_t zone)
             }
             path_track_filling_size = 1;
         }
-        else
+        else    
         {
             // update path_track
             // example of path_track update
