@@ -9,53 +9,10 @@
 #include "network.h"
 #include "vl53_main.h"
 
-#define CALIPILE_0_ADDR (0x0C << 1)
-#define CALIPILE_1_ADDR (0x0D << 1)
-#define CALIPILE_LOWPASS1 11
-#define CALIPILE_LOWPASS2 8
-#define CALIPILE_LOWPASS3 10
-#define CALIPILE_PRTRSHLD 50
-#define CALIPILE_MTNTRSHLD 10
-#define CALIPILE_AMBTRSHLD 10
-#define CALIPILE_INTERRUPT 0X00
-#define CALIPILE_CYCLETIME 0X08
-#define CALIPILE_SOURCE 0X01
-#define CALIPILE_INTDIR 0X00
-#define CALIPILE_INTTIM 0
-#define CALIPILE_OBJTRSHLD 0
-
 // Global variables
 uint8_t vl53_enable = 0;  // Boolean, set to start counting with VL53
 
-calipile_t sensor0 = {
-    CALIPILE_0_ADDR,
-    CALIPILE_LOWPASS1,
-    CALIPILE_LOWPASS2,
-    CALIPILE_LOWPASS3,
-    CALIPILE_PRTRSHLD,
-    CALIPILE_MTNTRSHLD,
-    CALIPILE_AMBTRSHLD,
-    CALIPILE_INTERRUPT,
-    CALIPILE_CYCLETIME,
-    CALIPILE_SOURCE,
-    CALIPILE_INTDIR,
-    CALIPILE_INTTIM,
-    CALIPILE_OBJTRSHLD};
-calipile_t sensor1 = {
-    CALIPILE_1_ADDR,
-    CALIPILE_LOWPASS1,
-    CALIPILE_LOWPASS2,
-    CALIPILE_LOWPASS3,
-    CALIPILE_PRTRSHLD,
-    CALIPILE_MTNTRSHLD,
-    CALIPILE_AMBTRSHLD,
-    CALIPILE_INTERRUPT,
-    CALIPILE_CYCLETIME,
-    CALIPILE_SOURCE,
-    CALIPILE_INTDIR,
-    CALIPILE_INTTIM,
-    CALIPILE_OBJTRSHLD};
-
+// Main function
 int main(void)
 {
     // Init functions
@@ -66,20 +23,32 @@ int main(void)
     HW_SPI_Init();
     LoRa_Tx_Init();
     I2C_Init();
+    calipile_init();
     VL53_setup();
 
-    vl53_enable = 1;  // Enable VL53
-
-    UART_clearScreen();
-    UART_PutStr("interrupt test\r\n");
+    #ifdef DEBUG
+    UART_PutStr("Init complete\r\n");
+    #endif
+    
+    // Uncomment function below if CaliPile is not used
+    //vl53_enable = 1;  // Enable VL53
 
     change_network_timing_protocol(SEND_CONSTANT_FREQUENCY);
 
     while (1)
-    {
+    {   
+        // Check if calipile senses presence
+        if(calipile_get_presence() > 100)
+        {
+            vl53_enable = 1;        // Set vl53_enable variable
+            #ifdef DEBUG
+            UART_PutStr("Wake up\r\n");
+            #endif
+
+        }
         if(vl53_enable) 
         {
-            VL53_start_measuring();
+            VL53_start_measuring(); // Start measuring
         }
     }
     return 0;
